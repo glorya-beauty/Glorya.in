@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Helpers;
+
+class ImageHelper 
+{
+    /**
+     * Get the correct URL for a payment screenshot image
+     * Handles spaces and special characters in filenames
+     */
+    public static function getPaymentScreenshotUrl($filename)
+    {
+        if (!$filename) {
+            return asset('images/no-image.jpg');
+        }
+
+        $basePath = 'uploads/payments/';
+        
+        // Try original path first
+        $originalPath = $basePath . $filename;
+        if (file_exists(public_path($originalPath))) {
+            return asset(rawurlencode($originalPath));
+        }
+
+        // Try URL encoded version
+        $encodedPath = $basePath . rawurlencode($filename);
+        if (file_exists(public_path($basePath . $filename))) {
+            return asset($encodedPath);
+        }
+
+        // Try sanitized version (spaces replaced with underscores)
+        $sanitized = str_replace(' ', '_', $filename);
+        $sanitized = preg_replace('/[^A-Za-z0-9_\-\.]/', '', $sanitized);
+        $sanitizedPath = $basePath . $sanitized;
+        if (file_exists(public_path($sanitizedPath))) {
+            return asset($sanitizedPath);
+        }
+
+        // Return placeholder if nothing found
+        return asset('images/no-image.jpg');
+    }
+
+    /**
+     * Check if payment screenshot exists
+     */
+    public static function paymentScreenshotExists($filename)
+    {
+        if (!$filename) {
+            return false;
+        }
+
+        $basePath = 'uploads/payments/';
+        
+        // Check original path
+        if (file_exists(public_path($basePath . $filename))) {
+            return true;
+        }
+
+        // Check sanitized version
+        $sanitized = str_replace(' ', '_', $filename);
+        $sanitized = preg_replace('/[^A-Za-z0-9_\-\.]/', '', $sanitized);
+        if (file_exists(public_path($basePath . $sanitized))) {
+            return true;
+        }
+
+        return false;
+    }
+}
