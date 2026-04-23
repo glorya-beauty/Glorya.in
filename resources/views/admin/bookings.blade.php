@@ -170,26 +170,29 @@ use App\Helpers\ImageHelper;
                                                     $imageUrl = ImageHelper::getPaymentScreenshotUrl($booking->payment_screenshot);
                                                     $imageExists = ImageHelper::paymentScreenshotExists($booking->payment_screenshot);
                                                 @endphp
-                                                @if($imageUrl && $imageUrl != asset('images/no-image.jpg'))
+                                                @if($imageExists)
                                                     <img src="{{ $imageUrl }}" 
                                                          class="payment-screenshot-thumb" 
                                                          alt="Payment Screenshot" 
-                                                         data-toggle="modal" 
-                                                         data-target="#screenshotModal{{ $booking->id }}"
+                                                         data-bs-toggle="modal" 
+                                                         data-bs-target="#screenshotModal{{ $booking->id }}"
                                                          title="Click to view payment screenshot"
-                                                         onerror="this.src='{{ asset('images/no-image.jpg') }}'">
+                                                         onerror="this.src='{{ asset('images/no-image.jpg') }}'; console.log('Thumbnail failed to load:', this.src);">
                                                 @else
-                                                    <div class="no-image-placeholder" data-toggle="modal" data-target="#screenshotModal{{ $booking->id }}">
-                                                        <i class="fas fa-image"></i>
+                                                    <div class="no-image-placeholder" 
+                                                         data-bs-toggle="modal" 
+                                                         data-bs-target="#screenshotModal{{ $booking->id }}"
+                                                         title="Click to view payment screenshot details">
+                                                        <i class="fas fa-exclamation-triangle"></i>
                                                     </div>
                                                 @endif
-                                                <button type="button" class="btn btn-sm btn-info mt-1" data-toggle="modal" data-target="#screenshotModal{{ $booking->id }}">
+                                                <button type="button" class="btn btn-sm btn-info mt-1" data-bs-toggle="modal" data-bs-target="#screenshotModal{{ $booking->id }}">
                                                     <i class="fas fa-image"></i> View
                                                 </button>
                                             @else
                                                 <span class="badge badge-unverified">No Screenshot</span>
                                             @endif
-                                            <button type="button" class="btn btn-sm btn-primary mt-1" data-toggle="modal" data-target="#bookingModal{{ $booking->id }}">
+                                            <button type="button" class="btn btn-sm btn-primary mt-1" data-bs-toggle="modal" data-bs-target="#bookingModal{{ $booking->id }}">
                                                 <i class="fas fa-eye"></i> Details
                                             </button>
                                         </td>
@@ -202,37 +205,48 @@ use App\Helpers\ImageHelper;
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Payment Screenshot - Booking #{{ $booking->id }}</h5>
-                                                    <button type="button" class="close" data-dismiss="modal">
-                                                        <span>&times;</span>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                                     </button>
                                                 </div>
                                                 <div class="modal-body text-center">
                                                     <div class="mb-3">
                                                         <h6>Customer: {{ $booking->customer_name }}</h6>
-                                                        <p class="text-muted">Service: {{ $booking->service_name }} | Amount: ₹{{ number_format($booking->amount, 2) }}</p>
+                                                        <p class="text-muted">Service: {{ $booking->service_name }} | Amount: {{ number_format($booking->amount, 2) }}</p>
                                                     </div>
                                                     @php
                                                         $imageUrl = ImageHelper::getPaymentScreenshotUrl($booking->payment_screenshot);
                                                         $imageExists = ImageHelper::paymentScreenshotExists($booking->payment_screenshot);
                                                     @endphp
-                                                    @if($imageExists && $imageUrl != asset('images/no-image.jpg'))
-                                                        <img src="{{ $imageUrl }}" 
-                                                             class="payment-screenshot-modal img-fluid" 
-                                                             alt="Payment Screenshot"
-                                                             onerror="this.src='{{ asset('images/no-image.jpg') }}'">
+                                                    @if($imageExists)
+                                                        <div class="screenshot-container">
+                                                            <img src="{{ $imageUrl }}" 
+                                                                 class="payment-screenshot-modal img-fluid" 
+                                                                 alt="Payment Screenshot"
+                                                                 style="max-width: 100%; max-height: 70vh; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2);"
+                                                                 onerror="this.src='{{ asset('images/no-image.jpg') }}'; console.log('Image failed to load:', this.src);">
+                                                            <div class="mt-3">
+                                                                <small class="text-muted d-block mb-2">File: {{ basename($booking->payment_screenshot) }}</small>
+                                                                <a href="{{ $imageUrl }}" 
+                                                                   target="_blank" 
+                                                                   class="btn btn-info">
+                                                                    <i class="fas fa-external-link-alt"></i> Open in New Tab
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     @else
-                                                        <div class="text-center">
-                                                            <i class="fas fa-image fa-3x text-muted mb-3"></i>
-                                                            <p class="text-muted">No payment screenshot available</p>
+                                                        <div class="text-center p-4">
+                                                            <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                                                            <p class="text-muted">Payment screenshot file not found</p>
+                                                            <small class="text-muted">Expected file: {{ basename($booking->payment_screenshot) }}</small>
+                                                            <div class="mt-3">
+                                                                <a href="{{ asset('uploads/payments') }}" 
+                                                                   target="_blank" 
+                                                                   class="btn btn-sm btn-outline-secondary">
+                                                                    <i class="fas fa-folder"></i> Check Uploads Folder
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     @endif
-                                                    <div class="mt-3">
-                                                        <a href="{{ $imageUrl }}" 
-                                                           target="_blank" 
-                                                           class="btn btn-info">
-                                                            <i class="fas fa-external-link-alt"></i> Open in New Tab
-                                                        </a>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,8 +259,7 @@ use App\Helpers\ImageHelper;
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Booking Details #{{ $booking->id }}</h5>
-                                                    <button type="button" class="close" data-dismiss="modal">
-                                                        <span>&times;</span>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
@@ -281,25 +294,27 @@ use App\Helpers\ImageHelper;
                                                                         $imageUrl = ImageHelper::getPaymentScreenshotUrl($booking->payment_screenshot);
                                                                         $imageExists = ImageHelper::paymentScreenshotExists($booking->payment_screenshot);
                                                                     @endphp
-                                                                    @if($imageExists && $imageUrl != asset('images/no-image.jpg'))
+                                                                    @if($imageExists)
                                                                         <img src="{{ $imageUrl }}" 
                                                                              class="img-thumbnail" 
                                                                              style="max-width: 300px; max-height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #cf921c;"
                                                                              alt="Payment Screenshot"
-                                                                             onerror="this.src='{{ asset('images/no-image.jpg') }}'">
+                                                                             onerror="this.src='{{ asset('images/no-image.jpg') }}'; console.log('Details modal image failed to load:', this.src);">
+                                                                        <div class="mt-2">
+                                                                            <small class="text-muted d-block mb-2">File: {{ basename($booking->payment_screenshot) }}</small>
+                                                                            <a href="{{ $imageUrl }}" 
+                                                                               target="_blank" 
+                                                                               class="btn btn-sm btn-info">
+                                                                                <i class="fas fa-external-link-alt"></i> View Full Size
+                                                                            </a>
+                                                                        </div>
                                                                     @else
                                                                         <div class="text-center p-4">
-                                                                            <i class="fas fa-image fa-4x text-muted mb-3"></i>
-                                                                            <p class="text-muted">No payment screenshot available</p>
+                                                                            <i class="fas fa-exclamation-triangle fa-4x text-warning mb-3"></i>
+                                                                            <p class="text-muted">Payment screenshot file not found</p>
+                                                                            <small class="text-muted">Expected file: {{ basename($booking->payment_screenshot) }}</small>
                                                                         </div>
                                                                     @endif
-                                                                    <div class="mt-2">
-                                                                        <a href="{{ $imageUrl }}" 
-                                                                           target="_blank" 
-                                                                           class="btn btn-sm btn-info">
-                                                                            <i class="fas fa-external-link-alt"></i> View Full Size
-                                                                        </a>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -316,7 +331,7 @@ use App\Helpers\ImageHelper;
                                                     @endif
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                     @if($booking->payment_screenshot)
                                                         @php
                                                             $imageUrl = ImageHelper::getPaymentScreenshotUrl($booking->payment_screenshot);
@@ -721,8 +736,24 @@ use App\Helpers\ImageHelper;
 }
 
 .payment-screenshot-modal {
-    max-width: 90%;
-    max-height: 90vh;
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.screenshot-container {
+    position: relative;
+    display: inline-block;
+}
+
+.screenshot-container img {
+    transition: all 0.3s ease;
+}
+
+.screenshot-container:hover img {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }
 
 /* Modal Styling */
@@ -752,6 +783,17 @@ use App\Helpers\ImageHelper;
 .close:hover {
     opacity: 1;
     color: #cf921c;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.btn-close:hover {
+    opacity: 1;
+    filter: invert(1) grayscale(100%) brightness(200%) sepia(100%) hue-rotate(330deg) saturate(500%);
 }
 
 /* Pagination */
@@ -815,52 +857,96 @@ use App\Helpers\ImageHelper;
 </style>
 
 <script>
-$(document).ready(function() {
-    // Initialize tooltips
-    $('[data-toggle="tooltip"]').tooltip();
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Bootstrap 5 tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
     
     // Handle modal show events
-    $('.modal').on('show.bs.modal', function (e) {
-        var modal = $(this);
-        var trigger = $(e.relatedTarget);
+    document.addEventListener('show.bs.modal', function (e) {
+        var modal = e.target;
         
-        // Add loading state if needed
-        if (modal.find('.payment-screenshot-modal').length > 0) {
-            modal.find('.payment-screenshot-modal').on('error', function() {
-                $(this).attr('src', '{{ asset("images/no-image.jpg") }}');
-            });
+        // Add loading state for payment screenshots
+        var img = modal.querySelector('.payment-screenshot-modal');
+        if (img) {
+            var originalSrc = img.src;
+            
+            // Show loading state
+            img.addEventListener('load', function() {
+                console.log('Payment screenshot loaded successfully:', originalSrc);
+            }, { once: true });
+            
+            img.addEventListener('error', function() {
+                console.log('Payment screenshot failed to load:', originalSrc);
+                this.src = '{{ asset("images/no-image.jpg") }}';
+            }, { once: true });
         }
     });
     
     // Handle modal hide events
-    $('.modal').on('hidden.bs.modal', function (e) {
+    document.addEventListener('hidden.bs.modal', function (e) {
+        var modal = e.target;
+        
         // Reset any form states if needed
-        $(this).find('form').each(function() {
-            this.reset();
+        var forms = modal.querySelectorAll('form');
+        forms.forEach(function(form) {
+            form.reset();
         });
     });
     
-    // Handle image loading errors
-    $('.payment-screenshot-thumb').on('error', function() {
-        $(this).attr('src', '{{ asset("images/no-image.jpg") }}');
+    // Handle image loading errors for thumbnails
+    var thumbnails = document.querySelectorAll('.payment-screenshot-thumb');
+    thumbnails.forEach(function(thumb) {
+        thumb.addEventListener('error', function() {
+            console.log('Thumbnail failed to load:', this.src);
+            this.src = '{{ asset("images/no-image.jpg") }}';
+        });
+        
+        thumb.addEventListener('load', function() {
+            console.log('Thumbnail loaded successfully:', this.src);
+        });
     });
     
     // Add hover effects to table rows
-    $('tbody tr').hover(
-        function() {
-            $(this).addClass('table-row-hover');
-        },
-        function() {
-            $(this).removeClass('table-row-hover');
-        }
-    );
+    var tableRows = document.querySelectorAll('tbody tr');
+    tableRows.forEach(function(row) {
+        row.addEventListener('mouseenter', function() {
+            this.classList.add('table-row-hover');
+        });
+        
+        row.addEventListener('mouseleave', function() {
+            this.classList.remove('table-row-hover');
+        });
+    });
     
     // Handle form submissions with confirmation
-    $('form[data-confirm]').on('submit', function(e) {
-        if (!confirm($(this).data('confirm'))) {
-            e.preventDefault();
-            return false;
-        }
+    var confirmForms = document.querySelectorAll('form[data-confirm]');
+    confirmForms.forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            if (!confirm(this.dataset.confirm)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+    
+    // Add click handler for screenshot containers
+    var screenshotContainers = document.querySelectorAll('.screenshot-container');
+    screenshotContainers.forEach(function(container) {
+        container.addEventListener('click', function() {
+            var img = this.querySelector('img');
+            if (img) {
+                // Log image info for debugging
+                console.log('Screenshot clicked:', {
+                    src: img.src,
+                    alt: img.alt,
+                    naturalWidth: img.naturalWidth,
+                    naturalHeight: img.naturalHeight
+                });
+            }
+        });
     });
 });
 </script>

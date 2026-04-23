@@ -67,5 +67,48 @@
         }, 5000);
     </script>
     @stack('scripts')
+
+<!-- Handle checkout functionality -->
+<script>
+function handleCheckout(event) {
+    event.preventDefault();
+    
+    // Check if user is authenticated
+    @if(Auth::check())
+        // User is authenticated, go directly to checkout
+        window.location.href = '{{ route("cart.checkout") }}';
+    @else
+        // User is not authenticated, show registration modal
+        $('#registerModal').modal('show');
+    @endif
+}
+
+// Check if we need to show registration modal on page load
+$(document).ready(function() {
+    @if(session('show_register_modal'))
+        $('#registerModal').modal('show');
+    @endif
+    
+    // Load cart count for all users (guests and authenticated)
+    $.get('{{ route("cart.count") }}', function(response) {
+        updateCartCount(response.count);
+    });
+});
+
+function updateCartCount(count) {
+    $('.cart-count').each(function() {
+        $(this).text(count);
+        if (count > 0) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+</script>
+
+<!-- Login and Registration Modals -->
+@include('layouts.partials.auth-modals')
+
 </body>
 </html>

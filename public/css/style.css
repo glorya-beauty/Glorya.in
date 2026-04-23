@@ -18,6 +18,7 @@
 16. pagination
 17. f-cta
 18. pricing
+19. cart notifications
 19. contact
 20. footer
 
@@ -8715,6 +8716,85 @@ div.single-cta:last-child {
 .single-cta p a{color: #000000;}
 .s-cta-btn .btn{background:#383838;color:#fff;margin-top: 10px;}
 .s-cta-btn .btn::before{content: none;}
+
+/* Cart Notifications */
+.cart-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 10000;
+    min-width: 250px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.cart-notification-success {
+    background: #000000;
+    color: #ffffff;
+    border-left: 4px solid #333333;
+}
+
+.cart-notification-error {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    border-left: 4px solid #bd2130;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.cart-notification.fadeOut {
+    animation: slideOutRight 0.3s ease-out forwards;
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Cart icon improvements */
+.cart-icon {
+    transition: all 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cart-count {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 
 
 

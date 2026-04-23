@@ -11,9 +11,9 @@
                         </div>
                         <p class="footer-desc" style="color:black;">At Glorya, we're proud of our journey in beauty and wellness industry. Over the past year, we've established ourselves as a trusted destination for premium beauty services, building a reputation for excellence and customer satisfaction.</p>
                         <div class="footer-social  mt-30">                                    
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.facebook.com/people/Glorya-Home-Salon-Service/61580591662219/?mibextid=wwXIfr&rdid=MxNru6wGErhgLRyg&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F17LG86gtGe%2F%3Fmibextid%3DwwXIfr"><i class="fab fa-facebook-f"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.instagram.com/glorya.india?igsh=MXJtN3N5MHJkZWV2dQ%3D%3D&utm_source=qr"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-google-plus-g"></i></a>
                         </div>   
                     </div>

@@ -41,6 +41,10 @@ Route::post('/newsletter/subscribe', [FormController::class, 'subscribeNewslette
 // Authentication Routes
 Auth::routes(['register' => true]);
 
+// Cart Routes (allow guests to add items and see count)
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart/count', [CartController::class, 'count'])->name('cart.count');
+
 // Booking Routes (Protected by authentication)
 Route::middleware(['auth'])->group(function () {
     Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
@@ -51,15 +55,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/booking/success/{booking_number}', [BookingController::class, 'success'])->name('booking.success');
     Route::get('/booking/my', [BookingController::class, 'myBookings'])->name('booking.my');
     
-    // Cart Routes
+    // Cart Routes (require auth)
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-    Route::get('/cart/count', [CartController::class, 'count'])->name('cart.count');
     
-    // Checkout Route
+    // Checkout Route (requires authentication)
     Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
 

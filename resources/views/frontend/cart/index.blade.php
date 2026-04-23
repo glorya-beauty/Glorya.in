@@ -3,14 +3,34 @@
 @section('title', 'My Cart - Glorya Beauty')
 
 @section('content')
+   <section class="breadcrumb-area d-flex align-items-center" style="background-image:url({{ asset('images/testimonial/test-bg.png') }})">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="breadcrumb-wrap text-left">
+                                <div class="breadcrumb-title">
+                                    <h2>My cart </h2>
+                                    <div class="breadcrumb-wrap">
+                              
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">My Cart </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
 <div class="container mt-5 mb-5">
     <div class="row">
         <div class="col-lg-8">
             <div class="cart-page">
-                <div class="cart-header">
-                    <h2><i class="fas fa-shopping-cart"></i> My Cart</h2>
-                    <p>Review your selected services before booking</p>
-                </div>
+               
                 
                 @if($cart && $cart->items->count() > 0)
                     <div class="cart-items">
@@ -103,7 +123,7 @@
                         <span>Total</span>
                         <span>₹{{ number_format($total, 2) }}</span>
                     </div>
-                    <a href="{{ route('cart.checkout') }}" class="btn btn-primary btn-proceed">
+                    <a href="{{ route('cart.checkout') }}" class="btn btn-proceed">
                         <i class="fas fa-calendar-check"></i> Proceed to Checkout
                     </a>
                 </div>
@@ -271,7 +291,6 @@
     margin-top: 20px;
     padding: 12px;
     font-weight: 600;
-    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
     border: none;
 }
 
@@ -330,9 +349,316 @@
     margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
+/* Tablet Styles */
+@media (max-width: 991px) and (min-width: 768px) {
+    .cart-page {
+        padding: 20px;
+    }
+    
+    .cart-item {
+        padding: 18px;
+    }
+    
+    .cart-item-image img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .cart-item-info h4 {
+        font-size: 15px;
+    }
+    
+    .cart-item-info p {
+        font-size: 13px;
+    }
+    
+    .cart-summary {
+        margin-top: 20px;
+        position: sticky;
+        top: 20px;
+    }
+    
+    .cart-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .cart-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .cart-page {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .breadcrumb-area {
+        padding: 40px 0;
+    }
+    
+    .breadcrumb-title h2 {
+        font-size: 24px;
+    }
+    
     .cart-item {
         padding: 15px;
+        margin-bottom: 12px;
+    }
+    
+    .cart-item .row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .cart-item .row > div {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .cart-item-image {
+        text-align: center;
+    }
+    
+    .cart-item-image img {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+    }
+    
+    .cart-item-info {
+        text-align: center;
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 10px;
+    }
+    
+    .cart-item-info h4 {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    
+    .cart-item-info p {
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+    
+    .cart-item-price {
+        text-align: center;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+    
+    .cart-item-quantity {
+        text-align: center;
+    }
+    
+    .quantity-controls {
+        justify-content: center;
+        gap: 6px;
+        background: white;
+        border-radius: 8px;
+        padding: 6px;
+        border: 1px solid #dee2e6;
+        max-width: 150px;
+        margin: 0 auto;
+    }
+    
+    .quantity-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        border-radius: 6px;
+    }
+    
+    .quantity-display {
+        font-size: 16px;
+        min-width: 40px;
+    }
+    
+    .cart-item-subtotal {
+        text-align: center;
+        padding: 10px;
+        background: #e8f5e8;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .cart-item-actions {
+        text-align: center;
+    }
+    
+    .remove-btn {
+        width: 100%;
+        padding: 8px 16px;
+        font-size: 14px;
+        justify-content: center;
+    }
+    
+    .cart-actions {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+    
+    .cart-actions .btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 14px;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+    }
+    
+    .cart-summary {
+        margin-top: 20px;
+        padding: 20px;
+        border-radius: 12px;
+    }
+    
+    .cart-summary h4 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .summary-item {
+        font-size: 15px;
+        margin-bottom: 10px;
+        padding: 8px 0;
+    }
+    
+    .summary-item.total {
+        font-size: 16px;
+        padding-top: 10px;
+    }
+    
+    .btn-proceed {
+        padding: 15px;
+        font-size: 16px;
+        margin-top: 15px;
+    }
+    
+    .empty-cart {
+        padding: 40px 20px;
+    }
+    
+    .empty-cart h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .empty-cart p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    
+    .empty-cart .btn {
+        width: 100%;
+        max-width: 250px;
+        padding: 12px 20px;
+    }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .cart-page {
+        padding: 10px;
+    }
+    
+    .breadcrumb-title h2 {
+        font-size: 20px;
+    }
+    
+    .cart-item {
+        padding: 12px;
+    }
+    
+    .cart-item-image img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .cart-item-info h4 {
+        font-size: 14px;
+    }
+    
+    .cart-item-info p {
+        font-size: 12px;
+    }
+    
+    .quantity-controls {
+        max-width: 130px;
+        gap: 4px;
+        padding: 4px;
+    }
+    
+    .quantity-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .quantity-display {
+        font-size: 14px;
+        min-width: 35px;
+    }
+    
+    .cart-summary {
+        padding: 15px;
+    }
+    
+    .cart-summary h4 {
+        font-size: 16px;
+    }
+    
+    .summary-item {
+        font-size: 14px;
+    }
+    
+    .summary-item.total {
+        font-size: 15px;
+    }
+    
+    .btn-proceed {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    .empty-cart {
+        padding: 30px 15px;
+    }
+    
+    .empty-cart h3 {
+        font-size: 18px;
+    }
+    
+    .empty-cart i {
+        font-size: 3rem;
+    }
+}
+
+/* Landscape Mobile Styles */
+@media (max-width: 767px) and (orientation: landscape) {
+    .cart-item {
+        padding: 10px;
+    }
+    
+    .cart-item .row {
+        gap: 10px;
     }
     
     .cart-item-image img {
@@ -345,18 +671,44 @@
     }
     
     .quantity-controls {
-        gap: 4px;
+        max-width: 120px;
     }
     
+    .cart-summary {
+        margin-top: 15px;
+        padding: 15px;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
     .quantity-btn {
-        width: 24px;
-        height: 24px;
-        font-size: 10px;
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .remove-btn {
+        min-height: 44px;
+        padding: 10px 16px;
+    }
+    
+    .cart-actions .btn {
+        min-height: 44px;
+    }
+    
+    .btn-proceed {
+        min-height: 44px;
     }
 }
 </style>
 
 <script>
+// Mobile touch support
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
 function updateQuantity(serviceName, newQuantity) {
     if (newQuantity < 1) {
         removeFromCart(serviceName);
@@ -489,5 +841,134 @@ function showLoading() {
 function hideLoading() {
     $('#loadingOverlay').remove();
 }
+
+// Mobile touch event handlers
+function handleTouchStart(evt) {
+    touchStartX = evt.touches[0].clientX;
+    touchStartY = evt.touches[0].clientY;
+}
+
+function handleTouchEnd(evt) {
+    touchEndX = evt.changedTouches[0].clientX;
+    touchEndY = evt.changedTouches[0].clientY;
+    handleSwipeGesture();
+}
+
+function handleSwipeGesture() {
+    const swipeThreshold = 100;
+    const verticalThreshold = 50;
+    
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    
+    // Check if it's a horizontal swipe
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
+        if (Math.abs(deltaY) < verticalThreshold) {
+            // Left swipe - could be used for navigation
+            if (deltaX < 0) {
+                console.log('Swipe left detected');
+            }
+            // Right swipe - could be used for remove action
+            else {
+                console.log('Swipe right detected');
+            }
+        }
+    }
+}
+
+// Add mobile-specific enhancements
+$(document).ready(function() {
+    // Add touch event listeners to cart items
+    $('.cart-item').each(function() {
+        const cartItem = this;
+        const serviceName = $(this).find('.cart-item-info h4').text();
+        
+        // Touch events for swipe gestures
+        cartItem.addEventListener('touchstart', handleTouchStart, {passive: true});
+        cartItem.addEventListener('touchend', handleTouchEnd, {passive: true});
+        
+        // Long press for mobile context menu
+        let pressTimer;
+        
+        cartItem.addEventListener('touchstart', function(e) {
+            pressTimer = setTimeout(function() {
+                if (confirm(`Remove "${serviceName}" from cart?`)) {
+                    removeFromCart(serviceName);
+                }
+            }, 800);
+        }, {passive: true});
+        
+        cartItem.addEventListener('touchend', function() {
+            clearTimeout(pressTimer);
+        }, {passive: true});
+        
+        cartItem.addEventListener('touchmove', function() {
+            clearTimeout(pressTimer);
+        }, {passive: true});
+    });
+    
+    // Mobile quantity controls improvement
+    if (window.innerWidth <= 767) {
+        $('.quantity-btn').on('touchstart', function(e) {
+            e.preventDefault();
+            const btn = $(this);
+            const serviceName = btn.closest('.cart-item').find('.cart-item-info h4').text();
+            const currentQuantity = parseInt(btn.siblings('.quantity-display').text());
+            
+            if (btn.find('.fa-plus').length > 0) {
+                updateQuantity(serviceName, currentQuantity + 1);
+            } else if (btn.find('.fa-minus').length > 0) {
+                updateQuantity(serviceName, currentQuantity - 1);
+            }
+        });
+    }
+    
+    // Mobile viewport height fix for iOS
+    function setViewportHeight() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', setViewportHeight);
+    
+    // Add visual feedback for mobile interactions
+    $('.cart-item, .btn, .quantity-btn').on('touchstart', function() {
+        $(this).addClass('touch-active');
+    });
+    
+    $('.cart-item, .btn, .quantity-btn').on('touchend', function() {
+        $(this).removeClass('touch-active');
+    });
+});
+
+// Add CSS for touch feedback
+const touchStyles = `
+    <style>
+    .touch-active {
+        opacity: 0.7;
+        transform: scale(0.98);
+        transition: all 0.1s ease;
+    }
+    
+    .cart-item {
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    @media (max-width: 767px) {
+        :root {
+            --vh: 1vh;
+        }
+        
+        .cart-page {
+            min-height: calc(100vh - var(--vh) * 20);
+        }
+    }
+    </style>
+`;
+
+$('head').append(touchStyles);
 </script>
 @endsection

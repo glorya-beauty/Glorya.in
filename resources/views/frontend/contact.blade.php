@@ -102,76 +102,7 @@
             <!-- services-area-end -->
 			 <!-- contact-area -->
             <section id="contact" class="contact-area contact-bg pt-100 pb-100 p-relative fix" style="background-image:url({{ asset('images/bg/contact-bg.png') }})">
-                <div class="contact-bg-an-01"><img src="{{ asset('images/bg/contact-bg-an-01.png') }}" alt="contact-bg-an-01"></div>
-                <div class="contact-bg-an-02"><img src="{{ asset('images/bg/contact-bg-an-02.png') }}" alt="contact-bg-an-01"></div>
-                <div class="container">
-             
-					<div class="row align-items-center">
-						<div class="col-lg-6">
-                            <div class="contact-bg02 wow fadeInLeft  animated">
-                            
-							<form action="{{ route('contact.submit') }}" method="post" class="contact-form" id="contact-form">
-							@csrf
-							<div class="row">
-                            <div class="col-lg-6">
-                                <div class="contact-field p-relative c-name mb-20">                                    
-                                    <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
-                                </div>                               
-                            </div>
-							<div class="col-lg-6">                               
-                                <div class="contact-field p-relative c-email mb-20">                                    
-                                    <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
-                                </div>                                
-                            </div>
-							<div class="col-lg-6">                               
-                                <div class="contact-field p-relative c-subject mb-20">                                   
-                                    <input type="email" id="email" name="email" placeholder="Email" required>
-                                </div>
-                            </div>		
-                            <div class="col-lg-6">                               
-                                <div class="contact-field p-relative c-subject mb-20">                                   
-                                    <input type="tel" id="phone" name="phone" placeholder="Phone No." required>
-                                </div>
-                            </div>	
-                            
-                            <div class="col-lg-12">
-                                <div class="contact-field p-relative c-message mb-45">                                  
-                                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Write comments"></textarea>
-                                </div>
-                                
-                                <div class="slider-btn">                                          
-    <button class="btn ss-btn active" data-animation="fadeInRight" data-delay=".8s"> Submit Now</button>				
-</div>                             
-                            </div>
-                            </div>
-                        
-                    </form>
-                            
-							<!-- Ajax Response Message -->
-							<div class="ajax-response mt-3"></div>
-							
-                            </div>
-                        
-						</div>
-                         <div class="col-lg-6">
-                           <div class="about-content s-about-content wow fadeInRight  animated">
-                                <div class="about-title second-atitle pb-20">            
-                                                         
-                                    <h2>
-                                        Contact Form 
-                                    </h2>   
-                                 </div>
-                                <p>Get in touch with us and let’s bring effortless beauty and wellness closer to you. Our contact form is designed to make connecting with us simple, quick, and convenient. Whether you’re looking to book a luxury salon service at home, have questions about our offerings, or want to partner with us as a service professional, we’re just a message away.</p>
-<p>Fill out the form with your basic details and share your requirements or queries, and our team will respond promptly. We value your time and ensure that every message is handled with care and attention. From service-related inquiries and appointment support to feedback and collaboration opportunities, we’re here to listen and assist.</p>
-                                
-                                
-                            </div>
-                        </div>
-                        
-					</div>
-                    
-                </div>
-               
+             <div style="width: 100%"><iframe  frameborder="0" scrolling="no" marginheight="0" marginwidth="0"  style="height:500px;width:100%;" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=B-3/410,%20First%20Floor,%20Tara%20Nagar,%20Old%20Palam%20Road,%20Kakrola,%20Dwarka%20-%20110078+(Glorya)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.mapsdirections.info/pl/mapa-populacji/"></a></iframe></div>  
             </section>
             <!-- contact-area-end -->
        

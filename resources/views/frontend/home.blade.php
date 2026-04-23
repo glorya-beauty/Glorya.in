@@ -226,9 +226,7 @@
                             <a href="{{ route('services') }}" class="btn ss-btn" data-animation="fadeInRight" data-delay=".8s">
                                 <i class="fas fa-eye"></i> View Services
                             </a>
-                            <a href="{{ Auth::check() ? route('services') : route('login') }}" class="btn ss-btn active" data-animation="fadeInRight" data-delay=".9s">
-                                <i class="fas fa-calendar-plus"></i> Book Now
-                            </a>					
+                         				
                         </div>
                     </div>
                 </div>

@@ -43,17 +43,78 @@
                             </nav>
                         </div>
                     </div>   
+                    <!-- Desktop Cart Button -->
                     <div class="col-xl-2 col-lg-2 text-right d-none d-xl-block mt-30 mb-30">
                         @if(Auth::check())
+                            @php
+                                $cartCount = App\Models\CartItem::whereHas('cart', function($query) { $query->where('user_id', Auth::id()); })->sum('quantity');
+                            @endphp
                             <a href="{{ route('cart.index') }}" class="btn ss-btn cart-icon" style="padding: 8px 20px; font-size: 14px; position: relative;">
                                 <i class="fas fa-shopping-cart"></i> Cart
-                                <span class="cart-count" style="position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold;">{{ App\Models\CartItem::whereHas('cart', function($query) { $query->where('user_id', Auth::id()); })->sum('quantity') }}</span>
+                                <span class="cart-count" 
+                                      style="position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; {{ $cartCount > 0 ? '' : 'display: none;' }}">
+                                    {{ $cartCount }}
+                                </span>
                             </a>
                         @else
-                            <a href="#" class="btn ss-btn active" style="padding: 8px 20px; font-size: 14px;" data-toggle="modal" data-target="#loginModal">
-                                <i class="fas fa-sign-in-alt"></i> Download App
+                            <a href="#" class="btn ss-btn cart-icon" style="padding: 8px 20px; font-size: 14px; position: relative;" onclick="handleCheckout(event)">
+                                <i class="fas fa-shopping-cart"></i> Cart
+                                <span class="cart-count" 
+                                      style="position: absolute; top: -8px; right: -8px; background: #ff4757; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; display: none;">
+                                    0
+                                </span>
                             </a>
                         @endif
+                    </div>
+                    
+                    <!-- Tablet Cart Button -->
+                    <div class="col-lg-2 text-right d-none d-lg-block d-xl-none mt-30 mb-30">
+                        @if(Auth::check())
+                            @php
+                                $cartCount = App\Models\CartItem::whereHas('cart', function($query) { $query->where('user_id', Auth::id()); })->sum('quantity');
+                            @endphp
+                            <a href="{{ route('cart.index') }}" class="btn ss-btn cart-icon" style="padding: 10px 16px; font-size: 13px; position: relative;">
+                                <i class="fas fa-shopping-cart"></i> 
+                                <span class="cart-count" 
+                                      style="position: absolute; top: -6px; right: -6px; background: #ff4757; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; {{ $cartCount > 0 ? '' : 'display: none;' }}">
+                                    {{ $cartCount }}
+                                </span>
+                            </a>
+                        @else
+                            <a href="#" class="btn ss-btn cart-icon" style="padding: 10px 16px; font-size: 13px; position: relative;" onclick="handleCheckout(event)">
+                                <i class="fas fa-shopping-cart"></i> 
+                                <span class="cart-count" 
+                                      style="position: absolute; top: -6px; right: -6px; background: #ff4757; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; display: none;">
+                                    0
+                                </span>
+                            </a>
+                        @endif
+                    </div>
+                    
+                    <!-- Mobile Cart Button -->
+                    <div class="col-12 d-block d-lg-none">
+                        <div class="mobile-cart-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+                            @if(Auth::check())
+                                @php
+                                    $cartCount = App\Models\CartItem::whereHas('cart', function($query) { $query->where('user_id', Auth::id()); })->sum('quantity');
+                                @endphp
+                                <a href="{{ route('cart.index') }}" class="btn btn-primary mobile-cart-btn" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 4px 12px rgba(207, 146, 28, 0.4); background: linear-gradient(135deg, #cf921c 0%, #d4a574 100%); border: none; position: relative;">
+                                    <i class="fas fa-shopping-cart" style="color: white;"></i>
+                                    <span class="cart-count" 
+                                          style="position: absolute; top: -5px; right: -5px; background: #ff4757; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; {{ $cartCount > 0 ? '' : 'display: none;' }}">
+                                        {{ $cartCount }}
+                                    </span>
+                                </a>
+                            @else
+                                <a href="#" class="btn btn-primary mobile-cart-btn" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 4px 12px rgba(207, 146, 28, 0.4); background: linear-gradient(135deg, #cf921c 0%, #d4a574 100%); border: none; position: relative;" onclick="handleCheckout(event)">
+                                    <i class="fas fa-shopping-cart" style="color: white;"></i>
+                                    <span class="cart-count" 
+                                          style="position: absolute; top: -5px; right: -5px; background: #ff4757; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; display: none;">
+                                        0
+                                    </span>
+                                </a>
+                            @endif
+                        </div>
                     </div>
                   
                     

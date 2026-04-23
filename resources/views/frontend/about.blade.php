@@ -77,7 +77,7 @@
                                 </div>
                               
                                <div class="slider-btn mt-10">                                          
-                                            <a href="#" class="btn ss-btn" data-animation="fadeInRight" data-delay=".8s"> Learn More</a>					
+                                            <a href="{{ route('services') }}" class="btn ss-btn" data-animation="fadeInRight" data-delay=".8s"> Learn More</a>					
                                         </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
                                 <div class="team-info">
-                                    <h4><a href="team-details.html">Sarah Johnson</a></h4>
+                                    <h4><a href="team-details.html">Anjali Verma</a></h4>
                                     <span>Head Beautician</span>
                                     <div class="team-social mt-20">
                                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -130,7 +130,7 @@
                                     </div>
                                 </div>
                                 <div class="team-info">
-                                    <h4><a href="team-details.html">Emily Martinez</a></h4>
+                                    <h4><a href="team-details.html">Kavita Nair</a></h4>
                                     <span>Senior Makeup Artist</span>
                                   <div class="team-social mt-20">
                                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
                                 <div class="team-info">
-                                    <h4><a href="team-details.html">Jessica Chen</a></h4>
+                                    <h4><a href="team-details.html">Rashmi Iyer</a></h4>
                                     <span>Expert Nail Artist</span>
                                     <div class="team-social mt-20">
                                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
                                 <div class="team-info">
-                                    <h4><a href="team-details.html">Priya Sharma</a></h4>
+                                    <h4><a href="team-details.html">Pooja Reddy</a></h4>
                                     <span>Hair Stylist Expert</span>
                                     <div class="team-social mt-20">
                                         <a href="#"><i class="fab fa-facebook-f"></i></a>

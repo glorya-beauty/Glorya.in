@@ -1117,7 +1117,6 @@ display: none;
 background: no-repeat;
 padding: 20px 0;
 margin-top: 21px;
-background: #002e5b;
 }
 .main-menu {
 	text-align: left !important;
@@ -1468,4 +1467,5 @@ background: #002e5b;
     .button-group button {
     margin: 0 2px;
 
+}
 }

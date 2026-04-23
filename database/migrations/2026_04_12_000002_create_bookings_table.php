@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('customer_email');
             $table->string('customer_phone');
+            $table->text('address');
             $table->date('booking_date');
             $table->time('time_slot');
             $table->string('location')->nullable();

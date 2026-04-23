@@ -145,6 +145,12 @@
                                             <label for="booking_time">Preferred Time Slot *</label>
                                             <select name="booking_time" id="booking_time" required>
                                                 <option value="">Select Time Slot</option>
+                                                @php
+                                                    $currentDateTime = now();
+                                                    $selectedDate = request('booking_date') ?? date('Y-m-d');
+                                                    $isToday = $selectedDate === date('Y-m-d');
+                                                    $currentTime = $currentDateTime->format('H:i');
+                                                @endphp
                                                 @for($hour = 9; $hour <= 18; $hour++)
                                                     @for($minute = 0; $minute < 60; $minute += 60)
                                                         @php
@@ -153,11 +159,40 @@
                                                             $endHour = $hour + 1;
                                                             $endTime = sprintf('%02d:%02d', $endHour, $minute);
                                                             $displayEndTime = date('h:i A', strtotime($endTime));
+                                                            
+                                                            // Check if slot is available
+                                                            $isAvailable = true;
+                                                            if ($isToday) {
+                                                                // For today, disable slots that have already passed or are too soon
+                                                                $slotStartTime = $time;
+                                                                $slotEndTime = $endTime;
+                                                                
+                                                                // Add 30 minutes buffer time for preparation
+                                                                $bufferTime = 30;
+                                                                $currentBufferTime = $currentDateTime->copy()->addMinutes($bufferTime);
+                                                                $slotEndDateTime = \Carbon\Carbon::createFromFormat('H:i', $slotEndTime);
+                                                                $currentBufferTimeFormatted = $currentBufferTime->format('H:i');
+                                                                
+                                                                // Disable slot if current time + buffer is after slot end time
+                                                                if ($currentBufferTimeFormatted > $slotEndTime) {
+                                                                    $isAvailable = false;
+                                                                }
+                                                            }
                                                         @endphp
-                                                        <option value="{{ $time }}">{{ $displayTime }} - {{ $displayEndTime }}</option>
+                                                        <option value="{{ $time }}" @if(!$isAvailable) disabled @endif>
+                                                            {{ $displayTime }} - {{ $displayEndTime }}
+                                                            @if(!$isAvailable) (Not Available) @endif
+                                                        </option>
                                                     @endfor
                                                 @endfor
                                             </select>
+                                            <small class="form-text text-muted">
+                                                @if($isToday)
+                                                    Time slots showing availability for today with 30-minute preparation buffer
+                                                @else
+                                                    All time slots available for selected date
+                                                @endif
+                                            </small>
                                         </div>
                                     </div>
 
@@ -165,7 +200,7 @@
                                     <div class="col-lg-12">
                                         <div class="slider-btn">
                                             <button type="button" class="btn ss-btn active" onclick="nextStep(2)">
-                                                <i class="fas fa-arrow-right btn-icon mr-1"></i> Next: Payment
+                                                 Next: Payment
                                             </button>
                                         </div>
                                     </div>
@@ -209,12 +244,12 @@
                                 <div class="row mt-30">
                                     <div class="col-lg-6">
                                         <button type="button" class="btn btn-secondary" onclick="previousStep(1)">
-                                            <i class="fas fa-arrow-left btn-icon mr-1"></i> Previous
+                                             Previous
                                         </button>
                                     </div>
                                     <div class="col-lg-6 text-right">
                                         <button type="button" class="btn ss-btn active" onclick="nextStep(3)">
-                                            <i class="fas fa-arrow-right btn-icon mr-1"></i> Next: Upload Receipt
+                                          Upload Receipt
                                         </button>
                                     </div>
                                 </div>
@@ -269,7 +304,7 @@
                                     
                                     <div class="col-lg-6">
                                         <button type="button" class="btn btn-secondary" onclick="previousStep(2)">
-                                            <i class="fas fa-arrow-left btn-icon mr-1"></i> Previous
+                                             Previous
                                         </button>
                                     </div>
                                     <div class="col-lg-6 text-right">
@@ -878,33 +913,123 @@ function initializeForm() {
     if (dateInput) {
         const today = new Date().toISOString().split('T')[0];
         dateInput.setAttribute('min', today);
+
+        
+        // Add event listener to update time slots when date changes
+        dateInput.addEventListener('change', function() {
+            updateTimeSlots(this.value);
+        });
+        
+        // Initialize time slots for current date
+        updateTimeSlots(dateInput.value);
     }
     
     // Initialize map if needed
     initializeMap();
 }
 
+function updateTimeSlots(selectedDate) {
+    const timeSelect = document.getElementById('booking_time');
+    if (!timeSelect) return;
+    
+    // Get current date and time
+    const now = new Date();
+    const today = new Date().toISOString().split('T')[0];
+    const isToday = selectedDate === today;
+    
+    // Clear existing options
+    timeSelect.innerHTML = '<option value="">Select Time Slot</option>';
+    
+    // Generate time slots from 9 AM to 6 PM
+    for (let hour = 9; hour <= 18; hour++) {
+        const time = `${hour.toString().padStart(2, '0')}:00`;
+        const displayTime = new Date(`2000-01-01 ${time}`).toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        
+        const endHour = hour + 1;
+        const endTime = `${endHour.toString().padStart(2, '0')}:00`;
+        const displayEndTime = new Date(`2000-01-01 ${endTime}`).toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        
+        // Check if slot is available
+        let isAvailable = true;
+        let availabilityText = '';
+        
+        if (isToday) {
+            // For today, disable slots that have already passed or are too soon
+            const slotEndTime = new Date();
+            slotEndTime.setHours(endHour, 0, 0, 0);
+            
+            // Add 30 minutes buffer time for preparation
+            const bufferTime = 30 * 60 * 1000; // 30 minutes in milliseconds
+            const currentBufferTime = new Date(now.getTime() + bufferTime);
+            
+            // Disable slot if current time + buffer is after slot end time
+            if (currentBufferTime > slotEndTime) {
+                isAvailable = false;
+                availabilityText = ' (Not Available)';
+            }
+        }
+        
+        const option = document.createElement('option');
+        option.value = time;
+        option.textContent = `${displayTime} - ${displayEndTime}${availabilityText}`;
+        option.disabled = !isAvailable;
+        
+        timeSelect.appendChild(option);
+    }
+    
+    // Update helper text
+    const helperText = document.querySelector('#booking_time').nextElementSibling;
+    if (helperText && helperText.classList.contains('form-text')) {
+        if (isToday) {
+            helperText.textContent = 'Time slots showing availability for today with 30-minute preparation buffer';
+        } else {
+            helperText.textContent = 'All time slots available for selected date';
+        }
+    }
+}
+
 function initializeMap() {
     const mapElement = document.getElementById('map');
     if (mapElement) {
-        // Initialize with a simple interactive map
+        // Initialize with an interactive draggable map
         mapElement.innerHTML = `
             <div style="height: 100%; width: 100%; position: relative;">
-                <iframe 
-                    id="map-iframe"
-                    width="100%" 
-                    height="100%" 
-                    frameborder="0" 
-                    style="border:0" 
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=77.2080%2C28.6129%2C77.2100%2C28.6149&layer=mapnik&marker=28.6139%2C77.2095"
-                    allowfullscreen>
-                </iframe>
-                <div id="map-info" style="position: absolute; top: 10px; right: 10px; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                    <small><strong>Default Location:</strong><br>Delhi, India</small><br>
-                    <small>Enter your address above to update</small>
+                <div id="map-container" style="height: 100%; width: 100%; position: relative;">
+                    <iframe 
+                        id="map-iframe"
+                        width="100%" 
+                        height="100%" 
+                        frameborder="0" 
+                        style="border:0" 
+                        allowfullscreen>
+                    </iframe>
+                    <div id="map-marker" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; cursor: move;">
+                        <div style="background: #ff4757; width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>
+                    </div>
+                </div>
+                <div id="map-info" style="position: absolute; top: 10px; right: 10px; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); max-width: 250px;">
+                    <small><strong>Location:</strong><br>
+                    <span id="current-location">Delhi, India</span></small><br>
+                    <small style="color: #666;">Drag marker or enter address</small>
+                </div>
+                <div id="map-controls" style="position: absolute; bottom: 10px; left: 10px; background: white; padding: 5px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                    <button type="button" onclick="getCurrentLocation()" style="background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px;">
+                        <i class="fas fa-location-arrow"></i> My Location
+                    </button>
                 </div>
             </div>
         `;
+        
+        // Initialize map with default location
+        initializeMapWithLocation(28.6139, 77.2090, 'Delhi, India');
         
         // Add address change listener with debounce
         const addressField = document.getElementById('address');
@@ -926,6 +1051,204 @@ function initializeMap() {
                 }
             });
         }
+        
+        // Add drag functionality to map
+        addMapDragFunctionality();
+    }
+}
+
+function initializeMapWithLocation(lat, lng, address) {
+    const mapIframe = document.getElementById('map-iframe');
+    const locationSpan = document.getElementById('current-location');
+    
+    if (mapIframe) {
+        const bbox = `${lng - 0.01},${lat - 0.01},${lng + 0.01},${lat + 0.01}`;
+        mapIframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`;
+    }
+    
+    if (locationSpan) {
+        locationSpan.textContent = address || 'Location Selected';
+    }
+    
+    // Update hidden coordinate fields
+    const latField = document.getElementById('latitude');
+    const lngField = document.getElementById('longitude');
+    if (latField) latField.value = lat;
+    if (lngField) lngField.value = lng;
+}
+
+function addMapDragFunctionality() {
+    const mapContainer = document.getElementById('map-container');
+    const mapIframe = document.getElementById('map-iframe');
+    const marker = document.getElementById('map-marker');
+    const addressField = document.getElementById('address');
+    
+    if (!mapContainer || !marker || !mapIframe) return;
+    
+    let isDragging = false;
+    let dragTimeout;
+    
+    // Mouse events for desktop
+    marker.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', endDrag);
+    
+    // Touch events for mobile
+    marker.addEventListener('touchstart', startDrag);
+    document.addEventListener('touchmove', drag);
+    document.addEventListener('touchend', endDrag);
+    
+    function startDrag(e) {
+        isDragging = true;
+        marker.style.cursor = 'grabbing';
+        e.preventDefault();
+    }
+    
+    function drag(e) {
+        if (!isDragging) return;
+        
+        const rect = mapContainer.getBoundingClientRect();
+        let x, y;
+        
+        if (e.touches) {
+            x = e.touches[0].clientX - rect.left;
+            y = e.touches[0].clientY - rect.top;
+        } else {
+            x = e.clientX - rect.left;
+            y = e.clientY - rect.top;
+        }
+        
+        // Update marker position
+        marker.style.left = x + 'px';
+        marker.style.top = y + 'px';
+        
+        // Calculate coordinates from position
+        const lat = 28.6139 + (rect.height/2 - y) * 0.0001;
+        const lng = 77.2090 + (x - rect.width/2) * 0.0001;
+        
+        // Update map with debounce
+        clearTimeout(dragTimeout);
+        dragTimeout = setTimeout(() => {
+            updateMapFromCoordinates(lat, lng);
+        }, 500);
+    }
+    
+    function endDrag() {
+        if (isDragging) {
+            isDragging = false;
+            marker.style.cursor = 'move';
+            
+            // Get final coordinates and reverse geocode
+            const rect = mapContainer.getBoundingClientRect();
+            const x = parseFloat(marker.style.left);
+            const y = parseFloat(marker.style.top);
+            
+            const lat = 28.6139 + (rect.height/2 - y) * 0.0001;
+            const lng = 77.2090 + (x - rect.width/2) * 0.0001;
+            
+            reverseGeocode(lat, lng);
+        }
+    }
+}
+
+function updateMapFromCoordinates(lat, lng) {
+    const mapIframe = document.getElementById('map-iframe');
+    const locationSpan = document.getElementById('current-location');
+    
+    if (mapIframe) {
+        const bbox = `${lng - 0.01},${lat - 0.01},${lng + 0.01},${lat + 0.01}`;
+        mapIframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`;
+    }
+    
+    if (locationSpan) {
+        locationSpan.textContent = 'Updating location...';
+    }
+    
+    // Update hidden coordinate fields
+    const latField = document.getElementById('latitude');
+    const lngField = document.getElementById('longitude');
+    if (latField) latField.value = lat;
+    if (lngField) lngField.value = lng;
+}
+
+function reverseGeocode(lat, lng) {
+    const locationSpan = document.getElementById('current-location');
+    const addressField = document.getElementById('address');
+    
+    // Use Nominatim reverse geocoding
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.display_name) {
+                const address = data.display_name;
+                
+                // Update location display
+                if (locationSpan) {
+                    locationSpan.textContent = address.substring(0, 50) + (address.length > 50 ? '...' : '');
+                }
+                
+                // Update address field
+                if (addressField) {
+                    addressField.value = address;
+                    // Trigger change event for any listeners
+                    addressField.dispatchEvent(new Event('change'));
+                }
+                
+                console.log('Address updated from map:', address);
+            } else {
+                // Fallback to coordinates
+                if (locationSpan) {
+                    locationSpan.textContent = `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`;
+                }
+                
+                if (addressField) {
+                    addressField.value = `Location: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Reverse geocoding error:', error);
+            
+            // Fallback
+            if (locationSpan) {
+                locationSpan.textContent = `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`;
+            }
+            
+            if (addressField) {
+                addressField.value = `Location: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+            }
+        });
+}
+
+function getCurrentLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                
+                // Update map and reverse geocode
+                updateMapFromCoordinates(lat, lng);
+                reverseGeocode(lat, lng);
+                
+                // Center marker
+                const mapContainer = document.getElementById('map-container');
+                const marker = document.getElementById('map-marker');
+                if (mapContainer && marker) {
+                    const rect = mapContainer.getBoundingClientRect();
+                    marker.style.left = (rect.width / 2) + 'px';
+                    marker.style.top = (rect.height / 2) + 'px';
+                }
+                
+                showNotification('Location detected successfully!', 'success');
+            },
+            error => {
+                console.error('Geolocation error:', error);
+                showNotification('Unable to get your location. Please enable location services.', 'error');
+            }
+        );
+    } else {
+        showNotification('Geolocation is not supported by your browser.', 'error');
     }
 }
 
@@ -1224,6 +1547,13 @@ function submitBooking(formData) {
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     
+    // Add debugging info
+    console.log('=== DEBUG: Starting booking submission ===');
+    console.log('Form data entries:');
+    for (let [key, value] of formData.entries()) {
+        console.log(key + ':', value);
+    }
+    
     fetch('{{ route("booking.store") }}', {
         method: 'POST',
         body: formData,
@@ -1233,38 +1563,51 @@ function submitBooking(formData) {
         }
     })
     .then(response => {
+        console.log('=== DEBUG: Response received ===');
         console.log('Response status:', response.status);
         console.log('Response headers:', response.headers);
         
-        // Check if response is actually JSON
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-            throw new Error('Server returned non-JSON response. Status: ' + response.status);
-        }
-        
-        return response.json();
-    })
-    .then(data => {
-        console.log('Response data:', data);
-        if (data.success) {
-            showNotification('Booking confirmed successfully! Your booking is pending verification.', 'success');
-            setTimeout(() => {
-                window.location.href = data.redirect;
-            }, 2000);
-        } else {
-            let errorMessage = data.message || 'Booking failed';
-            if (data.errors) {
-                errorMessage += ': ' + Object.values(data.errors).flat().join(', ');
+        // Get response text for debugging
+        return response.text().then(text => {
+            console.log('Response text:', text);
+            
+            // Try to parse as JSON
+            try {
+                const data = JSON.parse(text);
+                console.log('=== DEBUG: Parsed JSON data ===');
+                console.log('Response data:', data);
+                
+                if (data.success) {
+                    showNotification('Booking confirmed successfully! Your booking is pending verification.', 'success');
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 2000);
+                } else {
+                    let errorMessage = data.message || 'Booking failed';
+                    if (data.errors) {
+                        errorMessage += ': ' + Object.values(data.errors).flat().join(', ');
+                    }
+                    showNotification(errorMessage, 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-check btn-icon mr-1"></i> Complete Booking';
+                }
+            } catch (e) {
+                console.error('=== DEBUG: JSON Parse Error ===');
+                console.error('Parse error:', e);
+                console.error('Response text was:', text);
+                
+                // Show the actual response for debugging
+                showNotification('Server error: ' + text.substring(0, 200) + '...', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check btn-icon mr-1"></i> Complete Booking';
             }
-            showNotification(errorMessage, 'error');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-check btn-icon mr-1"></i> Complete Booking';
-        }
+        });
     })
     .catch(error => {
+        console.error('=== DEBUG: Network Error ===');
         console.error('Error:', error);
         console.error('Error details:', error.message);
-        showNotification('An error occurred: ' + error.message, 'error');
+        showNotification('Network error: ' + error.message, 'error');
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-check btn-icon mr-1"></i> Complete Booking';
     });

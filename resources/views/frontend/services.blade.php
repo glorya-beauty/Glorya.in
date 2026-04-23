@@ -385,7 +385,7 @@
                                      <ul class="service-features">
                                          <li><i class="fas fa-check"></i> Facials</li>
                                          <li><i class="fas fa-check"></i> Clean-ups</li>
-                                         <li><i class="fas fa-check"></i> De-tan</li>
+                                         <li><i class="fas fa-check"></i> D-TAN</li>
                                          <li><i class="fas fa-check"></i> Bleach</li>
                                      </ul>
                                      <div class="service-price">
@@ -1562,16 +1562,16 @@
                                 </div>
                             </div>
                             
-                            <!-- De-tan Services -->
+                            <!-- D-TAN Services -->
                             <div class="col-lg-12">
                                 <div class="service-subcategory mb-40">
-                                    <h4 class="subcategory-title">De-tan Services</h4>
+                                    <h4 class="subcategory-title">D-TAN Services</h4>
                                     <p>A targeted detan service to help reduce pigmentation, tan & dark spots</p>
                                     
                                     <div class="row">
                                         <div class="col-md-6 col-lg-4 mb-30">
                                             <div class="service-card mini">
-                                                <img src="{{ asset('images/services/sk.jpeg') }}" style="height:350px"alt="Face & Neck De-tan">
+                                                <img src="{{ asset('images/services/sk.jpeg') }}" style="height:350px"alt="Face & Neck D-TAN">
                                                 <div class="service-header">
                                                     <h6>Face & Neck</h6>
                                                     <div class="price-info">
@@ -1581,11 +1581,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="service-details">
-                                                    <p>Specialized de-tan treatment for face and neck area. Our gentle yet effective formula removes sun damage and uneven pigmentation, revealing brighter, more even-toned skin with a natural glow.</p>
+                                                    <p>Specialized D-TAN treatment for face and neck area. Our gentle yet effective formula removes sun damage and uneven pigmentation, revealing brighter, more even-toned skin with a natural glow.</p>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
-                                                            onclick="addToCart('Face & Neck De-tan', 309, 'images/services/sk.jpeg', 'Time - N/A', 'De-tan Services')">
+                                                            onclick="addToCart('Face & Neck D-TAN', 309, 'images/services/sk.jpeg', 'Time - N/A', 'D-TAN Services')">
                                                         <i class="fas fa-shopping-cart"></i> Add to Cart
                                                     </button>
                                                 </div>
@@ -1594,7 +1594,7 @@
                                         
                                         <div class="col-md-6 col-lg-4 mb-30">
                                             <div class="service-card mini">
-                                                <img src="{{ asset('images/services/fam.jpg')}}" style="height:350px;" alt="Full Arms De-tan">
+                                                <img src="{{ asset('images/services/fam.jpg')}}" style="height:350px;" alt="Full Arms D-TAN">
                                                 <div class="service-header">
                                                     <h6>Full Arms</h6>
                                                     <div class="price-info">
@@ -1604,11 +1604,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="service-details">
-                                                    <p>Complete arm de-tan treatment from shoulders to wrists. Perfect for removing tan lines and achieving uniform skin tone, leaving your arms smooth, bright, and evenly colored.</p>
+                                                    <p>Complete arm D-TAN treatment from shoulders to wrists. Perfect for removing tan lines and achieving uniform skin tone, leaving your arms smooth, bright, and evenly colored.</p>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
-                                                            onclick="addToCart('Full Arms De-tan', 309, 'images/services/fam.jpg', 'Time - N/A', 'De-tan Services')">
+                                                            onclick="addToCart('Full Arms D-TAN', 309, 'images/services/fam.jpg', 'Time - N/A', 'D-TAN Services')">
                                                         <i class="fas fa-shopping-cart"></i> Add to Cart
                                                     </button>
                                                 </div>
@@ -1617,7 +1617,7 @@
                                         
                                         <div class="col-md-6 col-lg-4 mb-30">
                                             <div class="service-card mini">
-                                                <img src="{{ asset('images/services/cdt.jpg') }}" style="height:350px;" alt="Chest De-tan">
+                                                <img src="{{ asset('images/services/cdt.jpg') }}" style="height:350px;" alt="Chest D-TAN">
                                                 <div class="service-header">
                                                     <h6>Chest</h6>
                                                     <div class="price-info">
@@ -1627,11 +1627,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="service-details">
-                                                    <p>Targeted chest de-tan treatment to address stubborn pigmentation. Ideal for those who wear low-cut outfits, this service evens out skin tone and reduces discoloration for a flawless décolletage.</p>
+                                                    <p>Targeted chest D-TAN treatment to address stubborn pigmentation. Ideal for those who wear low-cut outfits, this service evens out skin tone and reduces discoloration for a flawless décolletage.</p>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
-                                                            onclick="addToCart('Chest De-tan', 349, 'images/services/cdt.jpg', 'Time - N/A', 'De-tan Services')">
+                                                            onclick="addToCart('Chest D-TAN', 349, 'images/services/cdt.jpg', 'Time - N/A', 'D-TAN Services')">
                                                         <i class="fas fa-shopping-cart"></i> Add to Cart
                                                     </button>
                                                 </div>
@@ -1640,7 +1640,7 @@
                                         
                                         <div class="col-md-6 col-lg-4 mb-30">
                                             <div class="service-card mini">
-                                                <img src="{{ asset('images/services/flt.jpg') }}" style="height:350px;" alt="Full Legs De-tan">
+                                                <img src="{{ asset('images/services/flt.jpg') }}" style="height:350px;" alt="Full Legs D-TAN">
                                                 <div class="service-header">
                                                     <h6>Full Legs</h6>
                                                     <div class="price-info">
@@ -1650,11 +1650,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="service-details">
-                                                    <p>Comprehensive leg de-tan from thighs to ankles. Removes stubborn tan lines and evens out skin tone, perfect for achieving smooth, uniform legs for shorts and skirts.</p>
+                                                    <p>Comprehensive leg D-TAN from thighs to ankles. Removes stubborn tan lines and evens out skin tone, perfect for achieving smooth, uniform legs for shorts and skirts.</p>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
-                                                            onclick="addToCart('Full Legs De-tan', 449, 'images/services/flt.jpg', 'Time - N/A', 'De-tan Services')">
+                                                            onclick="addToCart('Full Legs D-TAN', 449, 'images/services/flt.jpg', 'Time - N/A', 'D-TAN Services')">
                                                         <i class="fas fa-shopping-cart"></i> Add to Cart
                                                     </button>
                                                 </div>
@@ -1663,7 +1663,7 @@
                                         
                                         <div class="col-md-6 col-lg-4 mb-30">
                                             <div class="service-card mini">
-                                                <img src="{{ asset('images/services/bt.jpg') }}" style="height:350px;" alt="Back De-tan">
+                                                <img src="{{ asset('images/services/bt.jpg') }}" style="height:350px;" alt="Back D-TAN">
                                                 <div class="service-header">
                                                     <h6>Back</h6>
                                                     <div class="price-info">
@@ -1673,11 +1673,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="service-details">
-                                                    <p>Complete back de-tan treatment for even skin tone. Addresses stubborn tan and pigmentation across shoulders and back, perfect for backless outfits and swimwear.</p>
+                                                    <p>Complete back D-TAN treatment for even skin tone. Addresses stubborn tan and pigmentation across shoulders and back, perfect for backless outfits and swimwear.</p>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
-                                                            onclick="addToCart('Back De-tan', 349, 'images/services/bt.jpg', 'Time - N/A', 'De-tan Services')">
+                                                            onclick="addToCart('Back D-TAN', 349, 'images/services/bt.jpg', 'Time - N/A', 'D-TAN Services')">
                                                         <i class="fas fa-shopping-cart"></i> Add to Cart
                                                     </button>
                                                 </div>
@@ -1686,7 +1686,7 @@
                                         
                                         <div class="col-md-6 col-lg-4 mb-30">
                                             <div class="service-card mini">
-                                                <img src="{{ asset('images/services/fbt.jpg') }}" style="height:350px;" alt="Full Body De-tan">
+                                                <img src="{{ asset('images/services/fbt.jpg') }}" style="height:350px;" alt="Full Body D-TAN">
                                                 <div class="service-header">
                                                     <h6>Full Body</h6>
                                                     <div class="price-info">
@@ -1696,11 +1696,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="service-details">
-                                                    <p>Ultimate full body de-tan experience. Comprehensive treatment from neck to feet that removes all traces of tan, evens out skin tone, and leaves your entire body glowing and uniform.</p>
+                                                    <p>Ultimate full body D-TAN experience. Comprehensive treatment from neck to feet that removes all traces of tan, evens out skin tone, and leaves your entire body glowing and uniform.</p>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
-                                                            onclick="addToCart('Full Body De-tan', 1199, 'images/services/fbt.jpg', 'Time - N/A', 'De-tan Services')">
+                                                            onclick="addToCart('Full Body D-TAN', 1199, 'images/services/fbt.jpg', 'Time - N/A', 'D-TAN Services')">
                                                         <i class="fas fa-shopping-cart"></i> Add to Cart
                                                     </button>
                                                 </div>
@@ -1718,7 +1718,7 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-30">
                                             <div class="service-card">
-                                                                                            <img src="{{ asset('images/services/rcp.jpg') }}" style="height:350px;" alt="Full Body De-tan">    
+                                                                                            <img src="{{ asset('images/services/rcp.jpg') }}" style="height:350px;" alt="Full Body D-TAN">    
                                             <div class="service-header">
                                                     <h5>Rose Crystal Pedicure</h5>
                                                     <div class="price-info">
@@ -1750,7 +1750,7 @@
                                     <div class="col-lg-4 col-md-6 mb-30">
                                         <div class="service-card">
                                             <div class="service-image" style="object-fit:inherit;height:350px;">
-                                                <img src="{{ asset('images/services/be.jpeg') }}">
+                                                <img src="{{ asset('images/services/ble.jpeg') }}">
                                             </div>
                                             <div class="service-content">
                                                 <h4>Bleach</h4>
@@ -4002,13 +4002,6 @@ Time - 45 Min
 window.addToCart = function(serviceName, servicePrice, serviceImage, serviceTime, serviceCategory, buttonElement) {
     console.log('Adding to cart:', serviceName, servicePrice, serviceImage, serviceTime, serviceCategory);
     
-    // Temporarily removed authentication check for testing
-    // @if(!Auth::check())
-    //     alert('Please login to add services to cart');
-    //     window.location.href = '{{ route("login") }}';
-    //     return;
-    // @endif
-    
     $.ajax({
         url: '{{ route("cart.add") }}',
         type: 'POST',
@@ -4025,8 +4018,12 @@ window.addToCart = function(serviceName, servicePrice, serviceImage, serviceTime
                 // Update cart count
                 updateCartCount(response.cart_count);
                 
-                // Show success message
-                showNotification(response.message, 'success');
+                // Show appropriate message based on user type
+                let message = response.message;
+                if (response.is_guest) {
+                    message += ' Please register or login to checkout.';
+                }
+                showNotification(message, 'success');
                 
                 // Change button temporarily
                 if (buttonElement) {
@@ -4048,14 +4045,6 @@ window.addToCart = function(serviceName, servicePrice, serviceImage, serviceTime
             let errorMessage = 'Error adding to cart. Please try again.';
             if (xhr.responseJSON && xhr.responseJSON.message) {
                 errorMessage = xhr.responseJSON.message;
-                // If user is not authenticated, redirect to login
-                if (xhr.responseJSON.message.includes('not authenticated')) {
-                    showNotification('Please login to add items to cart', 'error');
-                    setTimeout(() => {
-                        window.location.href = '{{ route("login") }}';
-                    }, 2000);
-                    return;
-                }
             } else if (xhr.responseText) {
                 try {
                     const response = JSON.parse(xhr.responseText);
@@ -4091,10 +4080,8 @@ window.showNotification = function(message, type) {
     }, 3000);
 };
 
-// Load cart count on page load
-@if(Auth::check())
-    $.get('{{ route("cart.count") }}', function(response) {
-        updateCartCount(response.count);
-    });
-@endif
+// Load cart count on page load (works for both guests and authenticated users)
+$.get('{{ route("cart.count") }}', function(response) {
+    updateCartCount(response.count);
+});
 </script>

@@ -10,11 +10,12 @@ class CartController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        // Remove auth middleware from constructor to handle guests
+        // We'll handle authentication in individual methods
     }
 
     /**
-     * Add item to cart
+     * Add item to cart (works for both guests and authenticated users)
      */
     public function add(Request $request)
     {
@@ -27,6 +28,46 @@ class CartController extends Controller
                 'service_category' => 'required|string',
             ]);
 
+            // Handle guest users (store in session)
+            if (!auth()->check()) {
+                // Get cart from session or create new array
+                $cart = session()->get('guest_cart', []);
+                
+                // Generate a unique key for this item
+                $itemKey = md5($request->service_name . $request->service_price);
+                
+                if (isset($cart[$itemKey])) {
+                    // Update quantity if item exists
+                    $cart[$itemKey]['quantity'] += 1;
+                    $message = 'Service quantity updated in cart!';
+                } else {
+                    // Add new item to cart
+                    $cart[$itemKey] = [
+                        'service_name' => $request->service_name,
+                        'service_price' => $request->service_price,
+                        'service_image' => $request->service_image,
+                        'service_time' => $request->service_time,
+                        'service_category' => $request->service_category,
+                        'quantity' => 1,
+                    ];
+                    $message = 'Service added to cart successfully!';
+                }
+                
+                // Store updated cart in session
+                session()->put('guest_cart', $cart);
+                
+                // Calculate cart count
+                $cartCount = array_sum(array_column($cart, 'quantity'));
+                
+                return response()->json([
+                    'success' => true,
+                    'message' => $message,
+                    'cart_count' => $cartCount,
+                    'is_guest' => true
+                ]);
+            }
+            
+            // Handle authenticated users
             $user = auth()->user();
             $userId = $user->id;
 
@@ -57,14 +98,15 @@ class CartController extends Controller
                 $message = 'Service added to cart successfully!';
             }
 
-        // Get updated cart count
-        $cartCount = CartItem::where('cart_id', $cart->id)->sum('quantity');
+            // Get updated cart count
+            $cartCount = CartItem::where('cart_id', $cart->id)->sum('quantity');
 
-        return response()->json([
-            'success' => true,
-            'message' => $message,
-            'cart_count' => $cartCount
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'cart_count' => $cartCount,
+                'is_guest' => false
+            ]);
         } catch (\Exception $e) {
             \Log::error('Cart add error: ' . $e->getMessage());
             return response()->json([
@@ -75,10 +117,21 @@ class CartController extends Controller
     }
 
     /**
-     * Get cart count
+     * Get cart count (works for both guests and authenticated users)
      */
     public function count()
     {
+        // Handle guest users
+        if (!auth()->check()) {
+            $cart = session()->get('guest_cart', []);
+            $cartCount = array_sum(array_column($cart, 'quantity'));
+            
+            return response()->json([
+                'count' => $cartCount
+            ]);
+        }
+        
+        // Handle authenticated users
         $user = auth()->user();
         $cart = Cart::where('user_id', $user->id)->first();
         
@@ -223,11 +276,76 @@ class CartController extends Controller
     }
 
     /**
-     * Show checkout page
+     * Transfer guest cart to user cart after login/registration
+     */
+    public function transferGuestCart()
+    {
+        if (!auth()->check()) {
+            return;
+        }
+        
+        $guestCart = session()->get('guest_cart', []);
+        if (empty($guestCart)) {
+            return;
+        }
+        
+        $user = auth()->user();
+        $cart = Cart::firstOrCreate(['user_id' => $user->id]);
+        
+        foreach ($guestCart as $item) {
+            // Check if item already exists in user cart
+            $existingItem = CartItem::where('cart_id', $cart->id)
+                ->where('service_name', $item['service_name'])
+                ->first();
+            
+            if ($existingItem) {
+                // Update quantity
+                $existingItem->quantity += $item['quantity'];
+                $existingItem->save();
+            } else {
+                // Add new item
+                CartItem::create([
+                    'cart_id' => $cart->id,
+                    'service_name' => $item['service_name'],
+                    'service_price' => $item['service_price'],
+                    'service_image' => $item['service_image'],
+                    'service_time' => $item['service_time'],
+                    'service_category' => $item['service_category'],
+                    'quantity' => $item['quantity'],
+                ]);
+            }
+        }
+        
+        // Clear guest cart from session
+        session()->forget('guest_cart');
+    }
+
+    /**
+     * Show checkout page (handles both guests and authenticated users)
      */
     public function checkout()
     {
+        // Handle guest users - show registration modal
+        if (!auth()->check()) {
+            // Return JSON response for AJAX requests
+            if (request()->ajax() || request()->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please register or login to proceed to checkout',
+                    'requires_auth' => true,
+                    'auth_type' => 'register' // Show registration modal for new users
+                ]);
+            }
+            
+            // For direct URL access, redirect to home with registration modal
+            return redirect()->route('home')->with('show_register_modal', true);
+        }
+        
+        // Handle authenticated users
         $user = auth()->user();
+        
+        // Transfer guest cart to user cart if needed
+        $this->transferGuestCart();
         
         // Debug: Log user and cart info
         \Log::info('Checkout page accessed:', [
