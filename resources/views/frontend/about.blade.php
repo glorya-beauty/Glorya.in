@@ -195,7 +195,6 @@
                                 <div class="about-title second-atitle pb-40">    
                                     <h2>What We Have Achive In This Passed Years</h2>
                                     <span class="line"> <img src="{{ asset('images/bg/circle_right.png') }}" alt="circle_right"></span>
-                                    <p>Etiam ultrices lacinia sollicitudin. Nam vel dolor ut justo consequat lobortis id eget justo. Suspendisse tempus dui vel aliquam porta. Etiam dictum fringilla semper.</p>  
                                     <p>Aliquam eleifend eros eget blandit fringilla. Aliquam mattis leo ac risus ullamcorper maximus. In quis volutpat quam.</p>
                                 </div>
                                 <div class="row ab-coutner text-center">
