@@ -70,6 +70,19 @@
 .service-cards-grid {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Ensure proper grid layout */
+.service-cards-grid .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.service-cards-grid [class*="col-"] {
+    padding: 0 15px;
+    margin-bottom: 30px;
 }
 
 .service-image-card {
@@ -220,6 +233,28 @@
     
     .overlay-content h4 {
         font-size: 20px;
+    }
+    
+    /* Fix service cards visibility */
+    .service-cards-grid {
+        padding: 10px 0;
+    }
+    
+    .service-cards-grid .row {
+        margin: 0 -10px;
+    }
+    
+    .service-cards-grid [class*="col-"] {
+        padding: 0 10px;
+        margin-bottom: 20px;
+    }
+    
+    /* Ensure cards don't overflow */
+    .service-image-card,
+    .service-category-card,
+    .service-card {
+        min-width: 0;
+        width: 100%;
     }
 }
 
@@ -495,7 +530,21 @@
 }
 
 /* Responsive Design for Service Cards */
-@media (max-width: 991px) {
+@media (max-width: 1200px) {
+    .service-image {
+        height: 220px;
+    }
+    
+    .service-content {
+        padding: 25px;
+    }
+    
+    .service-content h3 {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 992px) {
     .service-image {
         height: 200px;
     }
@@ -511,9 +560,14 @@
     .price-amount {
         font-size: 1.5rem;
     }
+    
+    /* Fix for service category cards on tablet */
+    .service-category-card {
+        margin-bottom: 30px;
+    }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .service-image {
         height: 180px;
     }
@@ -541,6 +595,11 @@
     
     .service-icon i {
         font-size: 1.5rem;
+    }
+    
+    /* Ensure proper spacing on tablet */
+    .service-category-card {
+        margin-bottom: 25px;
     }
 }
 
@@ -574,6 +633,40 @@
     .service-badge span {
         font-size: 0.65rem;
         padding: 4px 12px;
+    }
+    
+    /* Mobile-specific fixes */
+    .service-cards-grid {
+        padding: 5px 0;
+    }
+    
+    .service-cards-grid .row {
+        margin: 0 -5px;
+    }
+    
+    .service-cards-grid [class*="col-"] {
+        padding: 0 5px;
+        margin-bottom: 15px;
+    }
+    
+    /* Ensure all cards are fully visible on mobile */
+    .service-image-card,
+    .service-category-card,
+    .service-card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+    
+    /* Fix for any cut-off content */
+    .service-image,
+    .service-image img {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        object-fit: cover;
     }
 }
 
@@ -1579,6 +1672,54 @@
     }
 }
 
+/* Bootstrap Grid Fixes for Service Cards */
+@media (min-width: 1200px) {
+    .service-cards-grid .col-lg-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .service-cards-grid .col-lg-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .service-cards-grid .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .service-cards-grid .col-lg-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .service-cards-grid .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .service-cards-grid .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .service-cards-grid .col-lg-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .service-cards-grid [class*="col-"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
 /* Service Cards Grid Styles */
 .service-cards-grid {
     padding: 40px 0;
@@ -1746,7 +1887,14 @@
 }
 
 /* Responsive adjustments for service cards */
-@media (max-width: 991px) {
+@media (max-width: 1200px) {
+    .service-cards-grid .col-lg-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+@media (max-width: 992px) {
     .service-cards-grid .col-lg-4 {
         flex: 0 0 50%;
         max-width: 50%;
@@ -1763,8 +1911,13 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .service-cards-grid .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    .service-cards-grid .col-lg-4 {
         flex: 0 0 50%;
         max-width: 50%;
     }
@@ -1784,7 +1937,9 @@
 }
 
 @media (max-width: 576px) {
-    .service-cards-grid .col-sm-6 {
+    .service-cards-grid .col-sm-6,
+    .service-cards-grid .col-md-6,
+    .service-cards-grid .col-lg-4 {
         flex: 0 0 100%;
         max-width: 100%;
     }

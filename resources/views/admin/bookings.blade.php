@@ -174,180 +174,34 @@ use App\Helpers\ImageHelper;
                                                     <img src="{{ $imageUrl }}" 
                                                          class="payment-screenshot-thumb" 
                                                          alt="Payment Screenshot" 
-                                                         data-bs-toggle="modal" 
-                                                         data-bs-target="#screenshotModal{{ $booking->id }}"
-                                                         title="Click to view payment screenshot"
+                                                         title="Payment screenshot available"
                                                          onerror="this.src='{{ asset('images/no-image.jpg') }}'; console.log('Thumbnail failed to load:', this.src);">
                                                 @else
                                                     <div class="no-image-placeholder" 
-                                                         data-bs-toggle="modal" 
-                                                         data-bs-target="#screenshotModal{{ $booking->id }}"
-                                                         title="Click to view payment screenshot details">
+                                                         title="Payment screenshot file not found">
                                                         <i class="fas fa-exclamation-triangle"></i>
                                                     </div>
                                                 @endif
-                                                <button type="button" class="btn btn-sm btn-info mt-1" data-bs-toggle="modal" data-bs-target="#screenshotModal{{ $booking->id }}">
-                                                    <i class="fas fa-image"></i> View
-                                                </button>
+                                                <div class="mt-1">
+                                                    <a href="{{ $imageUrl }}" 
+                                                       target="_blank" 
+                                                       class="btn btn-sm btn-info">
+                                                        <i class="fas fa-external-link-alt"></i> View
+                                                    </a>
+                                                    <a href="{{ $imageUrl }}" 
+                                                       download="payment-screenshot-{{ $booking->id }}-{{ basename($booking->payment_screenshot) }}"
+                                                       class="btn btn-sm btn-success">
+                                                        <i class="fas fa-download"></i> Download
+                                                    </a>
+                                                </div>
                                             @else
                                                 <span class="badge badge-unverified">No Screenshot</span>
                                             @endif
-                                            <button type="button" class="btn btn-sm btn-primary mt-1" data-bs-toggle="modal" data-bs-target="#bookingModal{{ $booking->id }}">
-                                                <i class="fas fa-eye"></i> Details
-                                            </button>
                                         </td>
                                     </tr>
 
-                                    <!-- Payment Screenshot Modal -->
-                                    @if($booking->payment_screenshot)
-                                    <div class="modal fade" id="screenshotModal{{ $booking->id }}" tabindex="-1">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Payment Screenshot - Booking #{{ $booking->id }}</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body text-center">
-                                                    <div class="mb-3">
-                                                        <h6>Customer: {{ $booking->customer_name }}</h6>
-                                                        <p class="text-muted">Service: {{ $booking->service_name }} | Amount: {{ number_format($booking->amount, 2) }}</p>
-                                                    </div>
-                                                    @php
-                                                        $imageUrl = ImageHelper::getPaymentScreenshotUrl($booking->payment_screenshot);
-                                                        $imageExists = ImageHelper::paymentScreenshotExists($booking->payment_screenshot);
-                                                    @endphp
-                                                    @if($imageExists)
-                                                        <div class="screenshot-container">
-                                                            <img src="{{ $imageUrl }}" 
-                                                                 class="payment-screenshot-modal img-fluid" 
-                                                                 alt="Payment Screenshot"
-                                                                 style="max-width: 100%; max-height: 70vh; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2);"
-                                                                 onerror="this.src='{{ asset('images/no-image.jpg') }}'; console.log('Image failed to load:', this.src);">
-                                                            <div class="mt-3">
-                                                                <small class="text-muted d-block mb-2">File: {{ basename($booking->payment_screenshot) }}</small>
-                                                                <a href="{{ $imageUrl }}" 
-                                                                   target="_blank" 
-                                                                   class="btn btn-info">
-                                                                    <i class="fas fa-external-link-alt"></i> Open in New Tab
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    @else
-                                                        <div class="text-center p-4">
-                                                            <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
-                                                            <p class="text-muted">Payment screenshot file not found</p>
-                                                            <small class="text-muted">Expected file: {{ basename($booking->payment_screenshot) }}</small>
-                                                            <div class="mt-3">
-                                                                <a href="{{ asset('uploads/payments') }}" 
-                                                                   target="_blank" 
-                                                                   class="btn btn-sm btn-outline-secondary">
-                                                                    <i class="fas fa-folder"></i> Check Uploads Folder
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endif
-
-                                    <!-- Booking Details Modal -->
-                                    <div class="modal fade" id="bookingModal{{ $booking->id }}" tabindex="-1">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Booking Details #{{ $booking->id }}</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <h6 class="text-primary mb-3">Customer Information</h6>
-                                                            <div class="mb-3">
-                                                                <p><strong>Name:</strong> {{ $booking->customer_name }}</p>
-                                                                <p><strong>Email:</strong> {{ $booking->customer_email }}</p>
-                                                                <p><strong>Phone:</strong> {{ $booking->customer_phone }}</p>
-                                                                <p><strong>Address:</strong> {{ $booking->customer_address ?: 'N/A' }}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <h6 class="text-primary mb-3">Booking Information</h6>
-                                                            <div class="mb-3">
-                                                                <p><strong>Service:</strong> {{ $booking->service_name }}</p>
-                                                                <p><strong>Date:</strong> {{ $booking->booking_date ? $booking->booking_date->format('M d, Y') : 'N/A' }}</p>
-                                                                <p><strong>Time:</strong> {{ $booking->time_slot }}</p>
-                                                                <p><strong>Amount:</strong> <span style="color: #cf921c; font-weight: 700;">₹{{ number_format($booking->amount, 2) }}</span></p>
-                                                                <p><strong>Status:</strong> <span class="badge-status badge-{{ $booking->status }}">{{ ucfirst($booking->status) }}</span></p>
-                                                                <p><strong>Payment Verified:</strong> <span class="badge-status badge-{{ $booking->payment_verified ? 'verified' : 'unverified' }}">{{ $booking->payment_verified ? 'Verified' : 'Not Verified' }}</span></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @if($booking->payment_screenshot)
-                                                        <div class="row mt-3">
-                                                            <div class="col-12">
-                                                                <h6 class="text-primary mb-3">Payment Screenshot</h6>
-                                                                <div class="text-center">
-                                                                    @php
-                                                                        $imageUrl = ImageHelper::getPaymentScreenshotUrl($booking->payment_screenshot);
-                                                                        $imageExists = ImageHelper::paymentScreenshotExists($booking->payment_screenshot);
-                                                                    @endphp
-                                                                    @if($imageExists)
-                                                                        <img src="{{ $imageUrl }}" 
-                                                                             class="img-thumbnail" 
-                                                                             style="max-width: 300px; max-height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #cf921c;"
-                                                                             alt="Payment Screenshot"
-                                                                             onerror="this.src='{{ asset('images/no-image.jpg') }}'; console.log('Details modal image failed to load:', this.src);">
-                                                                        <div class="mt-2">
-                                                                            <small class="text-muted d-block mb-2">File: {{ basename($booking->payment_screenshot) }}</small>
-                                                                            <a href="{{ $imageUrl }}" 
-                                                                               target="_blank" 
-                                                                               class="btn btn-sm btn-info">
-                                                                                <i class="fas fa-external-link-alt"></i> View Full Size
-                                                                            </a>
-                                                                        </div>
-                                                                    @else
-                                                                        <div class="text-center p-4">
-                                                                            <i class="fas fa-exclamation-triangle fa-4x text-warning mb-3"></i>
-                                                                            <p class="text-muted">Payment screenshot file not found</p>
-                                                                            <small class="text-muted">Expected file: {{ basename($booking->payment_screenshot) }}</small>
-                                                                        </div>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                    @if($booking->notes)
-                                                        <div class="row mt-3">
-                                                            <div class="col-12">
-                                                                <h6 class="text-primary mb-3">Notes</h6>
-                                                                <div class="alert alert-info" style="border-radius: 10px; border-left: 4px solid #cf921c;">
-                                                                    <i class="fas fa-sticky-note mr-2"></i> {{ $booking->notes }}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    @if($booking->payment_screenshot)
-                                                        @php
-                                                            $imageUrl = ImageHelper::getPaymentScreenshotUrl($booking->payment_screenshot);
-                                                            $imageExists = ImageHelper::paymentScreenshotExists($booking->payment_screenshot);
-                                                        @endphp
-                                                        @if($imageExists)
-                                                            <a href="{{ $imageUrl }}" target="_blank" class="btn btn-info">
-                                                                <i class="fas fa-download"></i> Download Screenshot
-                                                            </a>
-                                                        @endif
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @empty
+                                    
+                                                                    @empty
                                     <tr>
                                         <td colspan="9" class="text-center">No bookings found</td>
                                     </tr>
@@ -671,6 +525,19 @@ use App\Helpers\ImageHelper;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40,167,69,0.4);
+}
+
 .badge {
     padding: 6px 12px;
     font-size: 0.75rem;
@@ -756,45 +623,7 @@ use App\Helpers\ImageHelper;
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }
 
-/* Modal Styling */
-.modal-content {
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-}
 
-.modal-header {
-    background: linear-gradient(135deg, #000000 0%, #181E23 100%);
-    color: white;
-    border-radius: 15px 15px 0 0;
-    border: none;
-}
-
-.modal-title {
-    color: #cf921c;
-    font-weight: 700;
-}
-
-.close {
-    color: white;
-    opacity: 0.8;
-}
-
-.close:hover {
-    opacity: 1;
-    color: #cf921c;
-}
-
-.btn-close {
-    filter: invert(1) grayscale(100%) brightness(200%);
-    opacity: 0.8;
-    transition: all 0.3s ease;
-}
-
-.btn-close:hover {
-    opacity: 1;
-    filter: invert(1) grayscale(100%) brightness(200%) sepia(100%) hue-rotate(330deg) saturate(500%);
-}
 
 /* Pagination */
 .pagination .page-link {
@@ -857,96 +686,16 @@ use App\Helpers\ImageHelper;
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Bootstrap 5 tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
+// Simple functionality for admin booking page
+$(document).ready(function() {
+    // Handle image loading errors
+    $('.payment-screenshot-thumb').on('error', function() {
+        $(this).attr('src', '{{ asset("images/no-image.jpg") }}');
     });
     
-    // Handle modal show events
-    document.addEventListener('show.bs.modal', function (e) {
-        var modal = e.target;
-        
-        // Add loading state for payment screenshots
-        var img = modal.querySelector('.payment-screenshot-modal');
-        if (img) {
-            var originalSrc = img.src;
-            
-            // Show loading state
-            img.addEventListener('load', function() {
-                console.log('Payment screenshot loaded successfully:', originalSrc);
-            }, { once: true });
-            
-            img.addEventListener('error', function() {
-                console.log('Payment screenshot failed to load:', originalSrc);
-                this.src = '{{ asset("images/no-image.jpg") }}';
-            }, { once: true });
-        }
-    });
-    
-    // Handle modal hide events
-    document.addEventListener('hidden.bs.modal', function (e) {
-        var modal = e.target;
-        
-        // Reset any form states if needed
-        var forms = modal.querySelectorAll('form');
-        forms.forEach(function(form) {
-            form.reset();
-        });
-    });
-    
-    // Handle image loading errors for thumbnails
-    var thumbnails = document.querySelectorAll('.payment-screenshot-thumb');
-    thumbnails.forEach(function(thumb) {
-        thumb.addEventListener('error', function() {
-            console.log('Thumbnail failed to load:', this.src);
-            this.src = '{{ asset("images/no-image.jpg") }}';
-        });
-        
-        thumb.addEventListener('load', function() {
-            console.log('Thumbnail loaded successfully:', this.src);
-        });
-    });
-    
-    // Add hover effects to table rows
-    var tableRows = document.querySelectorAll('tbody tr');
-    tableRows.forEach(function(row) {
-        row.addEventListener('mouseenter', function() {
-            this.classList.add('table-row-hover');
-        });
-        
-        row.addEventListener('mouseleave', function() {
-            this.classList.remove('table-row-hover');
-        });
-    });
-    
-    // Handle form submissions with confirmation
-    var confirmForms = document.querySelectorAll('form[data-confirm]');
-    confirmForms.forEach(function(form) {
-        form.addEventListener('submit', function(e) {
-            if (!confirm(this.dataset.confirm)) {
-                e.preventDefault();
-                return false;
-            }
-        });
-    });
-    
-    // Add click handler for screenshot containers
-    var screenshotContainers = document.querySelectorAll('.screenshot-container');
-    screenshotContainers.forEach(function(container) {
-        container.addEventListener('click', function() {
-            var img = this.querySelector('img');
-            if (img) {
-                // Log image info for debugging
-                console.log('Screenshot clicked:', {
-                    src: img.src,
-                    alt: img.alt,
-                    naturalWidth: img.naturalWidth,
-                    naturalHeight: img.naturalHeight
-                });
-            }
-        });
+    // Form submissions
+    $('form').on('submit', function() {
+        return true;
     });
 });
 </script>

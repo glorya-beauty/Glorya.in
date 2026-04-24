@@ -8801,3 +8801,40 @@ div.single-cta:last-child {
 .widget.widget_media_image {
     margin: 25px 0 0;
 }
+
+/* Fix for login error messages visibility */
+.alert-danger {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
+}
+
+.alert-danger ul li {
+    color: #721c24 !important;
+}
+
+.invalid-feedback {
+    color: #dc3545 !important;
+    font-size: 0.875em !important;
+    margin-top: 0.25rem !important;
+}
+
+/* Ensure modal error messages are visible */
+.modal .alert-danger {
+    background-color: #f8d7da !important;
+    border: 1px solid #f5c6cb !important;
+    color: #721c24 !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    margin-bottom: 20px !important;
+}
+
+.modal .alert-danger ul {
+    margin-bottom: 0 !important;
+    color: #721c24 !important;
+}
+
+.modal .alert-danger ul li {
+    color: #721c24 !important;
+    font-weight: 500 !important;
+}
