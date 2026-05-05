@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('css/default.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/glorya-services.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/glorya-auth.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     @stack('styles')
 </head>

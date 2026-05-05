@@ -32,129 +32,6 @@
     </div>
     <!-- /search-popup -->
 
-<!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Login to Glorya Beauty</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('login') }}" id="loginForm">
-                    @csrf
-                    <div class="form-group">
-                        <label for="login_email">Email Address</label>
-                        <input type="email" class="form-control" id="login_email" name="email" 
-                               value="{{ old('email') }}" required autocomplete="email" autofocus>
-                        @error('email')
-                            <div class="invalid-feedback d-block">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="login_password">Password</label>
-                        <input type="password" class="form-control" id="login_password" name="password" required>
-                        @error('password')
-                            <div class="invalid-feedback d-block">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" name="remember" id="remember" class="form-check-input">
-                            <label class="form-check-label" for="remember">Remember me</label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn  ss-btn active btn-block">Login</button>
-                    <div class="text-center mt-3">
-                        <p>Don't have an account? <a href="#" onclick="showRegisterModal();">Register here</a></p>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Registration Modal -->
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="registerModalLabel">Register for Glorya Beauty</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('register') }}" id="registerForm">
-                    @csrf
-                    <div class="form-group">
-                        <label for="register_name">Full Name</label>
-                        <input type="text" class="form-control" id="register_name" name="name" 
-                               value="{{ old('name') }}" required autocomplete="name" autofocus>
-                        @error('name')
-                            <div class="invalid-feedback d-block">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="register_email">Email Address</label>
-                        <input type="email" class="form-control" id="register_email" name="email" 
-                               value="{{ old('email') }}" required autocomplete="email">
-                        @error('email')
-                            <div class="invalid-feedback d-block">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="register_password">Password</label>
-                        <input type="password" class="form-control" id="register_password" name="password" required>
-                        @error('password')
-                            <div class="invalid-feedback d-block">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="register_password_confirmation">Confirm Password</label>
-                        <input type="password" class="form-control" id="register_password_confirmation" name="password_confirmation" required>
-                    </div>
-                    <button type="submit" class="btn btn ss-btn active btn-block">Register</button>
-                    <div class="text-center mt-3">
-                        <p>Already have an account? <a href="#" onclick="showLoginModal();">Login here</a></p>
-                    </div>
-                </form>
-            </div> 
-        </div>
-    </div>
-</div>
     
     <!-- slider-area -->
     <section id="home" class="slider-area slider-four fix p-relative">
@@ -809,7 +686,7 @@
             <!-- testimonial-area-end -->
             
               <!-- blog-area -->
-            <section id="blog" class="blog-area  p-relative pt-100 pb-70 fix">
+            <!-- <section id="blog" class="blog-area  p-relative pt-100 pb-70 fix">
                 <div class="container">
                     <div class="row align-items-center"> 
                         <div class="col-lg-12">
@@ -962,7 +839,7 @@
                         
                     </div>
                 </div>
-            </section>
+            </section> -->
             <!-- blog-area-end -->
 		</main>
 		

@@ -15,7 +15,6 @@
             <div class="col-lg-12">
                 <div class="contact-bg02 wow fadeInLeft animated">
                     <div class="section-title mb-30">   
-                        <h2>Book Your Service</h2>
                         <span class="line5"> <img src="{{ asset('images/bg/circle_right.png') }}" alt="circle_left"></span>
                     </div>
                     
@@ -79,6 +78,14 @@
                                 <div class="row">
 
                                     <!-- Amount -->
+                                     <div class="col-lg-6">
+                                        <div class="contact-field p-relative c-subject mb-20">
+                                            <label for="base_amount">Base Amount</label>
+                                            <input type="number" id="base_amount" name="base_amount" readonly>
+                                            <small class="form-text text-muted">Subtotal before GST</small>
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-6">
                                         <div class="contact-field p-relative c-subject mb-20">
                                             <label for="amount">Total Amount (incl. 5% GST) *</label>
@@ -86,13 +93,7 @@
                                             <small class="form-text text-muted">Base amount + 5% GST automatically calculated</small>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="contact-field p-relative c-subject mb-20">
-                                            <label for="base_amount">Base Amount</label>
-                                            <input type="number" id="base_amount" name="base_amount" readonly>
-                                            <small class="form-text text-muted">Subtotal before GST</small>
-                                        </div>
-                                    </div>
+                                    
 
                                     <!-- Customer Name -->
                                     <div class="col-lg-6">
@@ -216,7 +217,7 @@
                                     <div class="col-md-6">
                                         <div class="qr-code-display" style="background: white; padding: 30px; border-radius: 8px; border: 2px solid #007bff; margin: 20px 0;">
                                             <h5>Scan QR Code to Pay</h5>
-                                            <img id="payment-qr" src="{{ asset('images/QR.jpeg') }}" alt="Payment QR Code" style="max-width: 300px; height: auto;">
+                                            <img id="payment-qr" src="{{ asset('images/QR.jpeg') }}" alt="Payment QR Code" class="img-fluid" style="max-width: 100%; height: auto; width: 300px;">
                                             <div class="payment-summary mt-20">
                                                 <h6>Payment Details</h6>
                                                 <p><strong>Amount:</strong> <span id="payment-amount">₹0</span></p>
@@ -293,14 +294,6 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="col-lg-12">
-                                        <div class="booking-summary" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                                            <h5>Booking Summary</h5>
-                                            <div id="summary-content">
-                                                <!-- Summary will be populated by JavaScript -->
-                                            </div>
-                                        </div>
-                                    </div>
                                     
                                     <div class="col-lg-6">
                                         <button type="button" class="btn btn-secondary" onclick="previousStep(2)">

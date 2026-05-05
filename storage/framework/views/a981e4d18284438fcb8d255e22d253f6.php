@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="<?php echo e(asset('css/default.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/glorya-services.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/glorya-auth.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/responsive.css')); ?>">
     <?php echo $__env->yieldPushContent('styles'); ?>
 </head>

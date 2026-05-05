@@ -12,7 +12,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-title-content text-center">
-                        <h2>Blog Details</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>

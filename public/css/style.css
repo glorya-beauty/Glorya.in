@@ -8838,3 +8838,46 @@ div.single-cta:last-child {
     color: #721c24 !important;
     font-weight: 500 !important;
 }
+
+
+.footer-widget .f-widget-title img {
+    max-width: 180px;      /* default desktop */
+    height: auto;
+}
+
+/* Large Desktop (≥1400px) */
+@media (min-width: 1400px) {
+    .footer-widget .f-widget-title img {
+        max-width: 200px;
+    }
+}
+
+/* Laptop (992px – 1199px) */
+@media (max-width: 1199px) {
+    .footer-widget .f-widget-title img {
+        max-width: 170px;
+    }
+}
+
+/* Tablet (768px – 991px) */
+@media (max-width: 991px) {
+    .footer-widget .f-widget-title img {
+        max-width: 150px;
+    }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+    .footer-widget .f-widget-title img {
+        max-width: 130px;
+        margin: 0 auto;       /* center logo */
+        display: block;
+    }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+    .footer-widget .f-widget-title img {
+        max-width: 110px;
+    }
+}

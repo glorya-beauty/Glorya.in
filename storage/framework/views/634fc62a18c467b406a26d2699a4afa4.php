@@ -1,11 +1,11 @@
-@extends('layouts.app')
 
-@section('title', 'Blog - Glorya Beauty')
-@section('description', 'Read our latest beauty tips, trends, and insights from Glorya Beauty experts')
 
-@section('content')
+<?php $__env->startSection('title', 'Blog - Glorya Beauty'); ?>
+<?php $__env->startSection('description', 'Read our latest beauty tips, trends, and insights from Glorya Beauty experts'); ?>
+
+<?php $__env->startSection('content'); ?>
 <!-- main-area -->
-    <section class="breadcrumb-area d-flex align-items-center" style="background-image:url({{ asset('images/testimonial/test-bg.png') }})">
+    <section class="breadcrumb-area d-flex align-items-center" style="background-image:url(<?php echo e(asset('images/testimonial/test-bg.png')); ?>)">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-xl-12 col-lg-12">
@@ -15,7 +15,7 @@
                               
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="<?php echo e(url('/')); ?>">Home</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Blog</li>
                                     </ol>
                                 </nav>
@@ -35,7 +35,7 @@
                         <div class="col-lg-8">
                             <div class="bsingle__post mb-50">
                                 <div class="bsingle__post-thumb">
-                                    <img src="{{ asset('images/blog/skincare-trends.jpg') }}" alt="Skincare Trends">
+                                    <img src="<?php echo e(asset('images/blog/skincare-trends.jpg')); ?>" alt="Skincare Trends">
                                 </div>
                                 <div class="bsingle__content">
                                     <div class="admin">
@@ -57,7 +57,7 @@
                             </div>
                             <div class="bsingle__post mb-50">
                                 <div class="bsingle__post-thumb">
-                                    <img src="{{ asset('images/blog/wedding-makeup.jpg') }}" alt="Wedding Makeup">
+                                    <img src="<?php echo e(asset('images/blog/wedding-makeup.jpg')); ?>" alt="Wedding Makeup">
                                 </div>
                                <div class="bsingle__content">
                                     <div class="admin">
@@ -80,7 +80,7 @@
                             <div class="bsingle__post mb-50">
                                 <div class="bsingle__post-thumb blog-active">
                                     <div class="slide-post">
-                                        <img src="{{ asset('images/blog/nail-art-trends.jpg') }}" alt="Nail Art Trends">
+                                        <img src="<?php echo e(asset('images/blog/nail-art-trends.jpg')); ?>" alt="Nail Art Trends">
                                     </div>
                                <div class="bsingle__content">
                                     <div class="admin">
@@ -274,4 +274,6 @@
                     </div>
                 </div>
             </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Glorya.in\resources\views/frontend/blog.blade.php ENDPATH**/ ?>

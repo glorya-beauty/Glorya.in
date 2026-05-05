@@ -1,9 +1,9 @@
-@extends('layouts.app')
 
-@section('title', 'My Cart - Glorya Beauty')
 
-@section('content')
-   <section class="breadcrumb-area d-flex align-items-center" style="background-image:url({{ asset('images/testimonial/test-bg.png') }})">
+<?php $__env->startSection('title', 'My Cart - Glorya Beauty'); ?>
+
+<?php $__env->startSection('content'); ?>
+   <section class="breadcrumb-area d-flex align-items-center" style="background-image:url(<?php echo e(asset('images/testimonial/test-bg.png')); ?>)">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-xl-12 col-lg-12">
@@ -13,7 +13,7 @@
                               
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="<?php echo e(url('/')); ?>">Home</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">My Cart </li>
                                     </ol>
                                 </nav>
@@ -31,78 +31,38 @@
             <div class="cart-page">
                
                 
-                @if($cart && $cart->items->count() > 0)
+                <?php if($cart && $cart->items->count() > 0): ?>
                     <div class="cart-items">
-                        @foreach($cart->items as $item)
+                        <?php $__currentLoopData = $cart->items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="cart-item">
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
                                         <div class="cart-item-image">
-                                            <img src="{{ asset($item->service_image) }}" alt="{{ $item->service_name }}">
+                                            <img src="<?php echo e(asset($item->service_image)); ?>" alt="<?php echo e($item->service_name); ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="cart-item-info">
-                                            <div class="d-flex justify-content-between align-items-start">
-                                                <div>
-                                                    <h4>{{ $item->service_name }}</h4>
-                                                    <p class="text-muted">{{ $item->service_category }}</p>
-                                                    <p class="text-muted"><i class="fas fa-clock"></i> {{ $item->service_time }}</p>
-                                                </div>
-                                                @if(str_contains(strtolower($item->service_name), 'manicure'))
-                                                    <button class="btn btn-sm btn-outline-info toggle-details-btn" onclick="toggleServiceDetails('{{ $item->service_name }}')">
-                                                        <i class="fas fa-chevron-down" id="arrow-{{ str_replace(' ', '-', strtolower($item->service_name)) }}"></i>
-                                                    </button>
-                                                @endif
-                                            </div>
-                                            
-                                            @if(str_contains(strtolower($item->service_name), 'manicure'))
-                                                <div class="service-details collapse" id="details-{{ str_replace(' ', '-', strtolower($item->service_name)) }}">
-                                                    <div class="details-content mt-3 p-3 bg-light rounded">
-                                                        <h6 class="text-primary mb-3"><i class="fas fa-info-circle"></i> Manicure Service Details</h6>
-                                                        
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <ul class="list-unstyled">
-                                                                    <li class="mb-2"><i class="fas fa-check text-success"></i> Nail shaping & filing</li>
-                                                                    <li class="mb-2"><i class="fas fa-check text-success"></i> Cuticle care & treatment</li>
-                                                                    <li class="mb-2"><i class="fas fa-check text-success"></i> Hand massage & exfoliation</li>
-                                                                    <li class="mb-2"><i class="fas fa-check text-success"></i> Moisturizing treatment</li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <ul class="list-unstyled">
-                                                                    <li class="mb-2"><i class="fas fa-check text-success"></i> Base coat application</li>
-                                                                    <li class="mb-2"><i class="fas fa-check text-success"></i> Premium nail polish</li>
-                                                                    <li class="mb-2"><i class="fas fa-check text-success"></i> Top coat for durability</li>
-                                                                    <li class="mb-2"><i class="fas fa-check text-success"></i> Quick dry finish</li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="alert alert-info mt-3 mb-0">
-                                                            <small><i class="fas fa-lightbulb"></i> <strong>Duration:</strong> {{ $item->service_time }} | <strong>Includes:</strong> All premium nail care products and tools sanitized for your safety.</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
+                                            <h4><?php echo e($item->service_name); ?></h4>
+                                            <p class="text-muted"><?php echo e($item->service_category); ?></p>
+                                            <p class="text-muted"><i class="fas fa-clock"></i> <?php echo e($item->service_time); ?></p>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="cart-item-price">
                                             <p class="price-label">Price</p>
-                                            <p class="price">₹{{ number_format($item->service_price, 2) }}</p>
+                                            <p class="price">₹<?php echo e(number_format($item->service_price, 2)); ?></p>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="cart-item-quantity">
                                             <p class="quantity-label">Quantity</p>
                                             <div class="quantity-controls">
-                                                <button class="btn btn-sm btn-outline-secondary quantity-btn" onclick="updateQuantity('{{ $item->service_name }}', {{ $item->quantity - 1 }})">
+                                                <button class="btn btn-sm btn-outline-secondary quantity-btn" onclick="updateQuantity('<?php echo e($item->service_name); ?>', <?php echo e($item->quantity - 1); ?>)">
                                                     <i class="fas fa-minus"></i>
                                                 </button>
-                                                <span class="quantity-display">{{ $item->quantity }}</span>
-                                                <button class="btn btn-sm btn-outline-secondary quantity-btn" onclick="updateQuantity('{{ $item->service_name }}', {{ $item->quantity + 1 }})">
+                                                <span class="quantity-display"><?php echo e($item->quantity); ?></span>
+                                                <button class="btn btn-sm btn-outline-secondary quantity-btn" onclick="updateQuantity('<?php echo e($item->service_name); ?>', <?php echo e($item->quantity + 1); ?>)">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </div>
@@ -110,61 +70,61 @@
                                     </div>
                                     <div class="col-md-2">
                                         <div class="cart-item-actions mt-2">
-                                            <button class="btn btn-sm btn-danger remove-btn" onclick="removeFromCart('{{ $item->service_name }}')">
+                                            <button class="btn btn-sm btn-danger remove-btn" onclick="removeFromCart('<?php echo e($item->service_name); ?>')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                     
                     <div class="cart-actions">
                         <button class="btn btn-outline-danger" onclick="clearCart()">
                             <i class="fas fa-trash"></i> Clear Cart
                         </button>
-                        <a href="{{ route('services') }}" class="btn btn-outline-primary">
+                        <a href="<?php echo e(route('services')); ?>" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left"></i> Continue Shopping
                         </a>
                     </div>
-                @else
+                <?php else: ?>
                     <div class="empty-cart text-center py-5">
                         <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
                         <h3>Your cart is empty</h3>
                         <p class="text-muted">Add some services to get started!</p>
-                        <a href="{{ route('services') }}" class="btn btn-primary">
+                        <a href="<?php echo e(route('services')); ?>" class="btn btn-primary">
                             <i class="fas fa-arrow-left"></i> Continue Shopping
                         </a>
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
         </div>
         
-        @if($cart && $cart->items->count() > 0)
+        <?php if($cart && $cart->items->count() > 0): ?>
             <div class="col-lg-4">
                 <!-- Cart Summary -->
                 <div class="cart-summary">
                     <h4><i class="fas fa-receipt"></i> Order Summary</h4>
                     <div class="summary-item">
-                        <span>Subtotal ({{ $cart->total_items }} items)</span>
-                        <span>₹{{ number_format($subtotal, 2) }}</span>
+                        <span>Subtotal (<?php echo e($cart->total_items); ?> items)</span>
+                        <span>₹<?php echo e(number_format($subtotal, 2)); ?></span>
                     </div>
                     <div class="summary-item">
                         <span>GST (5%)</span>
-                        <span>₹{{ number_format($gstAmount, 2) }}</span>
+                        <span>₹<?php echo e(number_format($gstAmount, 2)); ?></span>
                     </div>
                     <div class="summary-item total">
                         <span>Total</span>
-                        <span>₹{{ number_format($total, 2) }}</span>
+                        <span>₹<?php echo e(number_format($total, 2)); ?></span>
                     </div>
-                    <a href="{{ route('cart.checkout') }}" class="btn btn-proceed">
+                    <a href="<?php echo e(route('cart.checkout')); ?>" class="btn btn-proceed">
                         <i class="fas fa-calendar-check"></i> Proceed to Checkout
                     </a>
                 </div>
                 
                             </div>
-        @endif
+        <?php endif; ?>
     </div>
 </div>
 
@@ -384,65 +344,6 @@
     margin-bottom: 20px;
 }
 
-/* Service Details Styles */
-.toggle-details-btn {
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    transition: all 0.3s ease;
-    border: 1px solid #17a2b8;
-    color: #17a2b8;
-    background: transparent;
-}
-
-.toggle-details-btn:hover {
-    background: #17a2b8;
-    color: white;
-    transform: scale(1.05);
-}
-
-.toggle-details-btn:focus {
-    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
-}
-
-.service-details {
-    transition: all 0.3s ease;
-}
-
-.service-details .details-content {
-    border: 1px solid #e9ecef;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-}
-
-.service-details .details-content h6 {
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.service-details .details-content ul li {
-    font-size: 13px;
-    line-height: 1.4;
-}
-
-.service-details .details-content .alert {
-    background: rgba(23, 162, 184, 0.1);
-    border: 1px solid rgba(23, 162, 184, 0.3);
-    color: #0c5460;
-}
-
-.service-details .details-content .alert i {
-    color: #17a2b8;
-}
-
-/* Arrow animation */
-.toggle-details-btn i {
-    transition: transform 0.3s ease;
-}
-
-.toggle-details-btn:hover i {
-    transform: scale(1.1);
-}
-
 /* Tablet Styles */
 @media (max-width: 991px) and (min-width: 768px) {
     .cart-page {
@@ -588,37 +489,6 @@
     
     .cart-item-actions {
         text-align: center;
-    }
-    
-    .toggle-details-btn {
-        margin-top: 10px;
-        font-size: 14px;
-        padding: 6px 12px;
-    }
-    
-    .service-details .details-content {
-        margin-top: 15px;
-        padding: 15px;
-    }
-    
-    .service-details .details-content h6 {
-        font-size: 16px;
-        margin-bottom: 15px;
-        text-align: center;
-    }
-    
-    .service-details .details-content ul {
-        margin-bottom: 15px;
-    }
-    
-    .service-details .details-content ul li {
-        font-size: 14px;
-        margin-bottom: 8px;
-        text-align: left;
-    }
-    
-    .service-details .details-content .row {
-        margin-bottom: 10px;
     }
     
     .remove-btn {
@@ -845,10 +715,10 @@ function updateQuantity(serviceName, newQuantity) {
     
     // AJAX call to update quantity
     $.ajax({
-        url: '{{ route("cart.update") }}',
+        url: '<?php echo e(route("cart.update")); ?>',
         type: 'POST',
         data: {
-            '_token': '{{ csrf_token() }}',
+            '_token': '<?php echo e(csrf_token()); ?>',
             'service_name': serviceName,
             'quantity': newQuantity
         },
@@ -873,10 +743,10 @@ function removeFromCart(serviceName) {
         showLoading();
         
         $.ajax({
-            url: '{{ route("cart.remove") }}',
+            url: '<?php echo e(route("cart.remove")); ?>',
             type: 'POST',
             data: {
-                '_token': '{{ csrf_token() }}',
+                '_token': '<?php echo e(csrf_token()); ?>',
                 'service_name': serviceName
             },
             success: function(response) {
@@ -901,10 +771,10 @@ function clearCart() {
         showLoading();
         
         $.ajax({
-            url: '{{ route("cart.clear") }}',
+            url: '<?php echo e(route("cart.clear")); ?>',
             type: 'POST',
             data: {
-                '_token': '{{ csrf_token() }}'
+                '_token': '<?php echo e(csrf_token()); ?>'
             },
             success: function(response) {
                 if (response.success) {
@@ -965,29 +835,6 @@ function showLoading() {
 
 function hideLoading() {
     $('#loadingOverlay').remove();
-}
-
-function toggleServiceDetails(serviceName) {
-    const serviceId = 'details-' + serviceName.replace(/\s+/g, '-').toLowerCase();
-    const arrowId = 'arrow-' + serviceName.replace(/\s+/g, '-').toLowerCase();
-    const detailsElement = document.getElementById(serviceId);
-    const arrowElement = document.getElementById(arrowId);
-    
-    if (detailsElement) {
-        const isCollapsed = detailsElement.classList.contains('show');
-        
-        if (isCollapsed) {
-            // Collapse
-            detailsElement.classList.remove('show');
-            arrowElement.classList.remove('fa-chevron-up');
-            arrowElement.classList.add('fa-chevron-down');
-        } else {
-            // Expand
-            detailsElement.classList.add('show');
-            arrowElement.classList.remove('fa-chevron-down');
-            arrowElement.classList.add('fa-chevron-up');
-        }
-    }
 }
 
 // Mobile touch event handlers
@@ -1119,4 +966,6 @@ const touchStyles = `
 
 $('head').append(touchStyles);
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Glorya.in\resources\views/frontend/cart/index.blade.php ENDPATH**/ ?>

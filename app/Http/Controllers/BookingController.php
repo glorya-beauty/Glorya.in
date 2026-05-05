@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -254,9 +255,29 @@ class BookingController extends Controller
                 \App\Models\CartItem::where('cart_id', $cart->id)->delete();
             }
 
+            // Send booking confirmation email
+            try {
+                Mail::send('emails.booking-confirmation', ['booking' => $booking], function ($message) use ($booking) {
+                    $message->to($booking->customer_email, $booking->customer_name)
+                            ->subject('Order Confirmed - ' . $booking->booking_number . ' - Glorya Beauty')
+                            ->from(config('mail.from.address'), config('mail.from.name'));
+                });
+                
+                \Log::info('Booking confirmation email sent successfully', [
+                    'booking_number' => $booking->booking_number,
+                    'customer_email' => $booking->customer_email
+                ]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to send booking confirmation email: ' . $e->getMessage(), [
+                    'booking_number' => $booking->booking_number,
+                    'customer_email' => $booking->customer_email
+                ]);
+                // Continue with booking even if email fails
+            }
+
             return response()->json([
                 'success' => true,
-                'message' => 'Booking confirmed successfully! Your booking is pending verification.',
+                'message' => 'Booking confirmed successfully! Your booking is pending verification. A confirmation email has been sent to your registered email address.',
                 'booking_number' => $booking->booking_number,
                 'redirect' => route('booking.success', $booking->booking_number)
             ]);
@@ -372,12 +393,31 @@ class BookingController extends Controller
                 }
             }
 
+            // Send booking confirmation email
+            try {
+                Mail::send('emails.booking-confirmation', ['booking' => $booking], function ($message) use ($booking) {
+                    $message->to($booking->customer_email, $booking->customer_name)
+                            ->subject('Order Confirmed - ' . ($booking->booking_number ?? 'GB' . $booking->id) . ' - Glorya Beauty')
+                            ->from(config('mail.from.address'), config('mail.from.name'));
+                });
+                
+                \Log::info('Booking confirmation email sent successfully', [
+                    'booking_id' => $booking->id,
+                    'customer_email' => $booking->customer_email
+                ]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to send booking confirmation email: ' . $e->getMessage(), [
+                    'booking_id' => $booking->id,
+                    'customer_email' => $booking->customer_email
+                ]);
+                // Continue with booking even if email fails
+            }
             
             // Return JSON response for AJAX requests
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => true, 
-                    'message' => 'Booking created successfully!',
+                    'message' => 'Booking created successfully! A confirmation email has been sent to your registered email address.',
                     'redirect' => route('booking.success', ['id' => $booking->id])
                 ]);
             }

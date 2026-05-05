@@ -11,7 +11,6 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="breadcrumb-wrap text-left">
                     <div class="breadcrumb-title">
-                        <h2>Book Service</h2>    
                         <div class="breadcrumb-wrap">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">

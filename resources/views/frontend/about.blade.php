@@ -11,13 +11,13 @@
                         <div class="col-xl-12 col-lg-12">
                             <div class="breadcrumb-wrap text-left">
                                 <div class="breadcrumb-title">
-                                    <h2>About Us</h2>    
+                                       
                                     <div class="breadcrumb-wrap">
                               
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">About</li>
+                                        <li class="breadcrumb-item active" aria-current="page">About Us</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -107,7 +107,7 @@
                             <div class="single-team text-center mb-30 ">
                                 <div class="team-thumb">
                                   <div class="brd">
-                                        <img src="{{ asset('images/team/team_img01.png') }}" alt="img">
+                                        <img src="{{ asset('images/team/team_img02.png') }}" alt="img">
                                     </div>
                                 </div>
                                 <div class="team-info">
@@ -145,7 +145,7 @@
                             <div class="single-team text-center mb-30 ">
                                 <div class="team-thumb">
                                      <div class="brd">
-                                        <img src="{{ asset('images/team/team_img03.png') }}" alt="img">
+                                        <img src="{{ asset('images/team/team_img02.png') }}" alt="img">
                                     </div>
                                 </div>
                                 <div class="team-info">
@@ -165,7 +165,7 @@
                             <div class="single-team text-center mb-30 ">
                                 <div class="team-thumb">
                                      <div class="brd">
-                                        <img src="{{ asset('images/team/team_img04.png') }}" alt="img">
+                                        <img src="{{ asset('images/team/team_img02.png') }}" alt="img">
                                     </div>
                                 </div>
                                 <div class="team-info">

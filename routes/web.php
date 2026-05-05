@@ -7,6 +7,8 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\Auth\CustomLoginController;
+use App\Http\Controllers\Auth\CustomRegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 
@@ -39,7 +41,17 @@ Route::post('/registration/submit', [FormController::class, 'submitRegistration'
 Route::post('/newsletter/subscribe', [FormController::class, 'subscribeNewsletter'])->name('newsletter.subscribe');
 
 // Authentication Routes
-Auth::routes(['register' => true]);
+Auth::routes(['register' => false, 'login' => false]);
+
+// Custom Authentication Routes
+Route::post('/login', [CustomLoginController::class, 'login'])->name('login');
+Route::post('/register', [CustomRegisterController::class, 'register'])->name('register');
+Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout')->middleware('auth');
+
+// Forgot Password Routes
+Route::post('/forgot-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('password.email');
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
+Route::post('/reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('password.update');
 
 // Cart Routes (allow guests to add items and see count)
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');

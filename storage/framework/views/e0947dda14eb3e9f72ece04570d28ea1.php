@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'About Us - Glorya Beauty'); ?>
 <?php $__env->startSection('description', 'Learn about Glorya Beauty - our journey, mission, and commitment to excellence in beauty services'); ?>
 
@@ -9,7 +11,7 @@
                         <div class="col-xl-12 col-lg-12">
                             <div class="breadcrumb-wrap text-left">
                                 <div class="breadcrumb-title">
-                                    <h2>About Us</h2>    
+                                       
                                     <div class="breadcrumb-wrap">
                               
                                 <nav aria-label="breadcrumb">
@@ -105,7 +107,7 @@
                             <div class="single-team text-center mb-30 ">
                                 <div class="team-thumb">
                                   <div class="brd">
-                                        <img src="<?php echo e(asset('images/team/team_img01.png')); ?>" alt="img">
+                                        <img src="<?php echo e(asset('images/team/team_img02.png')); ?>" alt="img">
                                     </div>
                                 </div>
                                 <div class="team-info">
@@ -143,7 +145,7 @@
                             <div class="single-team text-center mb-30 ">
                                 <div class="team-thumb">
                                      <div class="brd">
-                                        <img src="<?php echo e(asset('images/team/team_img03.png')); ?>" alt="img">
+                                        <img src="<?php echo e(asset('images/team/team_img02.png')); ?>" alt="img">
                                     </div>
                                 </div>
                                 <div class="team-info">
@@ -163,7 +165,7 @@
                             <div class="single-team text-center mb-30 ">
                                 <div class="team-thumb">
                                      <div class="brd">
-                                        <img src="<?php echo e(asset('images/team/team_img04.png')); ?>" alt="img">
+                                        <img src="<?php echo e(asset('images/team/team_img02.png')); ?>" alt="img">
                                     </div>
                                 </div>
                                 <div class="team-info">
@@ -193,7 +195,6 @@
                                 <div class="about-title second-atitle pb-40">    
                                     <h2>What We Have Achive In This Passed Years</h2>
                                     <span class="line"> <img src="<?php echo e(asset('images/bg/circle_right.png')); ?>" alt="circle_right"></span>
-                                    <p>Etiam ultrices lacinia sollicitudin. Nam vel dolor ut justo consequat lobortis id eget justo. Suspendisse tempus dui vel aliquam porta. Etiam dictum fringilla semper.</p>  
                                     <p>Aliquam eleifend eros eget blandit fringilla. Aliquam mattis leo ac risus ullamcorper maximus. In quis volutpat quam.</p>
                                 </div>
                                 <div class="row ab-coutner text-center">

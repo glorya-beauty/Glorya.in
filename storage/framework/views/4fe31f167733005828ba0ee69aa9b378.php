@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'Gallery - Glorya Beauty'); ?>
 <?php $__env->startSection('description', 'Browse our gallery of beautiful transformations and stunning beauty work by Glorya Beauty experts'); ?>
 
@@ -11,13 +13,12 @@
                         <div class="col-xl-12 col-lg-12">
                             <div class="breadcrumb-wrap text-left">
                                 <div class="breadcrumb-title">
-                                    <h2>Gallery</h2>    
                                     <div class="breadcrumb-wrap">
                               
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?php echo e(url('/')); ?>">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Pricing</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Gallery</li>
                                     </ol>
                                 </nav>
                             </div>

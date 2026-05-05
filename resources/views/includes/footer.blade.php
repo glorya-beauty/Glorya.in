@@ -28,7 +28,7 @@
                                 <li><a href="{{ url('/') }}">Home</a></li>
                                 <li><a href="{{ url('/about') }}"> About Us</a></li>
                                 <li><a href="{{ url('/services') }}"> Services </a></li>
-                                <li><a href="{{ url('/blog') }}">Blog </a></li>
+                               
                             </ul>
                         </div>
                     </div>
@@ -40,10 +40,9 @@
                         </div>
                         <div class="footer-link">
                             <ul>
-                                <li><a href="{{ url('/blog') }}">FAQ</a></li>
-                                <li><a href="{{ url('/contact') }}">Support</a></li>
-                                <li><a href="{{ url('/contact') }}">Privacy</a></li>
-                                <li><a href="{{ url('/contact') }}">Term & Conditions</a></li>
+                                <li><a href="{{ url('/') }}">Media</a></li>
+                                <li><a href="{{ url('/') }}">Privacy</a></li>
+                                <li><a href="{{ url('/') }}">Term & Conditions</a></li>
                             </ul>
                         </div>
                     </div>

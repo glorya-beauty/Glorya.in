@@ -193,171 +193,76 @@
 .form-label i {
     color: #cf921c;
 }
+
+/* Service Details Toggle Styles */
+.toggle-service-details {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: 1px solid #cf921c;
+    color: #cf921c;
+    background: transparent;
+    min-width: 40px;
+}
+
+.toggle-service-details:hover {
+    background: #cf921c;
+    color: white;
+    transform: scale(1.05);
+}
+
+.toggle-service-details:focus {
+    box-shadow: 0 0 0 0.2rem rgba(207, 146, 28, 0.25);
+}
+
+.service-details {
+    transition: all 0.3s ease;
+}
+
+.service-details.collapse {
+    display: none;
+}
+
+.service-details.collapse.show {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Arrow animation */
+.toggle-service-details i {
+    transition: transform 0.3s ease;
+}
+
+.toggle-service-details:hover i {
+    transform: scale(1.1);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .toggle-service-details {
+        padding: 8px 12px;
+        font-size: 16px;
+        min-width: 45px;
+    }
+    
+    .service-details {
+        margin-top: 15px;
+    }
+}
 </style>
 
-<!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Login to Glorya Beauty</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php if($errors->any()): ?>
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li><?php echo e($error); ?></li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </ul>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" action="<?php echo e(route('login')); ?>" id="loginForm">
-                    <?php echo csrf_field(); ?>
-                    <div class="form-group">
-                        <label for="login_email">Email Address</label>
-                        <input type="email" class="form-control" id="login_email" name="email" 
-                               value="<?php echo e(old('email')); ?>" required autocomplete="email" autofocus>
-                        <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="login_password">Password</label>
-                        <input type="password" class="form-control" id="login_password" name="password" required>
-                        <?php $__errorArgs = ['password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" name="remember" id="remember" class="form-check-input">
-                            <label class="form-check-label" for="remember">Remember me</label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn ss-btn active btn-block">Login</button>
-                    <div class="text-center mt-3">
-                        <p>Don't have an account? <a href="#" onclick="showRegisterModal();">Register here</a></p>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Registration Modal -->
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="registerModalLabel">Register for Glorya Beauty</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php if($errors->any()): ?>
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li><?php echo e($error); ?></li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </ul>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" action="<?php echo e(route('register')); ?>" id="registerForm">
-                    <?php echo csrf_field(); ?>
-                    <div class="form-group">
-                        <label for="register_name">Full Name</label>
-                        <input type="text" class="form-control" id="register_name" name="name" 
-                               value="<?php echo e(old('name')); ?>" required autocomplete="name" autofocus>
-                        <?php $__errorArgs = ['name'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="register_email">Email Address</label>
-                        <input type="email" class="form-control" id="register_email" name="email" 
-                               value="<?php echo e(old('email')); ?>" required autocomplete="email">
-                        <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="register_password">Password</label>
-                        <input type="password" class="form-control" id="register_password" name="password" required>
-                        <?php $__errorArgs = ['password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="register_password_confirmation">Confirm Password</label>
-                        <input type="password" class="form-control" id="register_password_confirmation" name="password_confirmation" required>
-                    </div>
-                    <button type="submit" class="btn ss-btn active btn-block">Register</button>
-                    <div class="text-center mt-3">
-                        <p>Already have an account? <a href="#" onclick="showLoginModal();">Login here</a></p>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Success Message -->
 <?php if(session('success')): ?>
@@ -377,13 +282,12 @@ unset($__errorArgs, $__bag); ?>
                         <div class="col-xl-12 col-lg-12">
                             <div class="breadcrumb-wrap text-left">
                                 <div class="breadcrumb-title">
-                                    <h2>Services</h2>    
                                     <div class="breadcrumb-wrap">
                               
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?php echo e(url('/')); ?>">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Pricing</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Services</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -605,15 +509,23 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="col-md-12 mb-30">
                                             <div class="service-card detailed">
                                                 <div class="service-header">
-                                                    <h5>MANICURE</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹856</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹599</span>
-                                                        <span class="time">Time - 45 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>MANICURE</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹856</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹599</span>
+                                                                <span class="time">Time - 45 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('manicure-service')">
+                                                            <i class="fas fa-chevron-down" id="arrow-manicure-service"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-manicure-service">
                                                     <p>"Get soft, beautiful hands at home with our professional manicure services. We provide complete nail care including cleaning, shaping, scrub, massage, and polish – all in the comfort of your home. Hygienic, relaxing, and perfect for self-care."</p>
                                                     
                                                     <h6>Benefits of Manicure:</h6>
@@ -658,15 +570,23 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/rg.jpg')); ?>" style="height:350px;" alt="Regular / Basic Pedicure">
                                                 <div class="service-header">
-                                                    <h5>REGULAR / BASIC PEDICURE</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,284</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹899</span>
-                                                        <span class="time">Time - 45 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>REGULAR / BASIC PEDICURE</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,284</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹899</span>
+                                                                <span class="time">Time - 45 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('regular-basic-pedicure')">
+                                                            <i class="fas fa-chevron-down" id="arrow-regular-basic-pedicure"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-regular-basic-pedicure">
                                                     <h6>Benefits of Pedicure:</h6>
                                                     <ul>
                                                         <li>Keeps feet clean & healthy</li>
@@ -700,15 +620,23 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/rp.jpg')); ?>" style="height:350px;" alt="Raaga / Premium Pedicure">
                                                 <div class="service-header">
-                                                    <h5>RAAGA / PREMIUM PEDICURE</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹2,141</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹1,499</span>
-                                                        <span class="time">Time - 45 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>RAAGA / PREMIUM PEDICURE</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹2,141</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹1,499</span>
+                                                                <span class="time">Time - 45 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('raaga-premium-pedicure')">
+                                                            <i class="fas fa-chevron-down" id="arrow-raaga-premium-pedicure"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-raaga-premium-pedicure">
                                                     <h6>Benefits of Raaga / Premium Pedicure:</h6>
                                                     <ul>
                                                         <li>Deep hydration & nourishment</li>
@@ -745,15 +673,23 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/op.jpg')); ?>" style="height:350px;" alt="O3+ Pedicure">
                                                 <div class="service-header">
-                                                    <h5>O3+ Pedicure</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹2,284</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹1,599</span>
-                                                        <span class="time">Time - 45 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>O3+ Pedicure</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹2,284</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹1,599</span>
+                                                                <span class="time">Time - 45 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('o3-pedicure')">
+                                                            <i class="fas fa-chevron-down" id="arrow-o3-pedicure"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-o3-pedicure">
                                                     <h6>Benefits O3+ Pedicure:</h6>
                                                     <ul>
                                                         <li>Helps remove tan & dullness</li>
@@ -797,19 +733,36 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/ro.png')); ?>" style="height:350px;" alt="Roll in Waxing">
                                                 <div class="service-header">
-                                                    <h5>Roll on Waxing (Full Arms, Legs & Underarms)</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,284</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹899</span>
-                                                        <span class="time">Time - 45 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Roll on Waxing (Full Arms, Legs & Underarms)</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,284</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹899</span>
+                                                                <span class="time">Time - 45 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('roll-on-waxing')">
+                                                            <i class="fas fa-chevron-down" id="arrow-roll-on-waxing"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-roll-on-waxing">
                                                     <h6>Benefits Roll on Waxing:</h6>
                                                     <ul>
                                                         <li>Hygienic & single-use with no risk of burns</li>
                                                         <li>Two wax types for you to pick from: Rica or white chocolate</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Cleansing of the treatment area</li>
+                                                        <li>Application of roll-on wax in direction of hair growth</li>
+                                                        <li>Removal with disposable strips against hair growth</li>
+                                                        <li>Soothing post-wax lotion application</li>
+                                                        <li>Hygienic single-use equipment</li>
                                                     </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
@@ -825,19 +778,36 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/sp.jpg')); ?>" style="height:350px;" alt="Spatula Waxing">
                                                 <div class="service-header">
-                                                    <h5>Spatula Waxing (Full Arms, Legs & Underarms)</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,141</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹799</span>
-                                                        <span class="time">Time - 45 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Spatula Waxing (Full Arms, Legs & Underarms)</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,141</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹799</span>
+                                                                <span class="time">Time - 45 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('spatula-waxing')">
+                                                            <i class="fas fa-chevron-down" id="arrow-spatula-waxing"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-spatula-waxing">
                                                     <h6>Benefits Spatula Waxing:</h6>
                                                     <ul>
                                                         <li>Painless & irritation-free removal</li>
                                                         <li>Three wax types for you to pick from: Rica Aloe vera (liposoluble wax), honey nature (white chocolate) & honey cold wax</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Preparation and cleansing of skin</li>
+                                                        <li>Application of suitable wax with spatula</li>
+                                                        <li>Precise removal with disposable strips</li>
+                                                        <li>Soothing after-care treatment</li>
+                                                        <li>Anti-inflammatory cream application</li>
                                                     </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
@@ -853,19 +823,38 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/bi.jpg')); ?>" style="height:350px;" alt="Rica Brazilian Stripless Bikini Waxing">
                                                 <div class="service-header">
-                                                    <h5>Rica Brazilian Stripless Bikini Waxing</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,713</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 45 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Rica Brazilian Stripless Bikini Waxing</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,713</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 45 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('rica-brazilian-waxing')">
+                                                            <i class="fas fa-chevron-down" id="arrow-rica-brazilian-waxing"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-rica-brazilian-waxing">
                                                     <h6>Benefits Rica Brazilian Stripless Bikini Waxing:</h6>
                                                     <ul>
                                                         <li>Painless peel-off wax covering full pelvic area (buttocks not included)</li>
                                                         <li>Intimate waxing in the privacy of your home</li>
+                                                        <li>Professional and hygienic intimate care</li>
+                                                        <li>Long-lasting smooth results (3-4 weeks)</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Private area preparation and cleansing</li>
+                                                        <li>Application of Rica stripless wax</li>
+                                                        <li>Peel-off technique without strips</li>
+                                                        <li>Soothing after-care treatment</li>
+                                                        <li>Anti-bacterial cream application</li>
                                                     </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
@@ -1051,16 +1040,44 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/kf.jpg')); ?>" style="height:350px;" alt="Korean Glass Skin Facial">
                                                 <div class="service-header">
-                                                    <h5>Korean Glass skin Facial</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,713</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 hr 20 mins</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Korean Glass skin Facial</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,713</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 hr 20 mins</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('korean-glass-facial')">
+                                                            <i class="fas fa-chevron-down" id="arrow-korean-glass-facial"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-korean-glass-facial">
                                                     <p>Delivers long-lasting hydration for a dewy, glass-skin glow. Suitable for normal to dry skin.</p>
+                                                    
+                                                    <h6>Benefits of Korean Glass Facial:</h6>
+                                                    <ul>
+                                                        <li>Deep hydration and moisturizing</li>
+                                                        <li>Glass skin dewy glow effect</li>
+                                                        <li>Improves skin elasticity</li>
+                                                        <li>Reduces fine lines and wrinkles</li>
+                                                        <li>Suitable for normal to dry skin</li>
+                                                        <li>Long-lasting results</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Deep cleansing and exfoliation</li>
+                                                        <li>Korean essence application</li>
+                                                        <li>Hydrating mask treatment</li>
+                                                        <li>Glass skin serum infusion</li>
+                                                        <li>Moisture lock and protection</li>
+                                                        <li>Finishing and after-care</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1075,16 +1092,45 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/ar.jpg')); ?>" style="height:350px;" alt="Aroma Magic Instant Glow Facial">
                                                 <div class="service-header">
-                                                    <h5>Aroma Magic Instant Glow Facial</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,141</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹799</span>
-                                                        <span class="time">Time - 1 hr 10 mins</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Aroma Magic Instant Glow Facial</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,141</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹799</span>
+                                                                <span class="time">Time - 1 hr 10 mins</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('aroma-magic-facial')">
+                                                            <i class="fas fa-chevron-down" id="arrow-aroma-magic-facial"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-aroma-magic-facial">
                                                     <p>Refreshes tired skin & brings back a natural glow. Suitable for combination skin.</p>
+                                                    
+                                                    <h6>Benefits of Aroma Magic Facial:</h6>
+                                                    <ul>
+                                                        <li>Refreshes tired and dull skin</li>
+                                                        <li>Instant natural glow effect</li>
+                                                        <li>Aromatherapy relaxation</li>
+                                                        <li>Suitable for combination skin</li>
+                                                        <li>Improves skin texture</li>
+                                                        <li>Reduces stress and fatigue</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Aromatic cleansing with essential oils</li>
+                                                        <li>Exfoliation and pore refinement</li>
+                                                        <li>Aroma massage and relaxation</li>
+                                                        <li>Nourishing mask application</li>
+                                                        <li>Essential oil serum treatment</li>
+                                                        <li>Moisturizing and finishing</li>
+                                                        <li>Aromatherapy after-care</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1099,16 +1145,45 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/o3f.jpg')); ?>" style="height:350px;" alt="O3+ Shine & Glow Facial">
                                                 <div class="service-header">
-                                                    <h5>O3+ Shine & Glow Facial</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹2,284</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹1,299</span>
-                                                        <span class="time">Time - 1 hr 20 mins</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>O3+ Shine & Glow Facial</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹2,284</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹1,299</span>
+                                                                <span class="time">Time - 1 hr 20 mins</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('o3-shine-glow-facial')">
+                                                            <i class="fas fa-chevron-down" id="arrow-o3-shine-glow-facial"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-o3-shine-glow-facial">
                                                     <p>Reduces hyperpigmentation to even out skin tone. Suitable for normal to oily skin.</p>
+                                                    
+                                                    <h6>Benefits of O3+ Shine & Glow Facial:</h6>
+                                                    <ul>
+                                                        <li>Reduces hyperpigmentation effectively</li>
+                                                        <li>Evens out skin tone completely</li>
+                                                        <li>Brightens and illuminates skin</li>
+                                                        <li>Suitable for normal to oily skin</li>
+                                                        <li>Provides natural shine effect</li>
+                                                        <li>Long-lasting bright results</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>O3+ deep cleansing process</li>
+                                                        <li>Hyperpigmentation targeted treatment</li>
+                                                        <li>Exfoliation and skin renewal</li>
+                                                        <li>O3+ serum application</li>
+                                                        <li>Brightening mask treatment</li>
+                                                        <li>Moisture balancing</li>
+                                                        <li>SPF protection and finishing</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1123,16 +1198,45 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/arf.jpg')); ?>" style="height:350px;" alt="Sara Lightening Glow Facial">
                                                 <div class="service-header">
-                                                    <h5>Sara Lightening Glow Facial</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,213</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹849</span>
-                                                        <span class="time">Time - 1 hr 20 mins</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Sara Lightening Glow Facial</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,213</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹849</span>
+                                                                <span class="time">Time - 1 hr 20 mins</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('sara-lightening-facial')">
+                                                            <i class="fas fa-chevron-down" id="arrow-sara-lightening-facial"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-sara-lightening-facial">
                                                     <p>Boosts hydration overall skin clarity. Suitable for combination skin.</p>
+                                                    
+                                                    <h6>Benefits of Sara Lightening Facial:</h6>
+                                                    <ul>
+                                                        <li>Boosts hydration levels significantly</li>
+                                                        <li>Improves overall skin clarity</li>
+                                                        <li>Lightens dark spots and pigmentation</li>
+                                                        <li>Suitable for combination skin</li>
+                                                        <li>Enhances natural glow</li>
+                                                        <li>Deep moisturizing effect</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Sara deep cleansing process</li>
+                                                        <li>Hydration infusion treatment</li>
+                                                        <li>Lightening serum application</li>
+                                                        <li>Clarity enhancement mask</li>
+                                                        <li>Nourishing essence treatment</li>
+                                                        <li>Moisture lock and protection</li>
+                                                        <li>Finishing and after-care</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1466,15 +1570,40 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/fleg.jpg')); ?>" style="height:350px;" alt="Full Legs Bleach">
                                                 <div class="service-header">
-                                                    <h6>Full Legs</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹599</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹599</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Full Legs</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹599</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹599</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('full-legs-bleach')">
+                                                            <i class="fas fa-chevron-down" id="arrow-full-legs-bleach"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-full-legs-bleach">
                                                     <p>Professional leg bleaching treatment for flawless skin tone. Effectively lightens dark spots and uneven pigmentation, leaving your legs smooth, bright, and perfectly uniform.</p>
+                                                    
+                                                    <h6>Benefits of Full Legs Bleach:</h6>
+                                                    <ul>
+                                                        <li>Even out skin tone and reduce pigmentation</li>
+                                                        <li>Lighten dark spots and blemishes</li>
+                                                        <li>Smooth and brighten leg appearance</li>
+                                                        <li>Safe and professional formulation</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Cleansing and preparation of leg skin</li>
+                                                        <li>Application of professional bleach formula</li>
+                                                        <li>Precise timing for optimal results</li>
+                                                        <li>Neutralization and moisturizing</li>
+                                                        <li>After-care instructions provided</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1489,15 +1618,42 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/fbl.jpg')); ?>" style="height:350px;" alt="Full Body Bleach">
                                                 <div class="service-header">
-                                                    <h6>Full Body</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,449</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹1,099</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Full Body</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,449</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹1,099</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('full-body-bleach')">
+                                                            <i class="fas fa-chevron-down" id="arrow-full-body-bleach"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-full-body-bleach">
                                                     <p>Complete body bleaching treatment from neck to feet. Our advanced formula safely lightens overall skin tone, reduces dark spots, and provides a uniform, radiant complexion.</p>
+                                                    
+                                                    <h6>Benefits of Full Body Bleach:</h6>
+                                                    <ul>
+                                                        <li>Comprehensive skin tone evening</li>
+                                                        <li>Reduce tan and dark spots</li>
+                                                        <li>Uniform complexion from neck to feet</li>
+                                                        <li>Professional and safe formulation</li>
+                                                        <li>Long-lasting radiant results</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Full body skin preparation and cleansing</li>
+                                                        <li>Application of advanced bleach formula</li>
+                                                        <li>Section-wise treatment for optimal coverage</li>
+                                                        <li>Precise timing and monitoring</li>
+                                                        <li>Neutralization and full body moisturizing</li>
+                                                        <li>Comprehensive after-care guidance</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1512,15 +1668,41 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/abl.jpg')); ?>" style="height:350px;" alt="Full Arms Bleach">
                                                 <div class="service-header">
-                                                    <h6>Full Arms</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹449</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹349</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Full Arms</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹449</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹349</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('full-arms-bleach')">
+                                                            <i class="fas fa-chevron-down" id="arrow-full-arms-bleach"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-full-arms-bleach">
                                                     <p>Targeted arm bleaching for even skin tone. Removes discoloration and dark patches, leaving your arms smooth, bright, and perfectly matched to your desired complexion.</p>
+                                                    
+                                                    <h6>Benefits of Full Arms Bleach:</h6>
+                                                    <ul>
+                                                        <li>Even out arm skin tone completely</li>
+                                                        <li>Remove discoloration and dark patches</li>
+                                                        <li>Smooth and brighten arm appearance</li>
+                                                        <li>Safe and professional formulation</li>
+                                                        <li>Perfect for sleeveless outfits</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Arm cleansing and preparation</li>
+                                                        <li>Application of professional bleach formula</li>
+                                                        <li>Precise timing for optimal results</li>
+                                                        <li>Neutralization and moisturizing</li>
+                                                        <li>After-care instructions provided</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1535,15 +1717,43 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/cbl.jpg')); ?>" style="height:350px;" alt="Chest Bleach">
                                                 <div class="service-header">
-                                                    <h6>Chest</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹349</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹269</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Chest</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹349</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹269</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('chest-bleach')">
+                                                            <i class="fas fa-chevron-down" id="arrow-chest-bleach"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-chest-bleach">
                                                     <p>Gentle chest bleaching for flawless décolletage. Perfect for evening out skin tone and reducing pigmentation, ideal for low-cut outfits and special occasions.</p>
+                                                    
+                                                    <h6>Benefits of Chest Bleach:</h6>
+                                                    <ul>
+                                                        <li>Flawless décolletage appearance</li>
+                                                        <li>Even out chest skin tone</li>
+                                                        <li>Reduce pigmentation and dark spots</li>
+                                                        <li>Gentle and safe formulation</li>
+                                                        <li>Perfect for low-cut outfits</li>
+                                                        <li>Ideal for special occasions</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Chest area cleansing and preparation</li>
+                                                        <li>Application of gentle bleach formula</li>
+                                                        <li>Precise timing for sensitive skin</li>
+                                                        <li>Neutralization and soothing</li>
+                                                        <li>Moisturizing and protection</li>
+                                                        <li>After-care guidance for décolletage</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1558,15 +1768,43 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/fnb.jpg')); ?>" style="height:350px;" alt="Face & Neck Bleach">
                                                 <div class="service-header">
-                                                    <h6>Face & Neck</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹349</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹269</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Face & Neck</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹349</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹269</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('face-neck-bleach')">
+                                                            <i class="fas fa-chevron-down" id="arrow-face-neck-bleach"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-face-neck-bleach">
                                                     <p>Professional face and neck bleaching treatment. Safely lightens facial pigmentation, evens out skin tone, and reduces dark spots for a brighter, more radiant complexion.</p>
+                                                    
+                                                    <h6>Benefits of Face & Neck Bleach:</h6>
+                                                    <ul>
+                                                        <li>Safely lightens facial pigmentation</li>
+                                                        <li>Even out face and neck skin tone</li>
+                                                        <li>Reduce dark spots and blemishes</li>
+                                                        <li>Brighter, more radiant complexion</li>
+                                                        <li>Professional and safe formulation</li>
+                                                        <li>Uniform appearance from face to neck</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Face and neck cleansing and preparation</li>
+                                                        <li>Application of gentle facial bleach</li>
+                                                        <li>Precise timing for sensitive facial skin</li>
+                                                        <li>Neutralization and soothing</li>
+                                                        <li>Moisturizing and protection</li>
+                                                        <li>After-care guidance for facial skin</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1581,15 +1819,44 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/bbl.jpg')); ?>" style="height:350px;" alt="Back Bleach">
                                                 <div class="service-header">
-                                                    <h6>Back</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹449</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹349</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Back</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹449</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹349</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('back-bleach')">
+                                                            <i class="fas fa-chevron-down" id="arrow-back-bleach"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-back-bleach">
                                                     <p>Complete back bleaching treatment for uniform skin tone. Addresses stubborn pigmentation and dark spots across shoulders and back, perfect for backless outfits.</p>
+                                                    
+                                                    <h6>Benefits of Back Bleach:</h6>
+                                                    <ul>
+                                                        <li>Uniform back skin tone</li>
+                                                        <li>Address stubborn pigmentation</li>
+                                                        <li>Reduce dark spots across shoulders and back</li>
+                                                        <li>Perfect for backless outfits</li>
+                                                        <li>Professional and safe formulation</li>
+                                                        <li>Confidence for special occasions</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Back area cleansing and preparation</li>
+                                                        <li>Application of professional bleach formula</li>
+                                                        <li>Section-wise treatment for full coverage</li>
+                                                        <li>Precise timing for optimal results</li>
+                                                        <li>Neutralization and soothing</li>
+                                                        <li>Moisturizing and protection</li>
+                                                        <li>After-care guidance for back skin</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1614,15 +1881,42 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/sk.jpeg')); ?>" style="height:350px"alt="Face & Neck D-TAN">
                                                 <div class="service-header">
-                                                    <h6>Face & Neck</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹399</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹309</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Face & Neck</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹399</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹309</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('face-neck-dtan')">
+                                                            <i class="fas fa-chevron-down" id="arrow-face-neck-dtan"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-face-neck-dtan">
                                                     <p>Specialized D-TAN treatment for face and neck area. Our gentle yet effective formula removes sun damage and uneven pigmentation, revealing brighter, more even-toned skin with a natural glow.</p>
+                                                    
+                                                    <h6>Benefits of Face & Neck D-TAN:</h6>
+                                                    <ul>
+                                                        <li>Reduces sun damage and pigmentation</li>
+                                                        <li>Even out skin tone and texture</li>
+                                                        <li>Brightens dull, tired skin</li>
+                                                        <li>Removes dark spots and blemishes</li>
+                                                        <li>Natural, healthy glow</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Deep cleansing of face and neck</li>
+                                                        <li>Exfoliation to remove dead skin</li>
+                                                        <li>Application of D-TAN formula</li>
+                                                        <li>Precise timing for optimal results</li>
+                                                        <li>Neutralization and moisturizing</li>
+                                                        <li>Soothing after-care treatment</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1637,15 +1931,43 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/fam.jpg')); ?>" style="height:350px;" alt="Full Arms D-TAN">
                                                 <div class="service-header">
-                                                    <h6>Full Arms</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹399</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹309</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Full Arms</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹399</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹309</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('full-arms-dtan')">
+                                                            <i class="fas fa-chevron-down" id="arrow-full-arms-dtan"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-full-arms-dtan">
                                                     <p>Complete arm D-TAN treatment from shoulders to wrists. Perfect for removing tan lines and achieving uniform skin tone, leaving your arms smooth, bright, and evenly colored.</p>
+                                                    
+                                                    <h6>Benefits of Full Arms D-TAN:</h6>
+                                                    <ul>
+                                                        <li>Removes tan lines and uneven pigmentation</li>
+                                                        <li>Even out arm skin tone completely</li>
+                                                        <li>Brightens and smooths skin texture</li>
+                                                        <li>Treats sun damage effectively</li>
+                                                        <li>Uniform, natural-looking results</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Arm cleansing and preparation</li>
+                                                        <li>Gentle exfoliation process</li>
+                                                        <li>Application of D-TAN formula</li>
+                                                        <li>Section-wise treatment for full coverage</li>
+                                                        <li>Precise timing and monitoring</li>
+                                                        <li>Neutralization and moisturizing</li>
+                                                        <li>After-care guidance provided</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1660,15 +1982,44 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/cdt.jpg')); ?>" style="height:350px;" alt="Chest D-TAN">
                                                 <div class="service-header">
-                                                    <h6>Chest</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹449</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹349</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Chest</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹449</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹349</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('chest-dtan')">
+                                                            <i class="fas fa-chevron-down" id="arrow-chest-dtan"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-chest-dtan">
                                                     <p>Targeted chest D-TAN treatment to address stubborn pigmentation. Ideal for those who wear low-cut outfits, this service evens out skin tone and reduces discoloration for a flawless décolletage.</p>
+                                                    
+                                                    <h6>Benefits of Chest D-TAN:</h6>
+                                                    <ul>
+                                                        <li>Addresses stubborn chest pigmentation</li>
+                                                        <li>Even out décolletage skin tone</li>
+                                                        <li>Reduce discoloration and dark spots</li>
+                                                        <li>Flawless appearance for low-cut outfits</li>
+                                                        <li>Professional and safe formulation</li>
+                                                        <li>Confidence for special occasions</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Chest area cleansing and preparation</li>
+                                                        <li>Gentle exfoliation for sensitive skin</li>
+                                                        <li>Application of targeted D-TAN formula</li>
+                                                        <li>Precise timing for optimal results</li>
+                                                        <li>Neutralization and soothing</li>
+                                                        <li>Moisturizing and protection</li>
+                                                        <li>After-care guidance for décolletage</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1683,15 +2034,44 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/flt.jpg')); ?>" style="height:350px;" alt="Full Legs D-TAN">
                                                 <div class="service-header">
-                                                    <h6>Full Legs</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹599</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹449</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Full Legs</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹599</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹449</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('full-legs-dtan')">
+                                                            <i class="fas fa-chevron-down" id="arrow-full-legs-dtan"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-full-legs-dtan">
                                                     <p>Comprehensive leg D-TAN from thighs to ankles. Removes stubborn tan lines and evens out skin tone, perfect for achieving smooth, uniform legs for shorts and skirts.</p>
+                                                    
+                                                    <h6>Benefits of Full Legs D-TAN:</h6>
+                                                    <ul>
+                                                        <li>Removes stubborn tan lines completely</li>
+                                                        <li>Even out leg skin tone from thighs to ankles</li>
+                                                        <li>Smooth and uniform leg appearance</li>
+                                                        <li>Perfect for shorts and skirts</li>
+                                                        <li>Professional and safe formulation</li>
+                                                        <li>Confidence for summer outfits</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Full leg cleansing and preparation</li>
+                                                        <li>Section-wise exfoliation process</li>
+                                                        <li>Application of D-TAN formula</li>
+                                                        <li>Area-specific timing for optimal results</li>
+                                                        <li>Neutralization and soothing</li>
+                                                        <li>Moisturizing and protection</li>
+                                                        <li>After-care guidance for legs</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1706,15 +2086,44 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/bt.jpg')); ?>" style="height:350px;" alt="Back D-TAN">
                                                 <div class="service-header">
-                                                    <h6>Back</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹449</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹349</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Back</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹449</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹349</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('back-dtan')">
+                                                            <i class="fas fa-chevron-down" id="arrow-back-dtan"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-back-dtan">
                                                     <p>Complete back D-TAN treatment for even skin tone. Addresses stubborn tan and pigmentation across shoulders and back, perfect for backless outfits and swimwear.</p>
+                                                    
+                                                    <h6>Benefits of Back D-TAN:</h6>
+                                                    <ul>
+                                                        <li>Complete back skin tone evenness</li>
+                                                        <li>Addresses stubborn tan and pigmentation</li>
+                                                        <li>Perfect for backless outfits and swimwear</li>
+                                                        <li>Uniform appearance across shoulders and back</li>
+                                                        <li>Professional and safe formulation</li>
+                                                        <li>Confidence for beach and pool occasions</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Back area cleansing and preparation</li>
+                                                        <li>Section-wise exfoliation for full coverage</li>
+                                                        <li>Application of D-TAN formula</li>
+                                                        <li>Precise timing for optimal results</li>
+                                                        <li>Neutralization and soothing</li>
+                                                        <li>Moisturizing and protection</li>
+                                                        <li>After-care guidance for back skin</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1729,15 +2138,45 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="service-card mini">
                                                 <img src="<?php echo e(asset('images/services/fbt.jpg')); ?>" style="height:350px;" alt="Full Body D-TAN">
                                                 <div class="service-header">
-                                                    <h6>Full Body</h6>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,599</span>
-                                                        <span class="discount">30% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h6>Full Body</h6>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,599</span>
+                                                                <span class="discount">30% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('full-body-dtan')">
+                                                            <i class="fas fa-chevron-down" id="arrow-full-body-dtan"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-full-body-dtan">
                                                     <p>Ultimate full body D-TAN experience. Comprehensive treatment from neck to feet that removes all traces of tan, evens out skin tone, and leaves your entire body glowing and uniform.</p>
+                                                    
+                                                    <h6>Benefits of Full Body D-TAN:</h6>
+                                                    <ul>
+                                                        <li>Ultimate full body tan removal</li>
+                                                        <li>Comprehensive treatment from neck to feet</li>
+                                                        <li>Even out entire body skin tone</li>
+                                                        <li>Remove all traces of tan and pigmentation</li>
+                                                        <li>Professional and safe formulation</li>
+                                                        <li>Confidence for any outfit or occasion</li>
+                                                        <li>Long-lasting uniform glow</li>
+                                                    </ul>
+                                                    
+                                                    <h6>How it works:</h6>
+                                                    <ul>
+                                                        <li>Full body cleansing and preparation</li>
+                                                        <li>Section-wise exfoliation process</li>
+                                                        <li>Application of D-TAN formula to all areas</li>
+                                                        <li>Area-specific timing for optimal results</li>
+                                                        <li>Neutralization and soothing</li>
+                                                        <li>Full body moisturizing and protection</li>
+                                                        <li>Comprehensive after-care guidance</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1948,15 +2387,32 @@ Time - 45 Min
                                             <div class="service-card detailed">
                                                 <img src="<?php echo e(asset('images/services/sb.jpg')); ?>" style="height:350px;" alt="Straight & Smooth Blow Dry">
                                                 <div class="service-header">
-                                                    <h5>Straight & Smooth Blow Dry</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹399</span>
-                                                        <span class="time">Time - 45 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Straight & Smooth Blow Dry</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹399</span>
+                                                                <span class="time">Time - 45 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('straight-smooth-blow-dry')">
+                                                            <i class="fas fa-chevron-down" id="arrow-straight-smooth-blow-dry"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-straight-smooth-blow-dry">
+                                                    <h6>Benefits of Straight & Smooth Blow Dry:</h6>
+                                                    <ul>
+                                                        <li>Sleek, smooth & straight hair finish</li>
+                                                        <li>Professional heat protection for hair health</li>
+                                                        <li>Long-lasting results with proper aftercare</li>
+                                                        <li>Anti-frizz and shine enhancement</li>
+                                                        <li>Customized to hair type and preference</li>
+                                                    </ul>
+                                                    
                                                     <h6>Service Process:</h6>
                                                     <ol>
                                                         <li><strong>Hair Consultation</strong> - Hair type analysis (dry, frizzy, damaged, normal), Understanding client preference (natural straight / sleek finish)</li>
@@ -1974,7 +2430,6 @@ Time - 45 Min
                                                         <li>Apply light serum if needed for shine</li>
                                                         <li>Professional blow-dry at home recommended</li>
                                                     </ul>
-                                                    <p>sleek, smooth & straight hair with a professional blow-dry</p>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -1989,23 +2444,41 @@ Time - 45 Min
                                             <div class="service-card detailed">
                                                 <img src="<?php echo e(asset('images/services/co.jpg')); ?>" style="height:350px;" alt="In Curl / Out Curl Blow Dry">
                                                 <div class="service-header">
-                                                    <h5>In Curl / Out Curl Blow Dry</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹399</span>
-                                                        <span class="time">Time - 45 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>In Curl / Out Curl Blow Dry</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹399</span>
+                                                                <span class="time">Time - 45 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('in-curl-out-curl-blow-dry')">
+                                                            <i class="fas fa-chevron-down" id="arrow-in-curl-out-curl-blow-dry"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-in-curl-out-curl-blow-dry">
+                                                    <h6>Benefits of In Curl / Out Curl Blow Dry:</h6>
+                                                    <ul>
+                                                        <li>Voluminous, defined curls or relaxed waves</li>
+                                                        <li>Professional heat protection for hair health</li>
+                                                        <li>Customized curl size and pattern</li>
+                                                        <li>Long-lasting curl retention</li>
+                                                        <li>Anti-frizz and shine enhancement</li>
+                                                        <li>Suitable for all hair types</li>
+                                                    </ul>
+                                                    
                                                     <h6>Service Process:</h6>
                                                     <ol>
-                                                        <li><strong>Hair Consultation</strong> - Hair type analysis (dry, frizzy, damaged, normal), Understanding client preference (natural straight / sleek finish)</li>
-                                                        <li><strong>Heat Protection Application</strong> - Professional heat protectant applied, Prevents damage from blow-drying tools</li>
-                                                        <li><strong>Sectioning & Blow-Dry</strong> - Hair is divided into sections, Blow-dried using round/flat brush for smooth finish</li>
+                                                        <li><strong>Hair Consultation</strong> - Hair type analysis, Understanding client preference (tight curls, loose waves, etc.)</li>
+                                                        <li><strong>Heat Protection Application</strong> - Professional heat protectant applied, Prevents damage from styling tools</li>
+                                                        <li><strong>Sectioning & Blow-Dry</strong> - Hair is divided into sections, Blow-dried for optimal curl formation</li>
                                                         <li><strong>Curling Technique</strong> - Professional curling iron used to create bouncy, defined curls or relaxed waves</li>
-                                                        <li><strong>Straightening Finish (If Needed)</strong> - Light use of straightener for extra sleekness, Adds long-lasting smooth effect</li>
-                                                        <li><strong>Serum & Finishing</strong> - Anti-frizz serum applied, Adds shine, smoothness, and polish</li>
+                                                        <li><strong>Curl Setting</strong> - Proper cooling and setting for long-lasting results</li>
+                                                        <li><strong>Serum & Finishing</strong> - Anti-frizz serum applied, Adds shine, hold, and definition</li>
                                                     </ol>
                                                     
                                                     <h6>After Care (Client Guidance):</h6>
@@ -2018,7 +2491,6 @@ Time - 45 Min
                                                         <li>For curly hair: Use curl-enhancing products</li>
                                                         <li>For straight hair: Use anti-frizz products</li>
                                                     </ul>
-                                                    <p>Voluminous, defined curls or relaxed waves with professional styling</p>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3037,16 +3509,42 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/plain.jpg')); ?>" style="height:250px;" alt="Plain Gel Polish">
                                                 <div class="service-header">
-                                                    <h5>Plain</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹749</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹599</span>
-                                                        <span class="time">Time - 60 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Plain</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹749</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹599</span>
+                                                                <span class="time">Time - 60 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('plain-gel-polish')">
+                                                            <i class="fas fa-chevron-down" id="arrow-plain-gel-polish"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-plain-gel-polish">
                                                     <p>Achieve a flawless natural look with our plain gel polish service. Choose from 20+ stunning color options including nude shades, soft pastels, vintage tones, and vibrant hues. Our long-lasting formula provides chip-free wear for up to 3 weeks.</p>
+                                                    
+                                                    <h6>Benefits of Plain Gel Polish:</h6>
+                                                    <ul>
+                                                        <li>Flawless natural appearance</li>
+                                                        <li>20+ stunning color options</li>
+                                                        <li>Long-lasting chip-free wear</li>
+                                                        <li>Professional salon quality</li>
+                                                        <li>Suitable for any occasion</li>
+                                                        <li>Easy maintenance</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Color Options:</h6>
+                                                    <ul>
+                                                        <li>Nude shades for natural look</li>
+                                                        <li>Soft pastels for subtle elegance</li>
+                                                        <li>Vintage tones for classic style</li>
+                                                        <li>Vibrant hues for bold statement</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3061,16 +3559,42 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/matte.jpg')); ?>" style="height:250px;" alt="Matte Gel Polish">
                                                 <div class="service-header">
-                                                    <h5>Matte</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹749</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹599</span>
-                                                        <span class="time">Time - 60 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Matte</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹749</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹599</span>
+                                                                <span class="time">Time - 60 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('matte-gel-polish')">
+                                                            <i class="fas fa-chevron-down" id="arrow-matte-gel-polish"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-matte-gel-polish">
                                                     <p>Embrace the modern trend with our matte gel polish finish. This sophisticated non-shiny look creates a smooth, velvety appearance that's chic and contemporary. Perfect for those who prefer understated elegance with a fashion-forward edge.</p>
+                                                    
+                                                    <h6>Benefits of Matte Gel Polish:</h6>
+                                                    <ul>
+                                                        <li>Modern sophisticated appearance</li>
+                                                        <li>Smooth velvety texture</li>
+                                                        <li>Chic and contemporary style</li>
+                                                        <li>Understated elegance</li>
+                                                        <li>Fashion-forward edge</li>
+                                                        <li>Unique non-shiny finish</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Perfect For:</h6>
+                                                    <ul>
+                                                        <li>Professional settings</li>
+                                                        <li>Minimalist style preferences</li>
+                                                        <li>Fashion-forward individuals</li>
+                                                        <li>Those seeking unique nail look</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3085,16 +3609,43 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/solid.jpg')); ?>" style="height:250px;" alt="Solid Multi Color">
                                                 <div class="service-header">
-                                                    <h5>Solid Multi Color</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹749</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹599</span>
-                                                        <span class="time">Time - 60 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Solid Multi Color</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹749</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹599</span>
+                                                                <span class="time">Time - 60 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('solid-multi-color-gel-polish')">
+                                                            <i class="fas fa-chevron-down" id="arrow-solid-multi-color-gel-polish"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-solid-multi-color-gel-polish">
                                                     <p>Express your creativity with our solid multi-color gel polish service. Mix and match different colors on each nail or choose complementary shades for a unique, personalized look. Perfect for those who love variety and want to make a colorful statement.</p>
+                                                    
+                                                    <h6>Benefits of Solid Multi Color:</h6>
+                                                    <ul>
+                                                        <li>Creative self-expression</li>
+                                                        <li>Unique personalized look</li>
+                                                        <li>Variety of color combinations</li>
+                                                        <li>Mix and match options</li>
+                                                        <li>Colorful statement style</li>
+                                                        <li>Customizable design</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Design Options:</h6>
+                                                    <ul>
+                                                        <li>Different colors on each nail</li>
+                                                        <li>Complementary shade combinations</li>
+                                                        <li>Color blocking patterns</li>
+                                                        <li>Seasonal color themes</li>
+                                                        <li>Personalized color stories</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3151,16 +3702,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/frenchcl.jpg')); ?>" style="height:250px;" alt="Classic French">
                                                 <div class="service-header">
-                                                    <h5>Classic</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,125</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Classic</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,125</span>
                                                         <span class="discount">25% OFF</span>
                                                         <span class="final-price">₹899</span>
                                                         <span class="time">Time - 60 Min</span>
                                                     </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('classic-french')">
+                                                            <i class="fas fa-chevron-down" id="arrow-classic-french"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-classic-french">
                                                     <p>Experience the timeless elegance of classic French manicure. This iconic design features natural pink base with pristine white tips, creating a sophisticated and clean look that never goes out of style and complements any outfit or occasion.</p>
+                                                    
+                                                    <h6>Benefits of Classic French:</h6>
+                                                    <ul>
+                                                        <li>Timeless elegant appearance</li>
+                                                        <li>Iconic sophisticated design</li>
+                                                        <li>Natural pink base with white tips</li>
+                                                        <li>Never goes out of style</li>
+                                                        <li>Complements any outfit</li>
+                                                        <li>Suitable for all occasions</li>
+                                                        <li>Professional and clean look</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Perfect For:</h6>
+                                                    <ul>
+                                                        <li>Professional settings</li>
+                                                        <li>Weddings and formal events</li>
+                                                        <li>Everyday elegant look</li>
+                                                        <li>First-time nail art clients</li>
+                                                        <li>Those seeking classic beauty</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3175,16 +3754,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/vshape.jpg')); ?>" style="height:250px;" alt="V Shaped French">
                                                 <div class="service-header">
-                                                    <h5>V Shaped</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,125</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>V Shaped</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,125</span>
                                                         <span class="discount">25% OFF</span>
                                                         <span class="final-price">₹899</span>
                                                         <span class="time">Time - 60 Min</span>
                                                     </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('v-shaped-french')">
+                                                            <i class="fas fa-chevron-down" id="arrow-v-shaped-french"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-v-shaped-french">
                                                     <p>Modernize your French manicure with our V-shaped design. This contemporary twist features angular white tips that create a bold, geometric look, adding edge and personality to the traditional French style for a fashion-forward appearance.</p>
+                                                    
+                                                    <h6>Benefits of V Shaped French:</h6>
+                                                    <ul>
+                                                        <li>Modern contemporary twist</li>
+                                                        <li>Angular white tip design</li>
+                                                        <li>Bold geometric appearance</li>
+                                                        <li>Edge and personality</li>
+                                                        <li>Fashion-forward style</li>
+                                                        <li>Unique French variation</li>
+                                                        <li>Eye-catching design</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Perfect For:</h6>
+                                                    <ul>
+                                                        <li>Fashion-forward individuals</li>
+                                                        <li>Those seeking modern twist</li>
+                                                        <li>Trend-setting style</li>
+                                                        <li>Geometric design lovers</li>
+                                                        <li>Contemporary nail art</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3199,16 +3806,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/glitter.jpg')); ?>" style="height:250px;" alt="Glitter French">
                                                 <div class="service-header">
-                                                    <h5>Glitter</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,125</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Glitter</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,125</span>
                                                         <span class="discount">25% OFF</span>
                                                         <span class="final-price">₹899</span>
                                                         <span class="time">Time - 60 Min</span>
                                                     </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('glitter-french')">
+                                                            <i class="fas fa-chevron-down" id="arrow-glitter-french"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-glitter-french">
                                                     <p>Add sparkle and glamour to your French manicure with glitter tips. This dazzling variation features shimmering glitter on the white tips, creating a festive and eye-catching look that's perfect for special occasions and adds a touch of celebration to your nails.</p>
+                                                    
+                                                    <h6>Benefits of Glitter French:</h6>
+                                                    <ul>
+                                                        <li>Sparkle and glamour effect</li>
+                                                        <li>Dazzling glitter tips</li>
+                                                        <li>Festive appearance</li>
+                                                        <li>Eye-catching design</li>
+                                                        <li>Perfect for special occasions</li>
+                                                        <li>Celebratory touch</li>
+                                                        <li>Shimmering finish</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Perfect For:</h6>
+                                                    <ul>
+                                                        <li>Special occasions and events</li>
+                                                        <li>Parties and celebrations</li>
+                                                        <li>Holiday festivities</li>
+                                                        <li>Those who love sparkle</li>
+                                                        <li>Festive nail designs</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3264,15 +3899,23 @@ Time - 45 Min
                                         <div class="col-md-6 mb-30">
                                             <div class="service-card">
                                                 <div class="service-header">
-                                                    <h5>Custom Nail Art Design</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 hrs 10 min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Custom Nail Art Design</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 hrs 10 min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('custom-nail-art-design')">
+                                                            <i class="fas fa-chevron-down" id="arrow-custom-nail-art-design"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-custom-nail-art-design">
                                                     <h6>Explore Designs:</h6>
                                                     <ul>
                                                         <li>Cat Eyes</li>
@@ -3288,6 +3931,27 @@ Time - 45 Min
                                                         <li>Holographic</li>
                                                         <li>Ombre</li>
                                                         <li>Gold/silver foil</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Benefits of Custom Nail Art:</h6>
+                                                    <ul>
+                                                        <li>Unique personalized designs</li>
+                                                        <li>Professional artistic execution</li>
+                                                        <li>Wide variety of styles available</li>
+                                                        <li>Customized to your preferences</li>
+                                                        <li>High-quality materials used</li>
+                                                        <li>Long-lasting results</li>
+                                                        <li>Perfect for special occasions</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Popular Design Categories:</h6>
+                                                    <ul>
+                                                        <li>3D effects and textures</li>
+                                                        <li>Metallic finishes</li>
+                                                        <li>Nature-inspired patterns</li>
+                                                        <li>Abstract and geometric designs</li>
+                                                        <li>Seasonal themes</li>
+                                                        <li>Minimalist styles</li>
                                                     </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
@@ -3345,16 +4009,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/cla.jpeg')); ?>" style="height:250px;" alt="Classic Ombre">
                                                 <div class="service-header">
-                                                    <h5>Classic ombre</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 Hrs 10 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Classic ombre</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 Hrs 10 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('classic-ombre')">
+                                                            <i class="fas fa-chevron-down" id="arrow-classic-ombre"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-classic-ombre">
                                                     <p>Achieve a beautiful gradient effect with our classic ombre nails. This timeless technique creates a seamless color transition from light to dark, giving your nails a sophisticated and elegant look that complements any style or occasion.</p>
+                                                    
+                                                    <h6>Benefits of Classic Ombre:</h6>
+                                                    <ul>
+                                                        <li>Beautiful gradient effect</li>
+                                                        <li>Seamless color transition</li>
+                                                        <li>Timeless sophisticated look</li>
+                                                        <li>Elegant appearance</li>
+                                                        <li>Complements any style</li>
+                                                        <li>Suitable for all occasions</li>
+                                                        <li>Professional blending technique</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Popular Color Combinations:</h6>
+                                                    <ul>
+                                                        <li>Pink to white gradient</li>
+                                                        <li>Blue to light blue fade</li>
+                                                        <li>Red to pink transition</li>
+                                                        <li>Purple to lavender blend</li>
+                                                        <li>Nude to white ombre</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3369,16 +4061,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/glitter.jpg')); ?>" style="height:250px;" alt="Vertical Ombre">
                                                 <div class="service-header">
-                                                    <h5>Vertical ombre</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 Hrs 10 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Vertical ombre</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 Hrs 10 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('vertical-ombre')">
+                                                            <i class="fas fa-chevron-down" id="arrow-vertical-ombre"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-vertical-ombre">
                                                     <p>Create a striking vertical color flow with our vertical ombre design. This modern approach features color gradients running from cuticle to tip, elongating your nails and creating an eye-catching vertical statement.</p>
+                                                    
+                                                    <h6>Benefits of Vertical Ombre:</h6>
+                                                    <ul>
+                                                        <li>Striking vertical color flow</li>
+                                                        <li>Modern gradient approach</li>
+                                                        <li>Elongates nail appearance</li>
+                                                        <li>Eye-catching vertical statement</li>
+                                                        <li>Contemporary and stylish</li>
+                                                        <li>Unique color transition</li>
+                                                        <li>Fashion-forward design</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Popular Vertical Designs:</h6>
+                                                    <ul>
+                                                        <li>Cuticle to tip gradient</li>
+                                                        <li>Color fade from base</li>
+                                                        <li>Mixed color vertical flow</li>
+                                                        <li>Single color intensity fade</li>
+                                                        <li>Multi-tone vertical blend</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3393,16 +4113,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/FrenchGlitter.jpeg')); ?>" style="height:250px;" alt="Glitter Ombre">
                                                 <div class="service-header">
-                                                    <h5>Glitter ombre</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 Hrs 10 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Glitter ombre</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 Hrs 10 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('glitter-ombre')">
+                                                            <i class="fas fa-chevron-down" id="arrow-glitter-ombre"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-glitter-ombre">
                                                     <p>Add sparkle and dimension to your nails with glitter ombre. This dazzling combination blends gradient colors with fine glitter particles, creating a multidimensional effect that catches light from every angle.</p>
+                                                    
+                                                    <h6>Benefits of Glitter Ombre:</h6>
+                                                    <ul>
+                                                        <li>Sparkle and dimension effect</li>
+                                                        <li>Dazzling gradient combination</li>
+                                                        <li>Multidimensional appearance</li>
+                                                        <li>Catches light from every angle</li>
+                                                        <li>Festive and glamorous</li>
+                                                        <li>Eye-catching design</li>
+                                                        <li>Perfect for special occasions</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Glitter Options:</h6>
+                                                    <ul>
+                                                        <li>Fine glitter particles</li>
+                                                        <li>Coarse glitter blend</li>
+                                                        <li>Holographic glitter</li>
+                                                        <li>Metallic shimmer</li>
+                                                        <li>Color-matched glitter</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3417,16 +4165,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/marble.jpeg')); ?>" style="height:250px;" alt="Classic Marble">
                                                 <div class="service-header">
-                                                    <h5>Classic marble</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 Hrs 10 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Classic marble</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 Hrs 10 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('classic-marble')">
+                                                            <i class="fas fa-chevron-down" id="arrow-classic-marble"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-classic-marble">
                                                     <p>Achieve the luxurious look of natural stone with our classic marble nails. This artistic technique creates delicate veining patterns that mimic real marble, giving your nails an elegant and sophisticated appearance.</p>
+                                                    
+                                                    <h6>Benefits of Classic Marble:</h6>
+                                                    <ul>
+                                                        <li>Luxurious natural stone look</li>
+                                                        <li>Artistic veining patterns</li>
+                                                        <li>Mimics real marble appearance</li>
+                                                        <li>Elegant and sophisticated</li>
+                                                        <li>Unique design each time</li>
+                                                        <li>High-end aesthetic</li>
+                                                        <li>Timeless beauty</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Marble Variations:</h6>
+                                                    <ul>
+                                                        <li>White with gray veins</li>
+                                                        <li>Black with gold accents</li>
+                                                        <li>Pink marble design</li>
+                                                        <li>Blue marble patterns</li>
+                                                        <li>Multi-color marble blend</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3531,16 +4307,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/crome.jpg')); ?>" style="height:250px;" alt="Classic Chrome">
                                                 <div class="service-header">
-                                                    <h5>Classic</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 Hrs 10 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Classic</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 Hrs 10 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('classic-chrome')">
+                                                            <i class="fas fa-chevron-down" id="arrow-classic-chrome"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-classic-chrome">
                                                     <p>Experience the timeless elegance of classic chrome nails with our premium mirror-finish treatment. This service creates a stunning metallic sheen that reflects light beautifully, giving your nails a sophisticated and modern look perfect for any occasion.</p>
+                                                    
+                                                    <h6>Benefits of Classic Chrome:</h6>
+                                                    <ul>
+                                                        <li>Timeless elegant appearance</li>
+                                                        <li>Premium mirror-finish treatment</li>
+                                                        <li>Stunning metallic sheen</li>
+                                                        <li>Reflects light beautifully</li>
+                                                        <li>Sophisticated modern look</li>
+                                                        <li>Suitable for any occasion</li>
+                                                        <li>High-end nail aesthetic</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Chrome Finish Options:</h6>
+                                                    <ul>
+                                                        <li>Silver mirror chrome</li>
+                                                        <li>Gold metallic finish</li>
+                                                        <li>Rose gold chrome</li>
+                                                        <li>Gunmetal gray</li>
+                                                        <li>Multi-chrome effects</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3555,16 +4359,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/gal.jpg')); ?>" style="height:250px;" alt="Holographic Nails">
                                                 <div class="service-header">
-                                                    <h5>Holographic</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 Hrs 10 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Holographic</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 Hrs 10 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('holographic')">
+                                                            <i class="fas fa-chevron-down" id="arrow-holographic"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-holographic">
                                                     <p>Transform your nails into a rainbow prism with our holographic treatment. This mesmerizing effect creates a multidimensional sparkle that shifts colors with every movement, giving you an eye-catching and futuristic look that's perfect for parties and special events.</p>
+                                                    
+                                                    <h6>Benefits of Holographic:</h6>
+                                                    <ul>
+                                                        <li>Rainbow prism effect</li>
+                                                        <li>Mesmerizing multidimensional sparkle</li>
+                                                        <li>Shifts colors with movement</li>
+                                                        <li>Eye-catching futuristic look</li>
+                                                        <li>Perfect for parties and events</li>
+                                                        <li>Unique color-changing effect</li>
+                                                        <li>Stand-out nail design</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Holographic Effects:</h6>
+                                                    <ul>
+                                                        <li>Rainbow color shifts</li>
+                                                        <li>Iridescent sparkle</li>
+                                                        <li>Prismatic light reflection</li>
+                                                        <li>Color-changing particles</li>
+                                                        <li>3D dimensional effect</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3579,16 +4411,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/line.jpg')); ?>" style="height:250px;" alt="Chrome Lines">
                                                 <div class="service-header">
-                                                    <h5>Chrome Lines</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 Hrs 10 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Chrome Lines</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 Hrs 10 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('chrome-lines')">
+                                                            <i class="fas fa-chevron-down" id="arrow-chrome-lines"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-chrome-lines">
                                                     <p>Elevate your nail art with precision chrome line designs. This service combines the mirror-like finish of chrome with artistic line patterns, creating geometric and abstract designs that showcase both technical skill and creative vision.</p>
+                                                    
+                                                    <h6>Benefits of Chrome Lines:</h6>
+                                                    <ul>
+                                                        <li>Precision chrome line designs</li>
+                                                        <li>Mirror-like finish effects</li>
+                                                        <li>Artistic line patterns</li>
+                                                        <li>Geometric and abstract designs</li>
+                                                        <li>Showcases technical skill</li>
+                                                        <li>Creative vision expression</li>
+                                                        <li>High-end artistic nail art</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Line Design Options:</h6>
+                                                    <ul>
+                                                        <li>Geometric patterns</li>
+                                                        <li>Abstract line art</li>
+                                                        <li>Minimalist designs</li>
+                                                        <li>Intricate patterns</li>
+                                                        <li>Colorful chrome lines</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -3603,16 +4463,44 @@ Time - 45 Min
                                             <div class="service-card">
                                                 <img src="<?php echo e(asset('images/services/fr.jpg')); ?>" style="height:250px;" alt="Chrome French Tips">
                                                 <div class="service-header">
-                                                    <h5>Chrome French Tips</h5>
-                                                    <div class="price-info">
-                                                        <span class="original-price">₹1,499</span>
-                                                        <span class="discount">25% OFF</span>
-                                                        <span class="final-price">₹1,199</span>
-                                                        <span class="time">Time - 1 Hrs 10 Min</span>
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <h5>Chrome French Tips</h5>
+                                                            <div class="price-info">
+                                                                <span class="original-price">₹1,499</span>
+                                                                <span class="discount">25% OFF</span>
+                                                                <span class="final-price">₹1,199</span>
+                                                                <span class="time">Time - 1 Hrs 10 Min</span>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-outline-info toggle-service-details" 
+                                                                onclick="toggleServiceDetails('chrome-french-tips')">
+                                                            <i class="fas fa-chevron-down" id="arrow-chrome-french-tips"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="service-details">
+                                                <div class="service-details collapse" id="details-chrome-french-tips">
                                                     <p>Modernize the classic French manicure with our chrome French tips. This contemporary twist features reflective chrome tips that add a luxurious and glamorous touch to the timeless design, perfect for those who love tradition with a modern edge.</p>
+                                                    
+                                                    <h6>Benefits of Chrome French Tips:</h6>
+                                                    <ul>
+                                                        <li>Modernized classic French</li>
+                                                        <li>Reflective chrome tips</li>
+                                                        <li>Luxurious glamorous touch</li>
+                                                        <li>Contemporary twist on tradition</li>
+                                                        <li>Timeless design with modern edge</li>
+                                                        <li>Best of both worlds</li>
+                                                        <li>Sophisticated and trendy</li>
+                                                    </ul>
+                                                    
+                                                    <h6>Chrome French Variations:</h6>
+                                                    <ul>
+                                                        <li>Silver chrome tips</li>
+                                                        <li>Gold chrome French</li>
+                                                        <li>Rose gold tips</li>
+                                                        <li>Multi-chrome effects</li>
+                                                        <li>Colorful chrome variations</li>
+                                                    </ul>
                                                 </div>
                                                 <div class="service-action mt-3">
                                                     <button class="btn btn-add-to-cart" 
@@ -4031,9 +4919,6 @@ Time - 45 Min
             
          
             
-            
-              <!-- contact-area -->
-            <section id="contact" class="contact-area contact-bg pt-100 pb-100 p-relative fix" style="background-image:url(<?php echo e(asset('images/bg/contact-bg.png')); ?>)">
                 
 <?php $__env->stopSection(); ?>
 
@@ -4119,6 +5004,28 @@ window.showNotification = function(message, type) {
             $(this).remove();
         });
     }, 3000);
+};
+
+// Toggle service details collapse
+window.toggleServiceDetails = function(serviceId) {
+    const detailsElement = document.getElementById('details-' + serviceId);
+    const arrowElement = document.getElementById('arrow-' + serviceId);
+    
+    if (detailsElement) {
+        const isCollapsed = detailsElement.classList.contains('show');
+        
+        if (isCollapsed) {
+            // Collapse
+            detailsElement.classList.remove('show');
+            arrowElement.classList.remove('fa-chevron-up');
+            arrowElement.classList.add('fa-chevron-down');
+        } else {
+            // Expand
+            detailsElement.classList.add('show');
+            arrowElement.classList.remove('fa-chevron-down');
+            arrowElement.classList.add('fa-chevron-up');
+        }
+    }
 };
 
 // Load cart count on page load (works for both guests and authenticated users)

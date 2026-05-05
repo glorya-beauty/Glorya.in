@@ -1,11 +1,11 @@
-@extends('layouts.app')
 
-@section('title', 'Booking Successful - Glorya Beauty')
-@section('description', 'Your booking has been successfully confirmed at Glorya Beauty')
 
-@section('content')
+<?php $__env->startSection('title', 'Booking Successful - Glorya Beauty'); ?>
+<?php $__env->startSection('description', 'Your booking has been successfully confirmed at Glorya Beauty'); ?>
+
+<?php $__env->startSection('content'); ?>
 <!-- breadcrumb-area -->
-<section class="breadcrumb-area d-flex align-items-center" style="background-image:url({{ asset('images/testimonial/test-bg.png') }})">
+<section class="breadcrumb-area d-flex align-items-center" style="background-image:url(<?php echo e(asset('images/testimonial/test-bg.png')); ?>)">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-xl-12 col-lg-12">
@@ -14,7 +14,7 @@
                         <div class="breadcrumb-wrap">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="<?php echo e(url('/')); ?>">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Booking Successful</li>
                                 </ol>
                             </nav>
@@ -28,9 +28,9 @@
 <!-- breadcrumb-area-end -->
 
 <!-- success-area -->
-<section class="contact-area contact-bg pt-100 pb-100 p-relative fix" style="background-image:url({{ asset('images/bg/contact-bg.png') }})">
-    <div class="contact-bg-an-01"><img src="{{ asset('images/bg/contact-bg-an-01.png') }}" alt="contact-bg-an-01"></div>
-    <div class="contact-bg-an-02"><img src="{{ asset('images/bg/contact-bg-an-02.png') }}" alt="contact-bg-an-01"></div>
+<section class="contact-area contact-bg pt-100 pb-100 p-relative fix" style="background-image:url(<?php echo e(asset('images/bg/contact-bg.png')); ?>)">
+    <div class="contact-bg-an-01"><img src="<?php echo e(asset('images/bg/contact-bg-an-01.png')); ?>" alt="contact-bg-an-01"></div>
+    <div class="contact-bg-an-02"><img src="<?php echo e(asset('images/bg/contact-bg-an-02.png')); ?>" alt="contact-bg-an-01"></div>
     <div class="container">
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-10">
@@ -42,7 +42,7 @@
 
                     <div class="section-title mb-30">   
                         <h2>Booking Successful!</h2>
-                        <span class="line5"> <img src="{{ asset('images/bg/circle_right.png') }}" alt="circle_left"></span>
+                        <span class="line5"> <img src="<?php echo e(asset('images/bg/circle_right.png')); ?>" alt="circle_left"></span>
                     </div>
 
                     <div class="success-content mb-40">
@@ -56,39 +56,47 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="detail-item mb-15">
-                                    <strong>Booking ID:</strong> #GLY-{{ str_pad($booking->id, 6, '0', STR_PAD_LEFT) }}
+                                    <strong>Booking ID:</strong> #GLY-<?php echo e(str_pad($booking->id, 6, '0', STR_PAD_LEFT)); ?>
+
                                 </div>
                                 <div class="detail-item mb-15">
-                                    <strong>Service:</strong> {{ $booking->service_name }}
+                                    <strong>Service:</strong> <?php echo e($booking->service_name); ?>
+
                                 </div>
                                 <div class="detail-item mb-15">
-                                    <strong>Base Amount:</strong> {{ $booking->base_amount ?? 'N/A' }}/-
+                                    <strong>Base Amount:</strong> <?php echo e($booking->base_amount ?? 'N/A'); ?>/-
                                 </div>
                                 <div class="detail-item mb-15">
-                                    <strong>GST (5%):</strong> {{ $booking->base_amount ? number_format($booking->base_amount * 0.05, 2) : 'N/A' }}/-
+                                    <strong>GST (5%):</strong> <?php echo e($booking->base_amount ? number_format($booking->base_amount * 0.05, 2) : 'N/A'); ?>/-
                                 </div>
                                 <div class="detail-item mb-15">
-                                    <strong>Total Amount:</strong> {{ $booking->amount }}/-
+                                    <strong>Total Amount:</strong> <?php echo e($booking->amount); ?>/-
                                 </div>
                                 <div class="detail-item mb-15">
-                                    <strong>Date:</strong> {{ $booking->booking_date ? (is_string($booking->booking_date) ? \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') : $booking->booking_date->format('d M Y')) : 'N/A' }}
+                                    <strong>Date:</strong> <?php echo e($booking->booking_date ? (is_string($booking->booking_date) ? \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') : $booking->booking_date->format('d M Y')) : 'N/A'); ?>
+
                                 </div>
                                 <div class="detail-item mb-15">
-                                    <strong>Time:</strong> {{ $booking->time_slot ?? $booking->booking_time ?? 'N/A' }}
+                                    <strong>Time:</strong> <?php echo e($booking->time_slot ?? $booking->booking_time ?? 'N/A'); ?>
+
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="detail-item mb-15">
-                                    <strong>Name:</strong> {{ $booking->customer_name }}
+                                    <strong>Name:</strong> <?php echo e($booking->customer_name); ?>
+
                                 </div>
                                 <div class="detail-item mb-15">
-                                    <strong>Email:</strong> {{ $booking->customer_email }}
+                                    <strong>Email:</strong> <?php echo e($booking->customer_email); ?>
+
                                 </div>
                                 <div class="detail-item mb-15">
-                                    <strong>Phone:</strong> {{ $booking->customer_phone }}
+                                    <strong>Phone:</strong> <?php echo e($booking->customer_phone); ?>
+
                                 </div>
                                 <div class="detail-item mb-15">
-                                    <strong>Address:</strong> {{ $booking->customer_address ?? $booking->address ?? 'N/A' }}
+                                    <strong>Address:</strong> <?php echo e($booking->customer_address ?? $booking->address ?? 'N/A'); ?>
+
                                 </div>
                                 <div class="detail-item mb-15">
                                     <strong>Status:</strong> 
@@ -141,16 +149,18 @@
                     <h5 class="mb-3">Booking Details</h5>
                     <div class="row">
                         <div class="col-md-6">
-                            <strong>Booking Number:</strong> {{ $booking->booking_number ?? '#GLY-' . str_pad($booking->id, 6, '0', STR_PAD_LEFT) }}<br>
-                            <strong>Service:</strong> {{ $booking->service_name }}<br>
-                            <strong>Date:</strong> {{ $booking->booking_date ? (is_string($booking->booking_date) ? \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') : $booking->booking_date->format('d M Y')) : 'N/A' }}<br>
-                            <strong>Time:</strong> {{ $booking->time_slot ?? $booking->booking_time ?? 'N/A' }}
+                            <strong>Booking Number:</strong> <?php echo e($booking->booking_number ?? '#GLY-' . str_pad($booking->id, 6, '0', STR_PAD_LEFT)); ?><br>
+                            <strong>Service:</strong> <?php echo e($booking->service_name); ?><br>
+                            <strong>Date:</strong> <?php echo e($booking->booking_date ? (is_string($booking->booking_date) ? \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') : $booking->booking_date->format('d M Y')) : 'N/A'); ?><br>
+                            <strong>Time:</strong> <?php echo e($booking->time_slot ?? $booking->booking_time ?? 'N/A'); ?>
+
                         </div>
                         <div class="col-md-6">
-                            <strong>Total Amount:</strong> {{ $booking->amount }}/-<br>
+                            <strong>Total Amount:</strong> <?php echo e($booking->amount); ?>/-<br>
                             <strong>Status:</strong> <span class="badge badge-info">Payment Verification Pending</span><br>
-                            <strong>Email:</strong> {{ $booking->customer_email }}<br>
-                            <strong>Phone:</strong> {{ $booking->customer_phone }}
+                            <strong>Email:</strong> <?php echo e($booking->customer_email); ?><br>
+                            <strong>Phone:</strong> <?php echo e($booking->customer_phone); ?>
+
                         </div>
                     </div>
                 </div>
@@ -159,19 +169,19 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="fas fa-times mr-2"></i>Close
                 </button>
-                <a href="{{ route('booking.my') }}" class="btn btn-info">
+                <a href="<?php echo e(route('booking.my')); ?>" class="btn btn-info">
                     <i class="fas fa-list mr-2"></i>My Bookings
                 </a>
-                <a href="{{ route('home') }}" class="btn btn-primary">
+                <a href="<?php echo e(route('home')); ?>" class="btn btn-primary">
                     <i class="fas fa-home mr-2"></i>Go to Home
                 </a>
             </div>
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('styles')
+<?php $__env->startPush('styles'); ?>
 <style>
     .success-icon {
         animation: pulse 2s infinite;
@@ -204,9 +214,9 @@
         100% { transform: scale(1); opacity: 1; }
     }
 </style>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
 $(document).ready(function() {
     console.log('Success page loaded, preparing modal...');
@@ -249,8 +259,8 @@ $(document).ready(function() {
             console.error('Error showing modal:', error);
             // Final fallback: show alert
             alert('Thank you! Your booking has been submitted successfully and is pending verification.\n\nBooking Number: ' + 
-                  ('{{ $booking->booking_number ?? "#GLY-" . str_pad($booking->id, 6, "0", STR_PAD_LEFT) }}') + 
-                  '\nTotal Amount: {{ $booking->amount }}/-');
+                  ('<?php echo e($booking->booking_number ?? "#GLY-" . str_pad($booking->id, 6, "0", STR_PAD_LEFT)); ?>') + 
+                  '\nTotal Amount: <?php echo e($booking->amount); ?>/-');
         }
     }, 100); // Reduced delay for faster display
     
@@ -268,4 +278,6 @@ $(document).ready(function() {
     console.log('Modal setup complete. You can manually show modal by calling: showThankYouModal()');
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Glorya.in\resources\views/frontend/booking/success.blade.php ENDPATH**/ ?>

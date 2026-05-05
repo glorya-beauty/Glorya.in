@@ -1,11 +1,11 @@
-@extends('layouts.app')
 
-@section('title', 'Contact - Glorya Beauty')
-@section('description', 'Get in touch with Glorya Beauty - book appointments, ask questions, or visit our salon')
 
-@section('content')
+<?php $__env->startSection('title', 'Contact - Glorya Beauty'); ?>
+<?php $__env->startSection('description', 'Get in touch with Glorya Beauty - book appointments, ask questions, or visit our salon'); ?>
+
+<?php $__env->startSection('content'); ?>
  <!-- breadcrumb-area -->
-            <section class="breadcrumb-area d-flex align-items-center" style="background-image:url({{ asset('images/testimonial/test-bg.png') }})">
+            <section class="breadcrumb-area d-flex align-items-center" style="background-image:url(<?php echo e(asset('images/testimonial/test-bg.png')); ?>)">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-xl-12 col-lg-12">
@@ -15,7 +15,7 @@
                               
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="<?php echo e(url('/')); ?>">Home</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
                                     </ol>
                                 </nav>
@@ -39,7 +39,7 @@
                                   Get In Touch With Us
                                 </h2>
                                 <p>We're here to help you look and feel your best. Reach out to us for appointments, inquiries, or any beauty-related questions you may have.</p>
-                                <span class="line5"> <img src="{{ asset('images/bg/circle_left.png') }}" alt="circle_left"></span>
+                                <span class="line5"> <img src="<?php echo e(asset('images/bg/circle_left.png')); ?>" alt="circle_left"></span>
                             </div>
                            
                         </div>
@@ -50,7 +50,7 @@
                              
                           <div class="services-box text-center">
                               <div class="services-icon">
-                                   <img src="{{ asset('images/icon/cn-icon1.png') }}" alt="icon01">
+                                   <img src="<?php echo e(asset('images/icon/cn-icon1.png')); ?>" alt="icon01">
                                 </div>
                                <div class="services-content2">
                                     <h5>Email Address</h5>   
@@ -66,7 +66,7 @@
                              
                           <div class="services-box text-center">
                               <div class="services-icon">
-                                   <img src="{{ asset('images/icon/cn-icon2.png') }}" alt="icon01">
+                                   <img src="<?php echo e(asset('images/icon/cn-icon2.png')); ?>" alt="icon01">
                                 </div>
                                <div class="services-content2">
                                     <h5>Phone Number</h5>   
@@ -82,7 +82,7 @@
                              
                           <div class="services-box text-center">
                               <div class="services-icon">
-                                   <img src="{{ asset('images/icon/cn-icon3.png') }}" alt="icon01">
+                                   <img src="<?php echo e(asset('images/icon/cn-icon3.png')); ?>" alt="icon01">
                                 </div>
                                <div class="services-content2">
                                     <h5>Office Address</h5>   
@@ -100,15 +100,15 @@
             </section>
             <!-- services-area-end -->
 			 <!-- contact-area -->
-            <section id="contact" class="contact-area contact-bg pt-100 pb-100 p-relative fix" style="background-image:url({{ asset('images/bg/contact-bg.png') }})">
+            <section id="contact" class="contact-area contact-bg pt-100 pb-100 p-relative fix" style="background-image:url(<?php echo e(asset('images/bg/contact-bg.png')); ?>)">
              <div style="width: 100%"><iframe  frameborder="0" scrolling="no" marginheight="0" marginwidth="0"  style="height:500px;width:100%;" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=B-3/410,%20First%20Floor,%20Tara%20Nagar,%20Old%20Palam%20Road,%20Kakrola,%20Dwarka%20-%20110078+(Glorya)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.mapsdirections.info/pl/mapa-populacji/"></a></iframe></div>  
             </section>
             <!-- contact-area-end -->
        
            
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('styles')
+<?php $__env->startPush('styles'); ?>
 <style>
 .ajax-response {
     padding: 15px;
@@ -143,4 +143,6 @@
     transform: translateY(-2px);
 }
 </style>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Glorya.in\resources\views/frontend/contact.blade.php ENDPATH**/ ?>

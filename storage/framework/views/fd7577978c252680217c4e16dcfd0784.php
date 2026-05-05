@@ -28,7 +28,7 @@
                                 <li><a href="<?php echo e(url('/')); ?>">Home</a></li>
                                 <li><a href="<?php echo e(url('/about')); ?>"> About Us</a></li>
                                 <li><a href="<?php echo e(url('/services')); ?>"> Services </a></li>
-                                <li><a href="<?php echo e(url('/blog')); ?>">Blog </a></li>
+                               
                             </ul>
                         </div>
                     </div>
@@ -40,10 +40,9 @@
                         </div>
                         <div class="footer-link">
                             <ul>
-                                <li><a href="<?php echo e(url('/blog')); ?>">FAQ</a></li>
-                                <li><a href="<?php echo e(url('/contact')); ?>">Support</a></li>
-                                <li><a href="<?php echo e(url('/contact')); ?>">Privacy</a></li>
-                                <li><a href="<?php echo e(url('/contact')); ?>">Term & Conditions</a></li>
+                                <li><a href="<?php echo e(url('/')); ?>">Media</a></li>
+                                <li><a href="<?php echo e(url('/')); ?>">Privacy</a></li>
+                                <li><a href="<?php echo e(url('/')); ?>">Term & Conditions</a></li>
                             </ul>
                         </div>
                     </div>

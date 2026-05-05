@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'Glorya Beauty'); ?>
 <?php $__env->startSection('description', 'Luxury salon care at home, empowering service professionals'); ?>
 
@@ -31,169 +33,6 @@
     </div>
     <!-- /search-popup -->
 
-<!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Login to Glorya Beauty</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php if($errors->any()): ?>
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li><?php echo e($error); ?></li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </ul>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" action="<?php echo e(route('login')); ?>" id="loginForm">
-                    <?php echo csrf_field(); ?>
-                    <div class="form-group">
-                        <label for="login_email">Email Address</label>
-                        <input type="email" class="form-control" id="login_email" name="email" 
-                               value="<?php echo e(old('email')); ?>" required autocomplete="email" autofocus>
-                        <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="login_password">Password</label>
-                        <input type="password" class="form-control" id="login_password" name="password" required>
-                        <?php $__errorArgs = ['password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" name="remember" id="remember" class="form-check-input">
-                            <label class="form-check-label" for="remember">Remember me</label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn  ss-btn active btn-block">Login</button>
-                    <div class="text-center mt-3">
-                        <p>Don't have an account? <a href="#" onclick="showRegisterModal();">Register here</a></p>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Registration Modal -->
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="registerModalLabel">Register for Glorya Beauty</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php if($errors->any()): ?>
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li><?php echo e($error); ?></li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </ul>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" action="<?php echo e(route('register')); ?>" id="registerForm">
-                    <?php echo csrf_field(); ?>
-                    <div class="form-group">
-                        <label for="register_name">Full Name</label>
-                        <input type="text" class="form-control" id="register_name" name="name" 
-                               value="<?php echo e(old('name')); ?>" required autocomplete="name" autofocus>
-                        <?php $__errorArgs = ['name'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="register_email">Email Address</label>
-                        <input type="email" class="form-control" id="register_email" name="email" 
-                               value="<?php echo e(old('email')); ?>" required autocomplete="email">
-                        <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="register_password">Password</label>
-                        <input type="password" class="form-control" id="register_password" name="password" required>
-                        <?php $__errorArgs = ['password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback d-block">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="register_password_confirmation">Confirm Password</label>
-                        <input type="password" class="form-control" id="register_password_confirmation" name="password_confirmation" required>
-                    </div>
-                    <button type="submit" class="btn btn ss-btn active btn-block">Register</button>
-                    <div class="text-center mt-3">
-                        <p>Already have an account? <a href="#" onclick="showLoginModal();">Login here</a></p>
-                    </div>
-                </form>
-            </div> 
-        </div>
-    </div>
-</div>
     
     <!-- slider-area -->
     <section id="home" class="slider-area slider-four fix p-relative">
@@ -848,7 +687,7 @@ unset($__errorArgs, $__bag); ?>
             <!-- testimonial-area-end -->
             
               <!-- blog-area -->
-            <section id="blog" class="blog-area  p-relative pt-100 pb-70 fix">
+            <!-- <section id="blog" class="blog-area  p-relative pt-100 pb-70 fix">
                 <div class="container">
                     <div class="row align-items-center"> 
                         <div class="col-lg-12">
@@ -1001,7 +840,7 @@ unset($__errorArgs, $__bag); ?>
                         
                     </div>
                 </div>
-            </section>
+            </section> -->
             <!-- blog-area-end -->
 		</main>
 		
