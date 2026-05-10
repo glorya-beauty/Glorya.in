@@ -21,7 +21,6 @@
                 
                                     </li>
                                     <li><a href="{{ url('/gallery') }}">Gallery</a></li>
-                                    <li><a href="{{ url('/blog') }}">Media</a></li>
                                     <li><a href="{{ url('/contact') }}">Contact</a></li>
                                     @if(Auth::check())
                                         <li class="has-sub">

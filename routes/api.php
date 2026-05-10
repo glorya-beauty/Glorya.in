@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Public API Routes (no authentication required)
+use App\Http\Controllers\Admin\ServiceController;
+Route::get('/services/get-subcategories', [ServiceController::class, 'getSubcategories']);
+

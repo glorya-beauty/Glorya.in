@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth\CustomLoginController;
 use App\Http\Controllers\Auth\CustomRegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\CartController;
 
 /*
@@ -23,11 +25,18 @@ use App\Http\Controllers\CartController;
 |
 */
 
+// Test route
+Route::get('/test-api', function() {
+    return response()->json(['message' => 'API is working']);
+});
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Additional Pages
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/services', [PageController::class, 'services'])->name('services');
+Route::get('/services-clone', [PageController::class, 'servicesClone'])->name('services-clone');
 Route::get('/services-detail', [PageController::class, 'servicesDetail'])->name('services-detail');
 Route::get('/blog', [PageController::class, 'blog'])->name('blog');
 Route::get('/blog-details', [PageController::class, 'blogDetails'])->name('blog-details');
@@ -83,4 +92,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/bookings', [AdminController::class, 'bookings'])->name('bookings');
     Route::post('/booking/{id}/status', [AdminController::class, 'updateBookingStatus'])->name('booking.status');
     Route::post('/booking/{id}/payment-verify', [AdminController::class, 'verifyPayment'])->name('booking.payment.verify');
+    
+    // Category Management Routes
+    Route::resource('categories', CategoryController::class);
+    
+    // Service Management Routes
+    Route::resource('services', ServiceController::class);
+    Route::get('/services/get-subcategories', [ServiceController::class, 'getSubcategories'])->name('services.get-subcategories');
 });

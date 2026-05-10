@@ -40,7 +40,6 @@
                         </div>
                         <div class="footer-link">
                             <ul>
-                                <li><a href="{{ url('/') }}">Media</a></li>
                                 <li><a href="{{ url('/') }}">Privacy</a></li>
                                 <li><a href="{{ url('/') }}">Term & Conditions</a></li>
                             </ul>
@@ -53,7 +52,7 @@
                             <ul>
                             <li class="d-flex align-items-center">
                                 <i class="fas fa-phone-alt me-2 text-primary"></i>
-                                <span class="small">01141767035</span>
+                                <span class="small">011-4176-7035</span>
                             </li>
                            <li class="d-flex align-items-center">
                                 <i class="fas fa-envelope me-2 text-primary"></i>

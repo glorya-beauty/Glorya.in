@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Category;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,13 +24,17 @@ class AdminController extends Controller
         $confirmedBookings = Booking::where('status', 'confirmed')->count();
         $completedBookings = Booking::where('status', 'completed')->count();
         $totalUsers = User::where('is_admin', false)->count();
+        $totalCategories = Category::count();
+        $totalServices = Service::count();
 
         return view('admin.dashboard', compact(
             'totalBookings',
             'pendingBookings', 
             'confirmedBookings',
             'completedBookings',
-            'totalUsers'
+            'totalUsers',
+            'totalCategories',
+            'totalServices'
         ));
     }
 

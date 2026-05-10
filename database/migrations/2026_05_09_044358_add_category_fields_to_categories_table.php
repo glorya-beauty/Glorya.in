@@ -1,0 +1,31 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('categories', function (Blueprint $table) {
+            $table->string('title')->after('name');
+            $table->text('tagline')->nullable()->after('description');
+            $table->json('submenu')->nullable()->after('tagline');
+            $table->string('category_icon_image')->nullable()->after('image');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropColumn(['title', 'tagline', 'submenu', 'category_icon_image']);
+        });
+    }
+};

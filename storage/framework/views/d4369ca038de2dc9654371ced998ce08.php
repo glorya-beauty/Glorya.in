@@ -1,3 +1,5 @@
+
+
 <?php $__env->startPush('styles'); ?>
 <link rel="stylesheet" href="<?php echo e(asset('css/admin.css')); ?>">
 <?php $__env->stopPush(); ?>
@@ -78,6 +80,38 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-secondary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="mb-0"><?php echo e($totalCategories); ?></h4>
+                            <p class="mb-0">Categories</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-tags fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-purple text-white" style="background-color: #8B5CF6 !important;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="mb-0"><?php echo e($totalServices); ?></h4>
+                            <p class="mb-0">Services</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-concierge-bell fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -88,23 +122,33 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-2 mb-3">
                             <a href="<?php echo e(route('admin.bookings')); ?>" class="btn btn-primary btn-block">
                                 <i class="fas fa-list"></i> View All Bookings
                             </a>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-2 mb-3">
                             <a href="<?php echo e(route('admin.bookings', ['status' => 'pending'])); ?>" class="btn btn-warning btn-block">
                                 <i class="fas fa-clock"></i> Pending Bookings
                             </a>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-2 mb-3">
                             <a href="<?php echo e(route('admin.bookings', ['payment_verified' => '0'])); ?>" class="btn btn-danger btn-block">
                                 <i class="fas fa-times"></i> Unverified Payments
                             </a>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="<?php echo e(route('services')); ?>" class="btn btn-secondary btn-block">
+                        <div class="col-md-2 mb-3">
+                            <a href="<?php echo e(route('admin.categories.index')); ?>" class="btn btn-info btn-block">
+                                <i class="fas fa-tags"></i> Manage Categories
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="<?php echo e(route('admin.categories.create')); ?>" class="btn btn-success btn-block">
+                                <i class="fas fa-plus"></i> Add Category
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="<?php echo e(route('home')); ?>" class="btn btn-secondary btn-block">
                                 <i class="fas fa-eye"></i> View Website
                             </a>
                         </div>
@@ -158,6 +202,10 @@
     background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important;
 }
 
+.bg-secondary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
 .btn {
     border-radius: 8px;
     padding: 12px 20px;
@@ -172,4 +220,4 @@
 </style>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Glorya.in\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Glorya.in\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>

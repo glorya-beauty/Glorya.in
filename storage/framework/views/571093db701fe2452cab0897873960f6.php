@@ -21,7 +21,6 @@
                 
                                     </li>
                                     <li><a href="<?php echo e(url('/gallery')); ?>">Gallery</a></li>
-                                    <li><a href="<?php echo e(url('/blog')); ?>">Media</a></li>
                                     <li><a href="<?php echo e(url('/contact')); ?>">Contact</a></li>
                                     <?php if(Auth::check()): ?>
                                         <li class="has-sub">

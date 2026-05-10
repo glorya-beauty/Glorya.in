@@ -99,7 +99,8 @@
                                     <div class="col-lg-6">
                                         <div class="contact-field p-relative c-name mb-20">
                                             <label for="customer_name">Your Name *</label>
-                                            <input type="text" id="customer_name" name="customer_name" value="{{ Auth::user()->name }}" required>
+                                            <input type="text" id="customer_name" name="customer_name" value="{{ Auth::user()->name }}" placeholder="e.g., Priya Sharma" required>
+                                            <small class="form-text text-muted">Your full name as per ID proof</small>
                                         </div>
                                     </div>
 
@@ -107,7 +108,8 @@
                                     <div class="col-lg-6">
                                         <div class="contact-field p-relative c-email mb-20">
                                             <label for="customer_email">Email Address *</label>
-                                            <input type="email" id="customer_email" name="customer_email" value="{{ Auth::user()->email }}" required>
+                                            <input type="email" id="customer_email" name="customer_email" value="{{ Auth::user()->email }}" placeholder="e.g., user@example.com" required>
+                                            <small class="form-text text-muted">We'll send booking confirmation to this email</small>
                                         </div>
                                     </div>
 
@@ -115,7 +117,8 @@
                                     <div class="col-lg-6">
                                         <div class="contact-field p-relative c-phone mb-20">
                                             <label for="customer_phone">Phone Number *</label>
-                                            <input type="tel" id="customer_phone" name="customer_phone" value="{{ Auth::user()->phone ?? '' }}" required>
+                                            <input type="tel" id="customer_phone" name="customer_phone" value="{{ Auth::user()->phone ?? '' }}" placeholder="e.g., 9876543210" maxlength="10" required>
+                                            <small class="form-text text-muted">10-digit mobile number for service updates</small>
                                         </div>
                                     </div>
 
@@ -123,7 +126,8 @@
                                     <div class="col-lg-12">
                                         <div class="contact-field p-relative c-message mb-20">
                                             <label for="address">Address *</label>
-                                            <textarea id="address" name="address" rows="3" required>{{ Auth::user()->address ?? '' }}</textarea>
+                                            <textarea id="address" name="address" rows="3" placeholder="e.g., 123 Main Road, Sector 15, Delhi - 110001" required>{{ Auth::user()->address ?? '' }}</textarea>
+                                            <small class="form-text text-muted">Complete address for home service delivery (minimum 10 characters)</small>
                                             <input type="hidden" id="latitude" name="latitude">
                                             <input type="hidden" id="longitude" name="longitude">
                                             
@@ -675,6 +679,76 @@
     outline: none;
 }
 
+/* Validation Styles */
+.contact-field input.is-valid,
+.contact-field select.is-valid,
+.contact-field textarea.is-valid {
+    border-color: #28a745;
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.contact-field input.is-invalid,
+.contact-field select.is-invalid,
+.contact-field textarea.is-invalid {
+    border-color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.05);
+}
+
+.field-error {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    animation: slideDown 0.3s ease;
+}
+
+.field-error::before {
+    content: '⚠';
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Input field validation states */
+.contact-field input.valid,
+.contact-field select.valid,
+.contact-field textarea.valid {
+    border-color: #28a745;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    padding-right: calc(1.5em + 0.75rem);
+}
+
+.contact-field input.invalid,
+.contact-field select.invalid,
+.contact-field textarea.invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    padding-right: calc(1.5em + 0.75rem);
+}
+
+/* Mobile number input formatting */
+.contact-field input[type="tel"] {
+    letter-spacing: 1px;
+}
+
 #map {
     border: 2px solid #e9ecef;
 }
@@ -917,8 +991,157 @@ function initializeForm() {
         updateTimeSlots(dateInput.value);
     }
     
+    // Setup real-time validation
+    setupRealTimeValidation();
+    
     // Initialize map if needed
     initializeMap();
+}
+
+function setupRealTimeValidation() {
+    // Email field real-time validation
+    const emailField = document.getElementById('customer_email');
+    if (emailField) {
+        emailField.addEventListener('blur', function() {
+            validateEmailField(this);
+        });
+        
+        emailField.addEventListener('input', function() {
+            // Clear error as user types
+            if (this.value.trim()) {
+                removeFieldError(this);
+                this.style.borderColor = '#e9ecef';
+            }
+        });
+    }
+    
+    // Mobile field real-time validation
+    const phoneField = document.getElementById('customer_phone');
+    if (phoneField) {
+        phoneField.addEventListener('blur', function() {
+            validatePhoneField(this);
+        });
+        
+        phoneField.addEventListener('input', function() {
+            // Auto-format and clear error as user types
+            const cleanValue = this.value.replace(/\D/g, '');
+            if (cleanValue.length <= 10) {
+                this.value = cleanValue;
+            }
+            
+            // Clear error if user is correcting
+            if (cleanValue.length === 10 && /^[6-9]/.test(cleanValue)) {
+                removeFieldError(this);
+                this.style.borderColor = '#28a745'; // Green for valid
+            } else if (cleanValue.length > 0) {
+                removeFieldError(this);
+                this.style.borderColor = '#e9ecef';
+            }
+        });
+    }
+    
+    // Name field real-time validation
+    const nameField = document.getElementById('customer_name');
+    if (nameField) {
+        nameField.addEventListener('blur', function() {
+            validateNameField(this);
+        });
+        
+        nameField.addEventListener('input', function() {
+            // Clear error as user types
+            if (this.value.trim()) {
+                removeFieldError(this);
+                this.style.borderColor = '#e9ecef';
+            }
+        });
+    }
+    
+    // Address field real-time validation
+    const addressField = document.getElementById('address');
+    if (addressField) {
+        addressField.addEventListener('blur', function() {
+            validateAddressField(this);
+        });
+        
+        addressField.addEventListener('input', function() {
+            // Clear error as user types
+            if (this.value.trim().length >= 10) {
+                removeFieldError(this);
+                this.style.borderColor = '#28a745'; // Green for valid
+            } else if (this.value.trim().length > 0) {
+                removeFieldError(this);
+                this.style.borderColor = '#e9ecef';
+            }
+        });
+    }
+}
+
+function validateEmailField(field) {
+    const value = field.value.trim();
+    if (!value) {
+        addFieldError(field, 'Email address is required');
+        return false;
+    }
+    
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(value)) {
+        addFieldError(field, 'Please enter a valid email address (e.g., user@example.com)');
+        return false;
+    }
+    
+    field.style.borderColor = '#28a745'; // Green for valid
+    return true;
+}
+
+function validatePhoneField(field) {
+    const value = field.value.trim().replace(/\D/g, '');
+    if (!value) {
+        addFieldError(field, 'Mobile number is required');
+        return false;
+    }
+    
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(value)) {
+        addFieldError(field, 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9');
+        return false;
+    }
+    
+    field.value = value; // Format to clean digits
+    field.style.borderColor = '#28a745'; // Green for valid
+    return true;
+}
+
+function validateNameField(field) {
+    const value = field.value.trim();
+    if (!value) {
+        addFieldError(field, 'Name is required');
+        return false;
+    }
+    
+    const nameRegex = /^[a-zA-Z\s]{2,50}$/;
+    if (!nameRegex.test(value)) {
+        addFieldError(field, 'Name should only contain letters and be 2-50 characters long');
+        return false;
+    }
+    
+    field.style.borderColor = '#28a745'; // Green for valid
+    return true;
+}
+
+function validateAddressField(field) {
+    const value = field.value.trim();
+    if (!value) {
+        addFieldError(field, 'Address is required');
+        return false;
+    }
+    
+    if (value.length < 10) {
+        addFieldError(field, 'Please enter a complete address (minimum 10 characters)');
+        return false;
+    }
+    
+    field.style.borderColor = '#28a745'; // Green for valid
+    return true;
 }
 
 function updateTimeSlots(selectedDate) {
@@ -1386,33 +1609,113 @@ function previousStep(stepNumber) {
 function validateStep1() {
     const requiredFields = ['customer_name', 'customer_email', 'customer_phone', 'address', 'booking_date', 'booking_time'];
     let isValid = true;
+    let errorMessage = '';
     
     requiredFields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
         if (!field || !field.value.trim()) {
             if (field) {
                 field.style.borderColor = '#dc3545';
+                addFieldError(field, 'This field is required');
             }
             isValid = false;
         } else {
             if (field) {
                 field.style.borderColor = '#e9ecef';
+                removeFieldError(field);
             }
         }
     });
     
-    // Email validation
+    // Enhanced Email validation
     const email = document.getElementById('customer_email');
-    if (email && !email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        email.style.borderColor = '#dc3545';
-        isValid = false;
+    if (email && email.value.trim()) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email.value.trim())) {
+            email.style.borderColor = '#dc3545';
+            addFieldError(email, 'Please enter a valid email address (e.g., user@example.com)');
+            isValid = false;
+            if (!errorMessage) errorMessage = 'Please enter a valid email address';
+        } else {
+            removeFieldError(email);
+        }
+    }
+    
+    // Enhanced Mobile validation
+    const phone = document.getElementById('customer_phone');
+    if (phone && phone.value.trim()) {
+        const phoneRegex = /^[6-9]\d{9}$/; // Indian mobile number format
+        const cleanPhone = phone.value.trim().replace(/\D/g, ''); // Remove non-digits
+        
+        if (!phoneRegex.test(cleanPhone)) {
+            phone.style.borderColor = '#dc3545';
+            addFieldError(phone, 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9');
+            isValid = false;
+            if (!errorMessage) errorMessage = 'Please enter a valid mobile number';
+        } else {
+            removeFieldError(phone);
+            phone.value = cleanPhone; // Format the phone number
+        }
+    }
+    
+    // Name validation
+    const name = document.getElementById('customer_name');
+    if (name && name.value.trim()) {
+        const nameRegex = /^[a-zA-Z\s]{2,50}$/;
+        if (!nameRegex.test(name.value.trim())) {
+            name.style.borderColor = '#dc3545';
+            addFieldError(name, 'Name should only contain letters and be 2-50 characters long');
+            isValid = false;
+            if (!errorMessage) errorMessage = 'Please enter a valid name';
+        } else {
+            removeFieldError(name);
+        }
+    }
+    
+    // Address validation
+    const address = document.getElementById('address');
+    if (address && address.value.trim()) {
+        if (address.value.trim().length < 10) {
+            address.style.borderColor = '#dc3545';
+            addFieldError(address, 'Please enter a complete address (minimum 10 characters)');
+            isValid = false;
+            if (!errorMessage) errorMessage = 'Please enter a complete address';
+        } else {
+            removeFieldError(address);
+        }
     }
     
     if (!isValid) {
-        showNotification('Please fill in all required fields', 'error');
+        showNotification(errorMessage || 'Please fill in all required fields correctly', 'error');
     }
     
     return isValid;
+}
+
+// Helper functions for field validation
+function addFieldError(field, message) {
+    removeFieldError(field); // Remove existing error first
+    
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'field-error';
+    errorDiv.style.cssText = `
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        font-weight: 500;
+    `;
+    errorDiv.textContent = message;
+    
+    field.parentNode.appendChild(errorDiv);
+    field.style.borderColor = '#dc3545';
+}
+
+function removeFieldError(field) {
+    const errorDiv = field.parentNode.querySelector('.field-error');
+    if (errorDiv) {
+        errorDiv.remove();
+    }
+    field.style.borderColor = '#e9ecef';
 }
 
 function validateStep2() {

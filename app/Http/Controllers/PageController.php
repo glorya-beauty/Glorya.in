@@ -13,7 +13,34 @@ class PageController extends Controller
 
     public function services()
     {
-        return view('frontend.services');
+        $categories = \App\Models\Category::where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('name', 'asc')
+            ->with('services')
+            ->get();
+        
+        $services = \App\Models\Service::where('is_active', true)
+            ->orderBy('category', 'asc')
+            ->orderBy('name', 'asc')
+            ->get();
+            
+        return view('frontend.services', compact('categories', 'services'));
+    }
+
+    public function servicesClone()
+    {
+        $categories = \App\Models\Category::where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('name', 'asc')
+            ->with('services')
+            ->get();
+        
+        $services = \App\Models\Service::where('is_active', true)
+            ->orderBy('category', 'asc')
+            ->orderBy('name', 'asc')
+            ->get();
+            
+        return view('frontend.services-clone', compact('categories', 'services'));
     }
 
     public function servicesDetail()
