@@ -367,7 +367,7 @@
                          <div class="col-lg-4 col-md-6 mb-30">
                              <div class="service-category-card">
                                  <div class="service-image" style="height:350px;">
-                                     <img src="http://127.0.0.1:8000/images/services/sk.jpeg" alt="Skin Care">
+                                     <img src="<?php echo e(asset('images/services/sk.jpeg')); ?>" alt="Skin Care">
                                      <div class="service-overlay">
                                          <div class="service-icon">
                                              <i class="fas fa-spa"></i>
@@ -395,7 +395,7 @@
                          <div class="col-lg-4 col-md-6 mb-30">
                              <div class="service-category-card">
                                  <div class="service-image" style="height:350px;">
-                                    <img src="http://127.0.0.1:8000/images/services/re.jpeg" alt="Makeup Services">
+                                    <img src="<?php echo e(asset('images/services/re.jpeg')); ?>" alt="Makeup Services">
                                    <div class="service-overlay">
                                     
                                            <div class="service-icon">
@@ -425,7 +425,7 @@
                          <div class="col-lg-4 col-md-6 mb-30">
                              <div class="service-category-card">
                                  <div class="service-image" style="height:350px;">
-                                     <img src="http://127.0.0.1:8000/images/services/hair.jpeg" alt="Hair Services">
+                                     <img src="<?php echo e(asset('images/services/hair.jpeg')); ?>" alt="Hair Services">
                                      <div class="service-overlay">
                                          <div class="service-icon">
                                              <i class="fas fa-cut"></i>
@@ -455,7 +455,7 @@
                          <div class="col-lg-4 col-md-6 mb-30">
                              <div class="service-category-card">
                                  <div class="service-image" style="height:350px;">
-                                     <img src="http://127.0.0.1:8000/images/services/marble.jpeg" alt="Nail Services">
+                                     <img src="<?php echo e(asset('images/services/marble.jpeg')); ?>" alt="Nail Services">
                                      <div class="service-overlay">
                                          <div class="service-icon">
                                              <i class="fas fa-hand-sparkles"></i>
@@ -483,7 +483,7 @@
                          <div class="col-lg-4 col-md-6 mb-30">
                              <div class="service-category-card">
                                  <div class="service-image" style="height:350px;">
-                                     <img src="http://127.0.0.1:8000/images/services/wax.jpeg" alt="Waxing Services">
+                                     <img src="<?php echo e(asset('images/services/wax.jpeg')); ?>" alt="Waxing Services">
                                      <div class="service-overlay">
                                          <div class="service-icon">
                                              <i class="fas fa-fire"></i>
@@ -514,7 +514,7 @@
                                      <span>Popular</span>
                                  </div>
                                  <div class="service-image" style="height:350px;">
-                                     <img src="http://127.0.0.1:8000/images/services/party.jpeg" alt="Special Packages">
+                                     <img src="<?php echo e(asset('images/services/party.jpeg')); ?>" alt="Special Packages">
                                      <div class="service-overlay">
                                          <div class="service-icon">
                                              <i class="fas fa-star"></i>
@@ -542,7 +542,6 @@
                     <?php if($categories->count() > 0): ?>
                     <div class="glorya-service-category mb-80">
                         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="glorya-service-category mb-80">
                             <div class="category-header text-center mb-40">
                                 <h3><i class="fas fa-spa"></i> <?php echo e($category->name); ?></h3>
                                 <p><?php echo e($category->description ?? 'Premium ' . $category->name . ' services for your beauty needs'); ?></p>
@@ -610,7 +609,7 @@
                                 <p class="text-muted">No services available in this category yet.</p>
                             </div>
                             <?php endif; ?>
-                        </div>
+                        
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                     <?php else: ?>
