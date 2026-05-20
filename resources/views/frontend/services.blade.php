@@ -558,11 +558,10 @@
                                             <div class="col-12 col-sm-6 col-lg-4 mb-30">
                                                 <div class="service-card">
                                                     @if($service->image)
-                                                    <img src="{{ asset('storage/' . $service->image) }}" style="height:350px; width: 100%; object-fit: cover;" alt="{{ $service->name }}">
-                                                    @else
-                                                    <img src="{{ asset('images/services/service-img1.jpg') }}" style="height:350px; width: 100%; object-fit: cover;" alt="{{ $service->name }}">
-                                                    @endif
-                                                    <div class="service-header">
+                                                    <img src="{{ asset('storage/' . $service->image) }}"
+                                                        style="height:350px; width: 100%; object-fit: cover;"
+                                                        alt="{{ $service->name }}">
+                                                   @endif                                                    <div class="service-header">
                                                         <div class="d-flex justify-content-between align-items-start">
                                                             <div>
                                                                 <h5>{{ strtoupper($service->name) }}</h5>

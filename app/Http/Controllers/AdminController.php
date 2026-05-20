@@ -20,7 +20,9 @@ class AdminController extends Controller
     public function dashboard()
     {
         $totalBookings = Booking::count();
-        $pendingBookings = Booking::where('status', 'pending')->count();
+        $pendingBookings = Booking::where('status', 'pending')
+            ->orWhere('payment_verified', false)
+            ->count();
         $confirmedBookings = Booking::where('status', 'confirmed')->count();
         $completedBookings = Booking::where('status', 'completed')->count();
         $totalUsers = User::where('is_admin', false)->count();
@@ -42,9 +44,16 @@ class AdminController extends Controller
     {
         $query = Booking::with('user');
 
-        // Filter by status
+        // Filter by status, treating unverified as pending
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            if ($request->status === 'pending') {
+                $query->where(function($q) {
+                    $q->where('status', 'pending')
+                      ->orWhere('payment_verified', false);
+                });
+            } else {
+                $query->where('status', $request->status);
+            }
         }
 
         // Filter by date range

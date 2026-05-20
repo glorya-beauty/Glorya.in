@@ -559,11 +559,10 @@
                                             <div class="col-12 col-sm-6 col-lg-4 mb-30">
                                                 <div class="service-card">
                                                     <?php if($service->image): ?>
-                                                    <img src="<?php echo e(asset('storage/' . $service->image)); ?>" style="height:350px; width: 100%; object-fit: cover;" alt="<?php echo e($service->name); ?>">
-                                                    <?php else: ?>
-                                                    <img src="<?php echo e(asset('images/services/service-img1.jpg')); ?>" style="height:350px; width: 100%; object-fit: cover;" alt="<?php echo e($service->name); ?>">
-                                                    <?php endif; ?>
-                                                    <div class="service-header">
+                                                    <img src="<?php echo e(asset('storage/' . $service->image)); ?>"
+                                                        style="height:350px; width: 100%; object-fit: cover;"
+                                                        alt="<?php echo e($service->name); ?>">
+                                                   <?php endif; ?>                                                    <div class="service-header">
                                                         <div class="d-flex justify-content-between align-items-start">
                                                             <div>
                                                                 <h5><?php echo e(strtoupper($service->name)); ?></h5>

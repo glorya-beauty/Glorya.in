@@ -219,6 +219,7 @@ class BookingController extends Controller
                 'time_slot' => $request->booking_time,
                 'notes' => $request->notes,
                 'status' => 'payment_uploaded',
+                'payment_verified' => false,
                 'payment_screenshot' => $paymentScreenshotPath,
                 'booking_number' => 'GB' . strtoupper(uniqid()),
             ]);
@@ -379,6 +380,7 @@ class BookingController extends Controller
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
                 'status' => 'pending',
+                'payment_verified' => false,
                 'notes' => $request->notes ?? null
             ]);
 
