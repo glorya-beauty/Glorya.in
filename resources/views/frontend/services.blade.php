@@ -524,7 +524,7 @@ html {
                          
                          <!-- Special Packages Card -->
                          <div class="col-lg-4 col-md-6 mb-30">
-                             <div class="service-category-card jump-card" data-target="category-special-packages">
+                             <div class="service-category-card jump-card" data-target="category-special-beauty-package">
                                  <div class="service-badge">
                                      <span>Popular</span>
                                  </div>
