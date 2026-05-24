@@ -78,6 +78,22 @@
         opacity: 1;
     }
 }
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+.jump-card {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.jump-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
 </style>
 @endpush
 @section('description', 'Explore our premium beauty services including skincare, nail art, makeup, and hair treatments')
@@ -351,7 +367,7 @@
             </section>
             <!-- breadcrumb-area-end -->
             <section id="glorya-services" class="pt-100 pb-100">
-                 <div class="container">
+                <div class="container">
                      <div class="row">
                          <div class="col-lg-12">
                              <div class="section-title center-align mb-50 text-center">
@@ -361,10 +377,10 @@
                              </div>
                          </div>
                      </div>
-                     <div class="row mb-60">
+                    <div class="row mb-60">
                         <!-- Skin Care Card -->
                          <div class="col-lg-4 col-md-6 mb-30">
-                             <div class="service-category-card">
+                                 <div class="service-category-card jump-card" data-target="category-skin-care-waxing-services">
                                  <div class="service-image" style="height:350px;">
                                      <img src="{{ asset('images/services/sk.jpeg') }}" alt="Skin Care">
                                      <div class="service-overlay">
@@ -392,7 +408,7 @@
                          <!-- Makeup Services Card -->
                           
                          <div class="col-lg-4 col-md-6 mb-30">
-                             <div class="service-category-card">
+                            <div class="service-category-card jump-card" data-target="category-makeup-services">
                                  <div class="service-image" style="height:350px;">
                                     <img src="{{ asset('images/services/re.jpeg') }}" alt="Makeup Services">
                                    <div class="service-overlay">
@@ -422,7 +438,7 @@
                          
                          <!-- Hair Services Card -->
                          <div class="col-lg-4 col-md-6 mb-30">
-                             <div class="service-category-card">
+                             <div class="service-category-card jump-card" data-target="category-hair-services">
                                  <div class="service-image" style="height:350px;">
                                      <img src="{{ asset('images/services/hair.jpeg') }}" alt="Hair Services">
                                      <div class="service-overlay">
@@ -452,7 +468,7 @@
                          
                          <!-- Nail Services Card -->
                          <div class="col-lg-4 col-md-6 mb-30">
-                             <div class="service-category-card">
+                             <div class="service-category-card jump-card" data-target="category-nail-services">
                                  <div class="service-image" style="height:350px;">
                                      <img src="{{ asset('images/services/marble.jpeg') }}" alt="Nail Services">
                                      <div class="service-overlay">
@@ -480,7 +496,7 @@
                          
                          <!-- Waxing Services Card -->
                          <div class="col-lg-4 col-md-6 mb-30">
-                             <div class="service-category-card">
+                             <div class="service-category-card jump-card" data-target="category-skin-care-waxing-services">
                                  <div class="service-image" style="height:350px;">
                                      <img src="{{ asset('images/services/wax.jpeg') }}" alt="Waxing Services">
                                      <div class="service-overlay">
@@ -508,7 +524,7 @@
                          
                          <!-- Special Packages Card -->
                          <div class="col-lg-4 col-md-6 mb-30">
-                             <div class="service-category-card featured">
+                             <div class="service-category-card jump-card" data-target="category-special-packages">
                                  <div class="service-badge">
                                      <span>Popular</span>
                                  </div>
@@ -537,78 +553,120 @@
                              </div>
                          </div>
                      </div>
+                    
                     <!-- Dynamic Services Section -->
                     @if($categories->count() > 0)
                     <div class="glorya-service-category mb-80">
-                        @foreach($categories as $category)
-                            <div class="category-header text-center mb-40">
-                                <h3><i class="fas fa-spa"></i> {{ $category->name }}</h3>
-                                <p>{{ $category->description ?? 'Premium ' . $category->name . ' services for your beauty needs' }}</p>
-                            </div>
-                            
-                            @if($category->services && $category->services->count() > 0)
-                            <div class="row">
-                                @foreach($category->services->groupBy('subcategory') as $subcategory => $services)
-                                <div class="col-lg-12">
-                                    <div class="service-subcategory mb-40">
-                                        <h4 class="subcategory-title">{{ $subcategory ?: 'General Services' }}</h4>
-                                        
-                                        <div class="row">
-                                            @foreach($services as $service)
-                                            <div class="col-12 col-sm-6 col-lg-4 mb-30">
-                                                <div class="service-card">
-                                                    @if($service->image)
-                                                    <img src="{{ asset('storage/' . $service->image) }}"
-                                                        style="height:350px; width: 100%; object-fit: cover;"
-                                                        alt="{{ $service->name }}">
-                                                   @endif                                                    <div class="service-header">
-                                                        <div class="d-flex justify-content-between align-items-start">
-                                                            <div>
-                                                                <h5>{{ strtoupper($service->name) }}</h5>
-                                                                <div class="price-info">
-                                                                    @if($service->original_price && $service->original_price > $service->final_price)
-                                                                    <span class="original-price">₹{{ number_format($service->original_price, 0) }}</span>
-                                                                    <span class="discount">{{ round((($service->original_price - $service->final_price) / $service->original_price * 100)) }}% OFF</span>
-                                                                    @endif
-                                                                    
-                                                                    <span class="final-price">₹{{ number_format($service->final_price, 0) }}</span>
-                                                                    @if($service->duration)
-                                                                    <span class="time">Time - {{ $service->duration }} Min</span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <button class="btn btn-sm btn-outline-info toggle-service-details" 
-                                                                    onclick="toggleServiceDetails('{{ str_replace(' ', '-', strtolower($service->name)) . '-' . $service->id }}')">
-                                                                <i class="fas fa-chevron-down" id="arrow-{{ str_replace(' ', '-', strtolower($service->name)) . '-' . $service->id }}"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="service-details collapse" id="details-{{ str_replace(' ', '-', strtolower($service->name)) . '-' . $service->id }}">
-                                                        <p>{!! $service->description !!}</p>
-                                                        
-                                                        <p>{!! $service->short_description !!}</p>
 
-                                                    </div>
-                                                    <div class="service-action mt-3">
-                                                        <button class="btn btn-add-to-cart" 
-                                                                onclick="addToCart('{{ $service->name }}', {{ $service->final_price }}, '{{ $service->image ? asset('storage/' . $service->image) : asset('images/services/default.jpg') }}', '{{ $service->duration ?? '45' }} Min', '{{ $category->name }}')">
-                                                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                                                        </button>
-                                                    </div>
+                        @foreach($categories as $category)
+
+                            <!-- CATEGORY HEADER (TARGET FOR SCROLL) -->
+                            <div class="category-header text-center mb-40"
+                                id="category-{{ Str::slug($category->name) }}">
+                                <h3><i class="fas fa-spa"></i> {{ $category->name }}</h3>
+                                <p>
+                                    {{ $category->description ?? 'Premium ' . $category->name . ' services for your beauty needs' }}
+                                </p>
+                            </div>
+
+                            @if($category->services && $category->services->count() > 0)
+
+                                <div class="row">
+                                    @foreach($category->services->groupBy('subcategory') as $subcategory => $services)
+
+                                        <div class="col-lg-12">
+                                            <div class="service-subcategory mb-40">
+
+                                                <h4 class="subcategory-title">
+                                                    {{ $subcategory ?: 'General Services' }}
+                                                </h4>
+
+                                                <div class="row">
+                                                    @foreach($services as $service)
+
+                                                        <div class="col-12 col-sm-6 col-lg-4 mb-30">
+                                                            <div class="service-card">
+
+                                                                @if($service->image)
+                                                                    <img src="{{ asset('storage/' . $service->image) }}"
+                                                                        style="height:350px; width:100%; object-fit:cover;"
+                                                                        alt="{{ $service->name }}">
+                                                                @endif
+
+                                                                <div class="service-header">
+                                                                    <div class="d-flex justify-content-between align-items-start">
+                                                                        <div>
+                                                                            <h5>{{ strtoupper($service->name) }}</h5>
+
+                                                                            <div class="price-info">
+                                                                                @if($service->original_price && $service->original_price > $service->final_price)
+                                                                                    <span class="original-price">
+                                                                                        ₹{{ number_format($service->original_price, 0) }}
+                                                                                    </span>
+                                                                                    <span class="discount">
+                                                                                        {{ round((($service->original_price - $service->final_price) / $service->original_price) * 100) }}% OFF
+                                                                                    </span>
+                                                                                @endif
+
+                                                                                <span class="final-price">
+                                                                                    ₹{{ number_format($service->final_price, 0) }}
+                                                                                </span>
+
+                                                                                @if($service->duration)
+                                                                                    <span class="time">
+                                                                                        Time - {{ $service->duration }} Min
+                                                                                    </span>
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <button class="btn btn-sm btn-outline-info toggle-service-details"
+                                                                                onclick="toggleServiceDetails('{{ Str::slug($service->name) }}-{{ $service->id }}')">
+                                                                            <i class="fas fa-chevron-down"
+                                                                            id="arrow-{{ Str::slug($service->name) }}-{{ $service->id }}"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="service-details collapse"
+                                                                    id="details-{{ Str::slug($service->name) }}-{{ $service->id }}">
+                                                                    <p>{!! $service->description !!}</p>
+                                                                    <p>{!! $service->short_description !!}</p>
+                                                                </div>
+
+                                                                <div class="service-action mt-3">
+                                                                    <button class="btn btn-add-to-cart"
+                                                                            onclick="addToCart(
+                                                                                '{{ $service->name }}',
+                                                                                {{ $service->final_price }},
+                                                                                '{{ $service->image ? asset('storage/' . $service->image) : asset('images/services/default.jpg') }}',
+                                                                                '{{ $service->duration ?? '45' }} Min',
+                                                                                '{{ $category->name }}'
+                                                                            )">
+                                                                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    @endforeach
                                                 </div>
+
                                             </div>
-                                            @endforeach
                                         </div>
-                                    </div>
-                                @endforeach
-                            </div>
+
+                                    @endforeach
+                                </div>
+
                             @else
-                            <div class="text-center mt-50">
-                                <p class="text-muted">No services available in this category yet.</p>
-                            </div>
+                                <div class="text-center mt-50">
+                                    <p class="text-muted">No services available in this category yet.</p>
+                                </div>
                             @endif
-                        
+
                         @endforeach
+
                     </div>
                     @else
                     <div class="text-center mt-100">
@@ -735,5 +793,31 @@ window.toggleServiceDetails = function(serviceId) {
 // Load cart count on page load (works for both guests and authenticated users)
 $.get('{{ route("cart.count") }}', function(response) {
     updateCartCount(response.count);
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".jump-card").forEach(card => {
+        card.addEventListener("click", function () {
+            const targetId = this.getAttribute("data-target");
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                const offset = 120; // header height
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = targetElement.getBoundingClientRect().top;
+                const position = elementRect - bodyRect - offset;
+
+                window.scrollTo({
+                    top: position,
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+
 });
 </script>
